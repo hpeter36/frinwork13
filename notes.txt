@@ -1,0 +1,3022 @@
+  ==============================================================BUBBLE TODO=================================
+  custom bubble colorok 
+  *tooltipet formázni cégnév, kamu link bele
+  switch box exchange szerint, animáció váltáskor (all opció alapból)
+  searchbox megtalálva a céget rázoomol + infoablak
+
+  animációs easingeket alkalm.
+  *mouseover egy nagyobb kisebb buble anim de nagyobbra mint kezdetkor, outnál eredeti méretre vissza
+      bubble color change, sötétebb árnyalatúra változzon vagy egy adott színre
+  rákattolva  bubblere zoom + anim(amíg egy adott átmérőt el nem ér a bubble vagy meg nem halad) + infoablak (tartalma navigálható legyen kattintható)
+      keresőben kiválasztva, rázoomol, a többi kiszürkül, megjeleníti név, exchange, profil
+      kikattintva, ablakot bezárva outzoom
+      a többi kiszürkül rázoomkor
+  tickerek a név helyett, megfelelő szövegmérettel, minden látszódjon
+
+  *title tag nem igen kell, cégnév viszont oda is mentődnie kell ahol túl nagy lenne a szöveg, adatok ne svg elemekből hanem eredeti adathalmaz
+  *zoom, pan úgy általánosan
+
+  *adatokhoz való hozzáférés, index alapon az eredeti adatsorból(d,i) =>..., minden bubble kap egy id-t 
+
+  mousemove? tooltip mozogjon?
+  tickerek a név helyett?
+
+  searchbox, katt
+      kiszürkítése a többinek 
+      smooth zoom
+      infoablak tartalma navigálható kattintható
+          megjeleníti név, exchange, profil
+          bezárásakor, kikattintáskor ablak bezár, zoom out, színadás a többinek
+  exchange switch box
+  bubble colorok
+  mouseover sötétebb árnyalat vagy adott szín
+
+  ---Gabi emailje
+  új adat read
+  teljes chart látszódjon
+  nem kell rész a bubblek között
+  bubbleben ticker, töltse ki teljesen
+  bubble körvonal
+  bubble hover - színváltás(többinek ne) + tooptip(name, exch, market_cap, \n\n , 'For company description, click on the bubble')
+  kereső, kattintás
+      transp/greyed, 0.5 sec kivéve kattintott
+      zoom, max 5x férjen bele
+      tooltip disable(when zoomed, disable)
+      ablak
+          name, exch, legfontosabb mutatók 2x4 table, cégleírás sorkizárt, formázott
+          x az ablak szélén vagy képernyő jobb fent és visszatér az alaphelyzet  
+  
+  amíg hooverelt addig lightosan ugráljon a bubble
+
+  ---tanfolyam alapján
+  részletesen megnézni a működését tanfolyam alapján
+  BS alapú page-be helyezni
+  oop, alap inputokkal
+
+  *férjen ki az egész egy monitor lapra, optimális méret
+  *ticker töltse ki a bubble-t
+  *nagyító ha az egér fölé megy kereső is
+  *toottip name, exch, market cap, \n, for comp desc click
+  *max 10x férjen bele ha több ne zoom outoljon, de minden más ahogy kell
+  *lassabb animok, látszódjanak a lépések jobban (kiszürk, zoom, oldalról beúszás)
+
+  classosítás, fölös kommentek, overheadek kidobálása, refactorálás, maximális konfigurálhatóság
+    json input
+    végső input meghat
+    többféle csoportosíthatóság nem csak exchange
+  szélesebb vászon
+  alapból ne színezze a gömböket exchange szerint
+  bubblek overlaybe mint a forcenál
+  filtert választva:
+    megszínezni a bubblekat exchange szerint animálva
+    szétrobbanás
+    exchange feliratok animálva előtűnve
+    bubblek ne follyanak össze
+    visszafelé fordított sorrend 
+  minden bug fix
+  minden automatizálva pld. az exchange keyek kigyűjtése
+  lehetne egy csúszka, amivel lehetne választani mennyi céget jelenítsek meg, itt is többféle szempont pld. market value szerint rendezve a csúszkát
+  description tiingoból
+  db adatsource, hogy kapjon tiingóból adatot saját db-nk feltöltése tiingóból
+  kateg kiválasztás sticky legyen
+  zoom az csak picike legyen épp hogy csak látszódjon a feature, elegánsan, easinget adjunk hozzá
+  egy lassú forgás amikor nem kattolunk egyik bubira sem?
+
+  szétrobbanó, összefolyó bubble-k
+       Marek Pilczuk (D3.js - the art of data visualization)
+       by sector, by exchange filter -> szétrobbanó effectus
+          alapból minden egyszínű
+          csoportosítva szívváltás animáltan, pulzálás, szétugrás
+          groupokra (group névre) kattintva középre kerül a group
+          kattintás, zoom, keresés funkció itt is működjön
+  végleges színek, oldal color színskála
+
+  tiingo integráció adatbázisba
+  d3 line chart metrika megjelenítéshez
+  felsőmenu lecserélése vagy kompatibilissá tétele a sticky headeremmel vagy legyen az is sticky, megnézni a template-ben milyen lehetőségek vannak
+    keskenyebbre venni a menüt
+    mobile friendly legyen minden!!!
+
+  "creative advanced css anims" tanfolyam
+  onenote kipróbál
+
+  ==============================================================NOTES================================
+  bemenő változók cleaning, kód egyszerűsítés, refactoring, common funkció kiszervezés, kommentelés
+      általános struktúra, refactoring stb, átfogó terv a fentiek hatékony megval.
+
+  best practiceok gyűjteni
+      add remove css classes ha változtatni akarok a svg állapotán
+      classok adása az svg elemeknek stílusok stíluslapon
+
+  bubble with axes
+  https://www.d3-graph-gallery.com/graph/bubble_tooltip.html
+  mouse click esemény, pont hozzáadása az adatokhoz, charthoz
+  http://bl.ocks.org/WilliamQLiu/76ae20060e19bf42d774
+  
+  zooming
+  https://observablehq.com/@d3/zoom
+  https://observablehq.com/@d3/programmatic-zoom
+  https://observablehq.com/@d3/zoom-with-tooltip?collection=@d3/d3-zoom
+  https://observablehq.com/@d3/drag-zoom?collection=@d3/d3-zoom
+
+  https://observablehq.com/@d3/smooth-zooming?collection=@d3/d3-zoom
+  https://observablehq.com/@d3/d3-interpolatezoom
+
+  ---custom színek
+      var myColor = d3.scaleOrdinal()
+      .domain(["Asia", "Europe", "Americas", "Africa", "Oceania"])
+      .range(d3.schemeSet2); // []
+  ...
+  .style("fill", function (d) { return myColor(d.continent); } )
+
+  .style("fill", function(d) {
+      var returnColor;
+      if (d === 30) { returnColor = "green";
+      } else if (d === 70) { returnColor = "purple";
+      } else if (d === 110) { returnColor = "red"; }
+      return returnColor;
+
+  ---attribs
+  var circleAttrs = {
+      cx: function(d) { return xScale(d.x); },
+      cy: function(d) { return yScale(d.y); },
+      r: radius
+  };
+      ...
+      .attr(circleAttrs) 
+
+  tick template strings
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+tesztelni a plugin automatikus betöltését lazy loadingot, gondolom egy class alapján tölti betöltését
+speed:
+    http://docs.semicolonweb.com/docs/getting-started/website-optimization-tips/
+    https://github.com/h5bp/html5-boilerplate
+    https://github.com/h5bp/server-configs-apache
+    https://github.com/h5bp/html5-boilerplate/blob/v8.0.0/dist/doc/TOC.md
+    minden plugint cdns-ről loadingolni
+    Apacheben engedélyezni
+        gZip Compression
+        Browser Caching
+    image optim, compress
+    minify css, js
+
+https://freefrontend.com/css-search-boxes/
+
+
+-------Search boxok, kódokat átnézni
+https://codepen.io/takaneichinose/pen/ErGwPZ   - siteba impl.
+https://codepen.io/co0kie/pen/YzyZBqb  - blur effekt
+https://codepen.io/dream_boy999/pen/YzwdRNK - 3D-s search box
+https://codepen.io/thebabydino/pen/PBXRRm  - 2 gomb közötti transition
+https://codepen.io/himalayasingh/pen/dqjLgO - 2 gomb közötti transition
+https://codepen.io/aaroniker/pen/XyXzYp - nagyító -> input transition
+https://codepen.io/liamj/pen/vYYLGZj - gépelésre beugró search button
+https://codepen.io/jkantner/pen/eYmvvqQ - nagyító -> kereső + nagyító gomb
+https://codepen.io/CBeghin/pen/HeuiF - kiugró designos transparent keresőmező
+https://codepen.io/jcoulterdesign/pen/pgwxJR nagyító -> komplex keresőmező anim
+https://codepen.io/ste-vg/pen/QrrrOz - nagyító -> egyedi keresőmező transition
+
+brutál jó paralax scroll (az 1.)
+https://speckyboy.com/css-javascript-parallax-scrolling/
+
+2 oldal közötti loading screen pl. + egyéb
+    https://speckyboy.com/page-transition-effects/
+
+https://speckyboy.com/slide-out-sidebars/
+
+https://speckyboy.com/text-distortion-effects/
+
+baromi fullos inspirációs oldalak(lista, továbbnavigálni):
+    https://speckyboy.com/sticky-vertical-navbars/
+
+
+https://api.tiingo.com/products/end-of-day-stock-price-data
+
+bublek ütköztetése, ütközések észlelése algoritmus
+    https://bl.ocks.org/mbostock/7881887
+    http://jsfiddle.net/cyril123/a0ypLkr0/1/
+    https://bl.ocks.org/mbostock/3231298
+
+---------------scroll mobile select
+https://www.jqueryscript.net/other/slot-machine-picker-drum.html
+https://www.jqueryscript.net/other/ios-wheel-picker.html
+https://www.jqueryscript.net/form/iOS-7-Style-jQuery-3D-Animated-Value-Selector-Drumjs.html
+https://www.jqueryscript.net/form/Picker-iOS-UI-Selectscroll.html
+https://www.cssscript.com/mobile-ios-date-picker-rolldate/
+https://www.jqueryscript.net/other/iOS-Data-Picker-jQuery.html
+https://www.cssscript.com/ios-style-picker-view-vanilla-javascript-mobileselect-js/
+https://github.com/onlyhom/mobile-select/blob/master/README.md
+https://www.jqueryscript.net/other/Mobile-friendly-Anything-Picker-Plugin-Input-Fields-AnyPicker.html
+https://nehakadam.github.io/AnyPicker/
+
+----------list all globals
+for(var b in window) { 
+  if(window.hasOwnProperty(b)) console.log(b); 
+}
+
+jquery mintapélda
+https://www.py4u.net/discuss/942576
+
+bubble collison detection
+https://bl.ocks.org/mbostock/3231298
+https://bl.ocks.org/mbostock/1748247
+
+
+---------------------------------------------------------------------------------
+Az elemzésközpontos jegyzeteim alapján megcsináltam R-ben a dividend history chart-ot. Az egyik diagramunk így fog kinézni az osztalékbefektetés blokkban. Az alábbiakat kell tudja (Az aláhúzott részt nem tudtam még megcsinálni R-ben, de most nem kínlódok vele többet, úgyis D3-ban kell majd működjön):
+Dividend history features:
+
+Osztalék dollárban/év chart.
+Látszódjon (stacked column) hány osztalékfizetés volt az adott évben.
+Attól az évtől induljon a chart, ahol először fizet osztalékot a cég, de azt követően azon évek is szerepeljenek, melyekben nulla volt az osztalékfizetés
+Az oszlopok tetején meg lehet jeleníteni az előző évhez képest mennyi volt a növekedés (dividend growth)
+Pozitív growth esetén zöld, negatív esetén piros lesz a label színe
+
+Úgy írtam meg a kódot, hogy tetszőleges tickert beírva szépen elkészíti a chart-ot.
+
+Üdv.:
+G.
+Mellékletek terület
+
+dividend history chart amit küldött Gabi
+
+tanfolyamok
+    vs code tanfolyam
+    advanced css Jonas
+
+---------------sürgős---------------------
+ticker, cégnév, market cap, industry, description*
+line chart ideiglenes eltáv*
+
+rossz perf
+*SP500, dow 30 select box
+többféle csoportosítás tőzsde, szektor
+*teljes kör látszódjon
+*ne csússzanak össze a bubik
+russel 3000-et beolvasni
+Avilable companies with ... subscription plan, sorted by ...
+    free - dow 30
+    basic - sp500
+    átmenetek animáltan
+
+------------apróságok
+túl vastag betűméreteket levenni a tickereknél
+tooltip formázása a szövegek ne középre
+tökéletesen középre a zoomolásnál
+oldalsáv teljes height, legyen scrollozhatóság
+*egységesíteni a force nem force részeket
+*	mindig átlátszó bubik
+exch text akkor jelenjen meg ha szétigrottak
+beszinesedni, szétugranak, fade in text sorrend
+állandó forgás nagyon lassan
+görgős select box görgetés választással
+	industyra, stb is legyen szétugrasztás
+search box kisebb
+search box jobbra csússzon ki
+
+svg animációk végtelenítve egyes interakciókkor mint a Google-nél
+
+teljesen saját design, minden jonas alapján, canvas kiszed max ami hasznos azt kiszedni belőle
+dir struktúra átalakít ahogy neki van
+
+*bubi size -20%
+*dow,sp500 animated transition
+*    váltáskor mind2 flag legyen szinkronban
+*global variableket eliminálni!!!
+*variale elnevezéseket pontosítani hogy mit tárol
+*base css, stb
+*side menü invalid chars 
+    *valami style
+    *pld. TDY
+*bubi méret + elhelyezést jobban kidolg
+kicsit le mozog betöltésnél + nem látszódik ahogy bejön rögtön a forece aktiválódik
+chart style csak scss-ben legyen inline ne csak classokat adok veszek el d3-ban
+*kereső case insensitive + ticker + név alapján is
+bubble méretezés kódban egyszerűsíteni
+inputok pld. force csoportosítása
+lassú, zoom, cég desc görgetés, cég label pontosítás
+régi chart ami az első verzió
+petrowsky score chart
+
+szerveren gitből tölteni a changeket
+
+
+dividend chart
+tiingo ds
+
+bubble mint 3d-s gömb forgatható
+
+*minden kigyomlál (canvas)
+*    minden egyéb view, routeok (archiválni)
+*scss struktúra
+chart, picker js code cleanup eliminate globals
+    minden script értelmes clean újradolgozása, picker különösen, többféle input teszt(kiválasztott érték return index helyett stb)
+    Jquery mintapélda check
+    *scss prettyfier beüzemel
+
+-------------gyors bubble
+three.js - 2d, 3d webGl
+SVG + WebGl - axis szöveg svg a többi webgl? (Plotly használja)
+D3FC - D3 webGl-el + D3 skeletonok
+pixy js -  2D webgl lib
+    https://bstd.ru/
+    https://www.pixijs.com/gallery
+Meshroom - Open source 3D reconstruction sw for desktop
+    Alicevision github lib az alapja (Photogrammetry lib)
+    cmd line is
+    python alapú(QT, PySide GUI), támogatás hozzá
+    meshroom mesh -> blender model optim -> meshroom texturing
+    https://sketchfab.com/blogs/community/tutorial-meshroom-for-beginners
+    https://sketchfab.com/AliceVision/likes
+    tripod ajánlott, körbejárni az objot ne forgassuk még fehér háttér esetén se
+    ne reflektálja a fényt az anyaga ne legyen átlátszó
+    ne legyen a képek között elmosódott, minden képet checkolni, legjobb felbontásban csinálni
+    manual módban fotózni, kicsi ISO, F5-6 körüli, 50-100 kép, ne mozgassuk az objectet mialatt képeket csinálunk
+        erős árnyékok ne legyenek, természetes megvilágítás az igazi, 
+        változtassuk a távolságot is minden részlet kell, akár eltérő kamerákkal is lehet csinálni
+    videó inputot is támogat de a qualityje jóval gyengébb
+    utomunka levágni, lyukakat betömni, korrigálni
+        blender - sculpting
+        add modifier/decimate - vertexek számát csökkenti
+            smooth - simítja de részletek nem vesznek el
+Blender, Maya - 3D edit sw
+
+move.js - css anims from js
+https://h5bp.org/Effeckt.css/#0 - css animok kül elemekhez pld. page slide !
+slidr.js - slide effektek pld. kockaként elforduló !
+Vanilla js - lightweight js 
+https://github.com/sole/tween.js/
+    tween.js - js anim gpu gyorsítással(?)
+
+https://stardustjs.github.io/examples/graph/
+    simulate webassemblyben?
+    minden adatot beadni webgl-nek és render
+webgl mouse hover elem
+    https://threejs.org/examples/#webgl_interactive_cubes
+    examples pagen "Interactive" keresés
+mouse, touch eventek
+    https://github.com/jasonChen1982/three.interaction.js
+    https://jasonchen1982.github.io/three.interaction.js/examples/interaction/
+https://benchmarks.slaylines.io/pixi.html
+    Canvas Engines Comparison
+    bechmarkok, pixijs magasan a legjobb performancia
+pixi példa vertex programozással
+    https://www.pixiplayground.com/#/edit/wu4-HcklTXNsrTiE6y9O7
+pixi js magas perf circlekkel
+    https://www.html5gamedevs.com/topic/46193-fastest-way-to-render-50k-circles-of-varying-radius-and-colors/
+felirat sok sok objectből
+    https://github.com/greggman/tdl - low level webgl
+    https://webglsamples.org/google-io/2011/lots-of-objects-google.html
+video texture
+    https://webglsamples.org/video/video.html
+canvas akár egy d3 chart textúraként 3D-s objektumon !!!
+    https://threejsfundamentals.org/threejs/lessons/threejs-canvas-textures.html
+Kereső is lehetne 3D-s
+    https://css-tricks.com/techniques-for-rendering-text-with-webgl/
+    Fading letters demo
+three js webgl perf
+    https://threejs.org/examples/webgl_instancing_performance.html
+    https://github.com/mrdoob/three.js/blob/master/examples/webgl_instancing_performance.html
+website in webgl plane
+    http://learningthreejs.com/blog/2013/04/30/closing-the-gap-between-html-and-webgl/
+
+CSS3DObject
+Fontloader + ShapeGeometry
+    https://github.com/mrdoob/three.js/blob/master/examples/webgl_geometry_text_shapes.html
+    typeface package
+        https://github.com/components-ai/typefaces
+        https://github.com/components-ai/typefaces/tree/main/packages/font-lato/data/typefaces
+    generate typeface
+        https://gero3.github.io/facetype.js/
+fasza loadingscreenek 3D-ben, de ehhez elég szerintem css 3d transform is
+Loadingmanager, fontloader, először betöltök aztán a többi kód
+    https://jsfiddle.net/prisoner849/o94z3u8b/
+Buffergeom lehet jobb lenne a performancia és csak a position-t stb kellene változtatni
+https://www.eventbrite.com/engineering/its-2015-and-drawing-text-is-still-hard-webgl-threejs/
+    SDF textet ajánlotta
+text planemesh is lehetne shared PlaneBufferGeometry
+    https://attackingpixels.com/tips-tricks-optimizing-three-js-performance/
+    bubble pislákolás -> 5. pont
+    perf tippek
+        https://discoverthreejs.com/tips-and-tricks/
+    svg betöltése shapere
+reuse canvas texture
+    https://www.html5rocks.com/en/tutorials/webgl/million_letters/
+Dynamically create 2D text in three.js
+    https://www.py4u.net/discuss/296258    
+bemutató saját modellként benne a scienben
+    sok jó megoldás
+        loading screen, text, svg to single buffer memory, karakter animáció, raycasting
+    https://attackingpixels.com/three-js-timeline-career-3D-portfolio/
+    külső objectek, akár saját magunk be 3D scannelése, animálása !!!
+    timelineok, egyéb folyamatbemutatók
+soksok sprite egyszerre:
+    https://github.com/mrdoob/three.js/blob/master/examples/webgl_points_sprites.html
+sprite texts
+    https://seregpie.github.io/aframe-text-sprite/
+sok sok kommentel
+    http://www.johannes-raida.de/tutorials/three.js/tutorial06/tutorial06.htm
+fizika
+    https://raw.githack.com/takahirox/three.js/PhysicsInstancing/examples/webgl_physics_instancing.html
+bubik csak pontok legyenek?
+    https://threejs.org/examples/?q=points#webgl_points_dynamic
+ember pontokból széthullanak effekt
+    https://threejs.org/examples/?q=points#webgl_points_dynamic 
+sok gömb rajzolása(Buffergeom)
+    https://discourse.threejs.org/t/instancing-point-cloud/12280
+    https://discourse.threejs.org/t/how-to-animate-thousands-of-spheres-with-the-best-performance/9441
+    https://discourse.threejs.org/t/how-to-draw-spheres-more-than-1000000/19731
+    https://jsfiddle.net/h9fnx3sy/
+    https://jsfiddle.net/mprj6bvg/3/
+    https://jsfiddle.net/prisoner849/z3yfw208/
+    https://discourse.threejs.org/t/performance-optimization-tips-for-lots-of-spheres-but-a-bit-complicated/12655
+D3 + canvas
+    https://www.freecodecamp.org/news/d3-and-canvas-in-3-steps-8505c8b27444/
+OffScreenCanvas, Web workers - mind2 leveszi a terhelést a weblap main threadjéről
+D3 + Pixijs(webgl) + a cikkek benne
+    https://observablehq.com/@zakjan/force-directed-graph-pixi
+    https://graphaware.com/visualization/2019/09/05/scale-up-your-d3-graph-visualisation-webgl-canvas-with-pixi-js.html
+D3 + Stardust(WebGL)
+    https://stardustjs.github.io/examples/graph/
+raycast, tween js with three js
+    https://sbcode.net/threejs/raycaster/
+    https://github.com/sole/tween.js/
+    https://sbcode.net/threejs/tween/
+three js 2d
+    https://observablehq.com/@grantcuster/using-three-js-for-2d-data-visualization
+D3 + webGL(D3FC)
+    https://blog.scottlogic.com/2020/05/01/rendering-one-million-points-with-d3.html
+vanilla js
+    http://vanilla-js.com/
+    https://gist.github.com/thegitfather/9c9f1a927cd57df14a59c268f118ce86
+nice shader effect:
+    https://fjolt.com/article/3d-web-gl-javascript-gradient-effect
+    https://codepen.io/smpnjn/pen/pobGMKp
+    https://gist.github.com/patriciogonzalezvivo/670c22f3966e662d2f83
+D3 force with webassembly
+    https://bl.ocks.org/ColinEberhardt/6ceb7ca74aabac9c8534d7120d31b382
+Stardustot is megvizsgálni D3-al eléggé kompatibilis
+layout, fizika compute web workerbe
+D3 force tick gyorsítás
+    "d3 speed up animation"
+    https://stackoverflow.com/questions/26188266/how-to-speed-up-the-force-layout-animation-in-d3-js
+    https://github.com/d3/d3/issues/1519
+    http://plnkr.co/edit/wyBZbR6f4MMV5BG05u48?p=preview&preview
+D3 SVG chart perf
+    https://blog.scottlogic.com/2014/09/19/d3-svg-chart-performance.html
+mindenből cheat sheet
+
+
+---------------------------bubi 3d -------------
+dev módban kisebb képernyő kisebbek, full screenben összeérnek a bubik
+    pontosan érjenek össze
+loading screen
+raycasting select, zoom
+    mouse touch eventek
+bubble anim
+bubik váltása dow30, sp500
+d3-as részt beletenni a chart classba, input a raw input data legyen
+webworker a layout, simulation kódoknak
+advanced effektek
+    tetszőleges új 3d-s dolgok pld. szétugró bubik ha kiválasztok egyet rázoomol + forgathatjuk is a camot, tetszőleges pathot is bejárhat stb
+ne gömb hanem extrudált circle
+    a gömb z ~0-ban legyen de a látható sugaruk mind egyvonalban
+valami értelmes háttér
+    ha nem kell a fény, kivenni
+segédlet a használathoz
+input output pld felhozni az oldalmenüt bubi kattolásra, szétdobni a bubikat egér scrollra
+    minden úgy menjen ahogy d3-al
+optimalizációs dolgok, pld ha nem kell fény visszaverő material, stb
+ha nincs mozgás ne animáljon, pörögjön a gpu
+legyen több height a chartnak, jobb elrendezés
+valami lightos material
+vagy ha már bubble akkor egy teljes kör legyen külső peremén a bubblik vagy többféle elrendezés
+
+-------------taskok---------
+flask internationalization, több nyelvi file    
+    formoknál is, ott hogy veszem ki az aktív nyelvet?
+        lehet kellene egy class ahol beállítom a def nyelvet vagy a user első lekérdezéskor állítja be, ha vált nyelvet érzékeli és cselekszik
+    mail templatekkel mi legyen?
+hibák lementése db-be 500, 404 stb, majd admin felületen láthatóak
+configba a site root addr (email templatebe is)
+*mindig encryptáljuk a pw-t db-be !!!
+db.commitok
+current_user-t hol updatelem még közvetlenül?
+    nem azonos db sessionba lett a user lekérd + módosítva
+*https://www.sec.gov/edgar/sec-api-documentation  coca colával
+dividend d3 chart
+tiingó python api
+egy alap D3 linechart hozzáadható elvehető metrikákkal
+
+------------------------btc payments, subscription management
+többféle fizetési lehetőség, választható lehessen
+btc fizetési lehetőség, user előfizetési státuszok, időpontok
+    user/pénztárca
+    befizetések könyvelése, vásárlások könyvelése
+    server side kalkuláció, mennyibe kerül x hónap, adott sub vagy upgrade sub adott dollárösszegben -> btc, 
+        kedvezményekkel recalc ha változtatja, ue. a számolás levonás esetén is
+    sub upgrade meglévő előfizetésre
+    további hónapok vétele
+    kedvezmények kezelése
+    pénzkivétel
+
+    user
+        account(btc számlaszám)
+
+    subscription_info
+        name, price 
+    subscriptions 
+        from, to, milyen sub
+        árkalc
+        lista(payments), upgrade, vétel
+    deposits 
+        mikor, mennyit, user
+        lista
+    payments 
+        mikor, mennyit, user, sub
+    withdraws 
+        mikor, mennyit, user
+        lista,kivétel
+
+Admin pw: z0dAeFWQP"jgtpc
+
+--------------------------data integration
+mint ami QFS munka lementeni külön archive mappába!!!
+
+db Tiingosítása
+    egyszerre csak 1 ds(több támogatása is kellene)
+        script ami betette a metric info-t, financial_fq,fy schema gen scripts
+    metrics.desc mező?
+    metaadatot legyártani QFS mintájára(Tiingo metaadatok json)
+adat letölt először ha nincs adat
+    Tiingo python lib egy wrapperrel
+    csak akkor töltünk adatot ha egyáltalán nincs illetve ha rég töltöttük le az adott céghez(last update)
+        kellene szerveroldalra egy getcompany ami a lenti folyamatot wrappeli(vagy legyen ténylegesen a data updater modul része ez a download)
+        letöltés esetén mindent újrakalk, kell egy last update mező mint korábban, nem is kell ehhez az updater
+            mindent updateljen a db-ben is függetlenül hogy változott-e valami adat
+        vagy az updater csinálja meg a fenti frissításeket bizonyos időnként automatikusan vagy ha valami lekér bármilyen adatot egy adott cégről
+számoló modul
+    FY adatot számolni kell valahogy
+    egyéb metrika számítások
+db tárolás
+    eltárolni db-ben, lehet file db is Json alapon
+    számolt metrikákat is
+API az adatlekérésekhez(flood protection)
+    a kliens ezt haszn.
+    kliens -> api -> mysql
+data update csak a db-ben meglévőkre
+    időnként cégek data update
+    checkForUpdateCompany, minden ettől kéri el az adatot -> ha nincs vagy régi -> dl -> recalc -> db force update
+    új adatok
+    napi változó adatok(számolni is kellene tudni őket)
+    speciális események + minden ami változhat
+    új metaadatok metrikák, minden ami a tiingóban új adat lesz
+    tiingo ticker lista(új tickerek hozzáadása), ami esetleg megszünt ott az elérhető adatokat nyújtjuk amik a leguccsók
+data manager js api
+    saját db-ből kér le adatot(API), kezeli kliens oldalon
+    melyik cég milyen metrikákat kérek le
+    minden elérhető időtávot
+    mindent lekér egy cégről opció
+
+lekérnek egy céget -> letölt(ha kell az update) -> számol -> eltárol(updatelt adatok, file system is) -> api lekérés(vagy db közv., 2 szinte ua inputra) -> data manager(apit haszn.) -> kliensnek, chartoknak, tableknek adat, stb
+
+api -> db -> getcomp(dl,update, calc) ->
+
+cég db-ben
+    letölt, számol, tárol, lekér
+régi az adat?
+    letölt, számol, tárol, lekér
+
+--------------------simple data vis chart---------------------------
+megcsinálni az adat manager után
+alapja minden egyéb megjelenítésnek
+metrika sidemenu
+chart
+date slider
+FY,FQ switch
+metrika table(lehetne div alapon is responsive, valami lib? datatable tudja?)
+    datatable js mennyire responsive, mobile friendly?
+    lehet egy egyedi div alapú responsive table class jobb lenne(keresni modernebb libet a datatablesnél)
+    Grid layout?
+    Responsive tables with flexbox
+        https://css-tricks.com/accessible-simple-responsive-tables/
+    div alapú table 
+        http://tabulator.info/
+
+----------crypto fizetés----------
+ETH2
+fontos szempontok
+    nagy blockchain network kell a biztonság miatt
+    transaction fee
+        transaction feenél hasonló árú, popularitású, felhasználási jellegű tokeneket hasonlítsunk össze
+        blockchain miner fee, crypto exchange fee, ico listings fee, wallet fee, withdraw fee
+    transacition speed
+    POS
+    token distribution ratios
+    shard chain(?)
+
+----------hasznos komponensek-----------
+    https://mustache.github.io/#demo - jinja 2 like templating in js + sok egyéb nyelvre
+    day js 
+    ms js - datetime -> ms, ms -> datetime
+    tabulator - datatables like
+    react js
+    Lodash - numbers, arrays, strings, objects
+    anime js 
+    vanilla js
+    https://github.com/Mamboleoo/DecorativeBackgrounds - elképesztő animált webgl hátterek, three js + animate js
+    Animate On Scroll
+    Cleave.js - input field formázás pld. telefonszám, email stb nem enged mást bevinni
+    fullPage.js - egész oldalas bemutatók lapozással, szép animációk, fizetős
+        görgőre scrolloz horizontálisan, vertikálisan
+        single page websiteokhoz tökéletes
+    Masonry - grid layout, a vertikális irányba pakolja ki az itemeket
+    Parsley - form validation
+    d3.js, three js
+    voca js - string manip
+    electron
+    https://ionicframework.com/docs/components - Cross-platform apps. Powered by the Web.
+        react support
+        szerintem elég a react native
+    https://webix.com/ - rengeteg ui comp, fizetős, iszonyat drága
+        ui komponenseket böngészni ötletelni mit használjunk
+    https://izitoast.marcelodolza.com/
+    https://izimodal.marcelodolza.com/
+        model, toast üzik- nagyon fancy
+    tippy js - tooltips
+    Hopscotch  - tour
+
+    https://scrollmagic.io/ frankó eventek scrollozásra, szép animált dolgok demoban
+    1-1 képből elképesztő animációkat lehet kreálni
+    https://greensock.com/gsap/
+        professzionális js animációs fw GSAP3
+        TweenMax ennek a része
+
+    https://codepen.io/aaroniker/pen/bGGMNPd
+        three.js + gsap animáció
+    https://codepen.io/dsenneff/pen/6b2bb89edaac4b4ce3b8ecb8fd0ecb73
+        komplex svg + gsap anim
+    https://codepen.io/chrisgannon/pen/QWWmaOb
+        egyszerűbb svg + gsap
+
+    https://flask.palletsprojects.com/en/2.0.x/logging/
+
+    "svg fit to container"
+    https://stackoverflow.com/questions/19484707/how-can-i-make-an-svg-scale-with-its-parent-container
+    https://css-tricks.com/scale-svg/
+    https://css-tricks.com/snippets/css/complete-guide-grid/
+
+    https://stackoverflow.com/questions/30610675/python-pandas-equivalent-in-javascript
+
+    investing.com hds, up to 39952 stocks, 82221 funds, 11403 ETFs, 2029 currency crosses, 7797 indices, 688 bonds, 66 commodities, 250 certificates, and 4697 cryptocurrencies
+    https://pypi.org/project/investpy/
+
+------------------hasznos dolgok, technológiai megoldások, megjegyzések
+
+Docker containers
+Kubernetes - for automating deployment, scaling, and management of containerized applications
+Helm - The package manager for Kubernetes
+GitLab - devops platform
+Jenkins - open source automation server, building, deploying and automating any project
+AWS, LINUX
+
+fontos tevékenységek
+    work-item management
+    a verziókövetés megoldása
+    kódolás
+    a konfiguráció menedzsment
+    a monitoring
+    és az automatizációk kialakítása.
+
+
+
+python virtual env a projektnek a mappájába
+    szerveren újra kell csinálni nem elég csak copyzni a mappát
+    pip install virtualenv
+    pip freeze > requirements.txt a source rendszerről
+    create new virtualenv on target
+        cd myproj
+        virtualenv env
+        \env\Scripts\activate.bat
+        .\venv\Scripts\activate . aktiválni
+    pip install -r requirements.txt
+    virtualenvwrapper-win
+    deactivate
+
+D3 drawing order
+    d3.selectall.sort, lower, raise
+    SVG doesn't have Z-index but use the order of the DOM elements
+    group elementekhez adjunk hozzá vegyünk el, attól függően hogy mi legyen legfelül stb
+    svg.append("g").attr("id", "links"),...
+    svg.select("#links").selectAll(".link")
+    // add data, attach elements and so on
+
+edgar data reqest
+    python api ami csinálja 2008-tól?
+    https://data.sec.gov/
+        https://data.sec.gov/submissions/CIK0000021344.json
+            beküldött adatok historyja milyen doksi, milyen adat stb, utolsó ezer vagy utolsó év
+        https://data.sec.gov/api/xbrl/companyfacts/CIK0000021344.json
+            minden elérhető adat a cégről
+        https://data.sec.gov/api/xbrl/frames/us-gaap/Revenues/USD/CY2021Q2.json
+            adott metrika, adott negyedév(év?) adatai minden cégre
+        https://data.sec.gov/api/xbrl/companyconcept/CIK0000021344/us-gaap/Depreciation.json
+            adott cég adott metrika history több filling typera 10-k, 10-Q, etc
+
+
+tiingo
+    https://pypi.org/project/tiingo/
+    https://tiingo-python.readthedocs.io/en/latest/readme.html
+    metrikalista
+        https://api.tiingo.com/tiingo/fundamentals/definitions
+    negyedéves adatok
+        https://api.tiingo.com/tiingo/fundamentals/AAPL/statements
+    napi fundi adatok(napi változó adatok(kevés))
+        https://api.tiingo.com/tiingo/fundamentals/AAPL/daily
+    cég metaadatok
+        https://api.tiingo.com/tiingo/fundamentals/meta
+
+    full company dataset hds-el ~4MB!!!
+    azonos tickerek is lehetnek kül. exchangeken
+    full ticker csv
+        több azonos ticker  még azonos exchangen belül is (aquisions)
+    nincs meg mindenhez a meta de van fq,fy adat...
+    van ahol nincs fq adat csak fy (DOX), + bármelyik fő adat hiányozhat
+
+    -Inf, Inf értékek a letöltött json-ban
+        -Infinity
+
+    marketcap MSFT-nél gapekkel nullok
+
+    asreported false esetén simán hétvége is lehet az adott date ahol nincs hds, fin daily adat
+
+async csak res betöltésnél kell hogy ne akadályozza a gui-t !!!
+
+https://stackoverflow.com/questions/13703720/converting-between-datetime-timestamp-and-datetime64
+
+advanced d3 transitions, animations
+    https://bl.ocks.org/mbostock/4341574 - The Amazing Pie
+    https://bl.ocks.org/mbostock/4341417 - Donut Transitions
+
+ne akadjanak össze a chartok közös class id miatt
+
+ha a db frm, ibd fileokat nem veszi be az új szerver db-je:
+    F:\MariaDb10.6\bin>mysqld --innodb_force_recovery=1
+    és ledumpolni sql fileba amit csak lehet majd db recreate
+
+db
+    SHOW variables; - változók mutatása
+    my.cnf, restartolni kell a MariaDb szervert
+        [mysqld]
+        max_connections=200
+    SET GLOBAL , ezzel nem kell restartolni a MariaDb szervert
+        SET GLOBAL max_connections=200
+
+    db companies.description utf8mb4 charset
+        néha nem tud bizonyos karaktereket hozzáadni latin1(sima utf8-al)
+        TEXT tipus nem varchar
+
+    beragadt schema change
+        cmd mysql client
+        SHOW PROCESSLIST;
+        KILL id;
+
+VS Code cheatsheat-----------
+    General
+        F1 - exec command
+        Crtl + B - navigator toggle
+        Crtl + 0, Crtl + <- - file nav. collapse
+        Alt + F4 - exit VSCode
+
+    SideBar
+        Crtl + Shift + f - activate main search
+
+    Navigation between files
+        Crtl + Tab - 2 file közötti váltás vagy file kiválasztás
+        Crtl + PgUp, Pgdown - switch between opened files to left and right
+        Crtl + Shift + PgUp, Pgdown - move opened file position
+        Crtl + F4 - nyitott file bezárása
+        Crtl + P - file keresés, megnyitás
+        Crtl + Alt + ->, split editor
+        Crtl + Alt + <-, unsplit editor
+        Crtl + 1,2,... - focus between editor groups
+
+        Crtl + . - fgv. havigálás, kiválasztásssa
+        Crtl + Shift + O - navigate to a searched func.
+        
+    Navigating in file, editing
+        Crtl + Home, End - jump to start, end of file
+        Home,End - jump to start, end of line
+        Alt + PgUp, Pgdown - egy oldalnyi navigálás fileban
+        Shift + Home, End - jump to start end of line with selection
+        Alt + Up, Down - move line up, down
+        Crtl + G - go to line
+        Alt + left - back to prev cursor pos
+        Crtl + K, Crtl + 0 - fold all
+        Crtl + K, Crtl + j - unfold all
+        
+
+build process(Ehizeex, Jonas) + liveszerverel css htnml js dev
+    sass, css prefix, minify, stb
+    css global reset, mindent sass file-ba
+    BEM notation
+    legyen egy egységes css
+    sass dir struktúra
+    sass elnevezés logika Jonas szerint
+    css desingok gyűjtése Jhonas, media site -> sassosítás
+        ezeket felturbózni 3d, és még mivel? mik a legújabb css cuccok?
+        ne legyen bazári
+    x lépéses process 3d carouselel, oldal lapozás effektek
+
+
+------------------------------------frissebb dolgok
+
+bubi chart
+    a bubiadatok db-ből, description is kéne
+    Bubble D3 chart külön fileba mint a chartjaim
+    3D-be kellene renderelni végső soron
+
+metric chart
+    több céggel is egyszerre teljes funkcionalitás, 1-2 helyen kell korrigálni hozzá
+        közös axisok ahol kb azonos a scale illetve több y axis
+
+pricing chart 
+    Ha viszont időközben nincs adat, ott szakadás látszódjon, külön hibaként is jelezni kell
+    price hoovert máshogy kellene mutatni összetettebben hogy mind2 price árát lássuk
+    árfolyamok kattinthatóak sticky behav
+        barokra, priceokra kattintva eltünik a többi + state-t cbx-eket állítva megfelelően
+    esetleg ha a barokra viszem az egeret akkor emeljük ki és a többit halványítsuk
+        a barok előtérbe az árak a háttérbe szépen easingel animáltan
+    a chartnak valami szép keretet rajzolni egyedi axisok
+
+multi gauge chart
+    skálázása, scale a külső sávnak?
+    szöveg az arc-on?
+        https://bl.ocks.org/Sachin4dotnet/2e3e159158fe60a137958e772a43a8e1/58934cd09c46f1a810afc8534c5ce91b56b079c0
+    a nyil végéhez esetleg egy szöveg a skála fölé az akt érték, a nyil a skálára esik rá, vékonyabb
+        https://codepen.io/meetamit/pen/xOgeoj
+        var textX = - (self.len + 45) * Math.cos(thetaRad);
+        var textY = - (self.len + 45) * Math.sin(thetaRad);
+        .attr('transform', "translate("+textX+","+textY+")")
+    az aktuális kivál. skála is több legyen attól függően hol áll?
+        http://bl.ocks.org/ameyms/9184728
+        az átlag skála is 3 szintű?
+    inputok rendszerezve 1 helyen
+        max paraméterezhetőség input {} a fő adatok is ebben
+    az átlag is egy vékony vonallal a skálához, mint a nyilnál mutatni az értéket
+        háttér olyan szín ami a fő skála
+    egy title a nyil alá
+        esetleg egyéb infók még a nyíl alá 
+    az anim legyen kompozíció, először a külső arcok egymás után, skála tween + opacity, majd a nyíl opacity, default 0-ba
+    *loading screen normálisan
+    mindenhol nem # id hanem class és a chart id mindenhol ami class és prefixálni mindent a charton belül
+    refactor
+
+    https://bl.ocks.org/Sachin4dotnet/2e3e159158fe60a137958e772a43a8e1/58934cd09c46f1a810afc8534c5ce91b56b079c0
+    http://bl.ocks.org/ameyms/9184728
+    http://zeusjs.github.io/viz/#/api/zeus.viz.directive:zsGauge
+    https://codepen.io/meetamit/pen/xOgeoj
+    https://codepen.io/kazu_codepen/pen/wGmGjv?editors=1010
+    https://oliverbinns.com/articles/D3js-gauge/
+    https://codepen.io/geekingreen/pen/NGgEmj
+        https://github.com/oliverbinns/d3gauge
+    https://gist.github.com/tomerd/1499279
+    https://gist.github.com/tomerd/1499279/777a16a191428c979f33b1aa87366f2c00dff9e4
+
+comp manager calculate modul pythonba külön megírni hasonló szisztéma
+    from, to datek teljeskörű tám.
+    metrika fokozatos load from db, lazy loading
+        companynál ne legyen ilyen lazy loading
+        db-be optionális megadható metrikamezők, comp man inputok
+            hds-re is
+        metric calc, store in db, milyen metrikákat lehet így melyiket nem pld. fairp
+            screenernek hasznos dolgokat tárolni
+                számoltakat letölteni, ill opcionálisan számolhatjuk is js-ben
+
+compmanager
+    fq,fy, hds lekérhetőség
+        indi calc period input
+        ahol indinek kell fq,fy adat ott inputjsonba
+        lehet ez nem is kell... ahol kell ott meg megadom inputjsonba
+    nem elérhető metrikát mindenhol azonosan beáll
+        egységes nincs meg adat érték
+        nem biztos hogy nem elérhetőt jelent mindig(Gabival egyeztetni)
+        van ahol minden 0, de ettől megvan a metrika
+        a 0 nem feltétlen azt jelenti hogy nincs metrika
+    számolások alapos debugolása
+    metrika lazy loading, default limitált betöltés
+        metrika limit fontos hogy ne legyen túl nagy az adatmennyiség
+            dl from db, meglévő lekért, calculatemetric -> create metric structure
+    date filter
+        mindig töltsünk le minden-t, metrika
+        indi lekérésnél lehessen date filter de csak simán szűri getMetric(from, to) ahogy eddig is de működjön
+        a speciális pld. fairp meg fairp_datef id-vel külön tárolni eleve kevesebb adatot
+    indicators 
+        fin, hds tipusú + db metaadat?
+    0, -1, null, undef -> ami nincs meg legyen mindenhol null egységesen
+    comp managerbe egy komplex adatelemzés, eredményét metrikánként lementeni egy objbe, min max érték, köztes hiány stb
+        cégszintű glob statisztika is
+        5 qy adat egy évhez
+ 
+hibakezelés, warningot cl, hibát ahol nem töltődhet be a lap ott error window
+    több hibakezelés
+    async error handling, catch(e), throw new Error("")
+        hiba esetén messagebox popup
+        runtime hibákat menteni db-be
+        sima alert boxokat lecserélni
+
+*rps nem kerül be a rendszerbe, overview fül
+    overview adat évesnél(0 index) csak sharefactor a negyedévesnél több van
+    overview adat elég hiányos sokszor + csak &asReported = false esetén vannak adatok, true esetén csak sharefactor
+Tiingo 2 féle adatvisszaadás alapos elemzése a flag ki be kapcs az apinál
+    mind2-ből le kellne menteni a hasznos adatokat
+    más adatok is lejönnek így vagy úgy, pld. csak 1 overview adat az egyiknél
+
+3D-s cube
+    értékeltség, nyereségesség, kockázatosság
+        azonos 0...10 maximális adható pont
+    pontok adása kül szempontok alapján a 3 szempont szerint pld. 3,5,10 éves árazottság értékeltség szerint
+    0 pont piros, 1 sárga, 2 kék, 3 zöld színű pötty a 3 fő értékelési szempont szerint
+    sp500 szürke gombócok vs. kiválasztott cég
+    kiválasztott cégek mutatása
+
+nem az utolsó dátum a charton + az utolsó period end date utáni fairp szaggatottal
+most recent hds on chart
+    szaggtottal a fair p-t ahol a legutolsó qy adat után van
+    ha nincs szinkronban a fairp, hds date akkor a hds area-k kirajzolása problémás lehet
+    date filter, gauge, számolások hogy módosulnak?
+        date filter ha a last databan böngészek ha csak az az area van a charton
+
+    minMax_chart_date a leguccsó hds
+    self.stats.date_full_max
+    self.data["historical_data"]
+
+--------------------------autom comp calc------------------
+    screener-t segíti elő
+    *kellenek mindenhez metric meta
+    *    id, type(fin ,fin_fq,fin_fy,fin_daily(indicator, hagyomános),hds,recent), categ(subtype) key, name, deps, calculated
+
+    *új fq,fy, stb adat esetén recent update (symbol, metric_id, date, value)
+
+    újraszámolás
+        utolsó számolás időpontja, stb kéne a db-be egy sched tábla
+        utolsó fq vagy releváns pl. hds számolás időpontja,  ha van új adat ehhez képest recalc de lehet összetettebb recalc trigger is
+    
+    sector, industrial stb leárazottság
+    sector, stb fairp, cégek lastp relációja %-osan
+    fairp, cégek lastp  relációja %-osan
+        fix period fairp estén 3,5,10yrs
+        ez fusson requestből érkező custom date calc-ra is (server side calc)
+            sched jobból is hívható
+    schaff, tdaf vételi jelzések
+        fin daily historikus adatok + recent értékek
+    később a rendszer összpontszámok alapján filter
+        végső cégpontszám (értékeltség, nyereségesség, kockázatosság)
+    
+    *lehetne egy recent values tábla ahol a screener szűr
+        recent adj_close, számolások legfrisebb értékei, fairp, stb
+        sched job, instrument_id(NULL),last_date, futás periodicitás
+            last_date ticker esetén az utolsó adattal való futás új adat triggereli az újbóli futást
+                egyéb esetben a megadott idő után fut ismét
+        comp calc, fq,fy, hds, daily utolsó értékek hozzáadása
+            screener-t segíti
+            instrument_id,(metric kateg vagy meta id),metric,last_date,value
+            last_date itt is lehet egy számolás dátuma vagy az utolsó adat dátuma
+            ez nem csak historikus metrika lehet, hanem 1 dátumos recent metrika is
+                fq,fy,fin daily, hds en kívül lehet 1 dátumos recent metrika is
+    inkább csak az új értékeket kellene számolni nem nagy szám max kell néha egy lookback
+
+    folyamat
+        rolling revenue fq -> fy calc
+        rps calc - revenue, sales per share
+        rolling price per sales, revenue calc
+        p/s avg calc
+        fair price calc
+    
+mass calculation
+    először optimalizáljuk a teljes company data structure-t + comp manager-t
+        többféle adatstruktúra lekérhetősége, ne kelljen a chartban konvertálgatni
+        data dl store, comp manager, calc objok betonstabil műk.
+    kalkuláció meglehet js, pythonban is 
+        külön nodejs szerveren lehetne a js kódokkal is multiprocessként szerverként számoltatni
+        js legyen külön class, az inputja a teljes letöltött comp data
+            adatvisszaadás is, legyen a comp manager objektje a calc class
+    ezt a modult elkészítve a rendszer robosztusságát is növelni lehet
+    többszálon háttérfolyamatként update ha letelik az 5 nap, újraszámolás
+    egy részét is lehet pld. a x legjelentősebb cég
+    ez az egész calc mehet egyenlőre függetlenül a meglévő dolgoktól, chartok pl.
+    mindent python számol pandasban
+    számolt adatok el is tárolhatóak db-ben
+    foreach kell letöltás. új letöltés -> letöltés -> 
+        minden megvan a számoláshoz? -> számolás -> régi adat del, tárolás
+    minden számolást tárolni screener miatt, végső cégpontszámot is beleértve (értékeltség, nyereségesség, kockázatosság)
+    letöltés után checkolni
+        hds adatok megléte fin adatok date rangeben
+        meglévő szükséges fq fin adatok a számoláshoz
+            sharesBasic, shares outstanding
+            revenue
+            rps - rev per share(nincs, számolni kell)
+        valid minden fin adat nincs hiányzó
+
+
+-----------sched cégupdate----------------------------
+
+    comp calc sched job
+        get available companies with data -> check condis -> calc1 -> check condis -> calc2
+        ha bármi nincs meg a számoláshoz, log, skip
+
+    sched jobs tábla
+        legyen dependency is egy job futásához ha az egyik lefut
+        deps column
+        ha az utolsó lefutás, max x ideje
+
+    minnél gyorsabban minnél tőbb cégre update
+    sched job, instrument_id(NULL),last_date, futás periodicitás? minden tickerre külön entry? vagy csak job adat?
+        companies táblába is last update
+    last_date ticker esetén az utolsó adattal való futás új adat triggereli az újbóli futást
+        egyéb esetben a megadott idő után fut ismét
+        periodikusan vagy új adat esetén fut le
+    újraszámolás mechanizmusa fontos, ha nem telt el x idő azonnal skip pld. hds adatok
+    az adat ki beolvasásokat minimálisra kell csökkenteni, calc csak akkor ha van új adat
+    külön tábla az adott sched jobon belül a résztvevő instrumentumoknak
+        utolsó lefutás data date, lefutás periódus
+        ha már futnia kell de nem kapott új adatot akkor cancel sched job, 
+            és fusson gyakrabban le, míg nem érkezik meg az adat, ez után a 
+            szokásos last data date + running period
+    cég update sorrend smart
+        legtöbbször lekért cégek
+        eventel rendelk
+        iparági calcban szereplő cégek
+        marketcap csökkenő sorrend
+        indexek, russel, sp500, stb
+    jobok
+        ticker list update
+            cég meta update isActive
+        cégupdate hds, fq,fy, daily -> comp, calc ha van új adat -> recent adatok is update
+        eventek futtatása(cég bound)
+
+        eventek (nem cég bound)
+        iparági jobok
+        mt5 hds update, calc a main route test-ben
+        investment.com tickerek a fentihez hasonlóan
+            google finance
+                https://pypi.org/project/googlefinance/
+                no delay, real time stock data in NYSE & NASDAQ
+            yahoo finance
+                https://github.com/yahoo-finance/yahoo-finance
+                15 min delayed data
+        egyéb calc
+        esetleg subscribing lejárathoz közei expirationok illetve a lejárat bekönyvelése
+
+    
+
+-----------alapjaiban nagyon egyszerű screener, teszt jelleggel---------
+    2-3 input szűrés gui elem
+    ajax lekérés
+    egy szűrő query összerakása
+    számolt, alap metrikákban szűrni
+    tömör táblázat ami a screenereknél lenni szokott
+    screener templatek csinálása különféle stratégiákhoz pld Williem Oneal(CANSLIM), David Ryan, a mi main stratégiánk
+        combóboxal választható, egyből beállítható
+        leírás a templatekhez, metrikákhoz
+    dinamikus formal hozzáadni elvenni
+        x- sor törlése
+        metrikák ajax async load
+        autocomplete kereshető + hagyományos select (select with search field)
+        metrika select box, reláció, érték(ha kell), logikai kapcsolat(ha kell), sor törlése
+        ajax async db search
+        egyszerű, tömör táblázat, datatables is jó
+    külön lapra tenni a kódokat
+
+    screenerbe iparági leárazottság mértéke x ideje a max priceról jelenlegi ára az milyen %-os esés
+        azon belül cégek + fair price valuation rangsor
+
+    screener milyen mezőket szeretnék a táblázatban megjeleníteni kiválasztható, alapból a szűrés alapján
+
+    usernek screener preset
+
+    historikus leárazottség is kellene, adott időtávon mennyire leárazott a cég a min, max pricehoz képest az adott időtávon
+        0-100% (0, a csúcson az ár, 100 historikus lowon az ár)
+
+    akár egy donchian alsó vonal mentszést visszaugrást is lehet
+
+    árfolyam gyorsulást is számolni, amikor nagyon esik valami
+
+
+    add,remove filter
+        + add filter gomb bal alulra
+        metric name(listbox + search), reláció, érték, logikai kapcs( vagy alapból and?), sor torlése(X)
+    templatek(adott preset)
+    user preset
+    table miket mutasson
+        alapból recent date order desc, cég, alapból metrikák amiket szűrtem + hozzáadható elvehető
+        ilyenkor újra lekérni a céget hozzáadva az új mezőket
+        egy checkbox listával ki-bepipálni a metrikákat
+
+    metrikák lekérése metástól(comp manager)
+        ebben való keresés js
+    click filter -> form check -> send json data({}) -> get_screener_results(inputs) ->
+    szerver data check -> sql filter összerakása az inputokból(change esetén is újból, nem modify) ->
+    inputs {'metric_name': '', 'relation': '', value: '', } 
+    -> exec select query, elég order by date desc, duration is, company, metricx,y,z(szűrés)...
+
+    valahogy a dateket is le kéne venni, mikori az utolsó adat, esetleg egy mouse hover az adott adatra?
+
+    mit vettek a guruk mikor, milyen áron és most lentebb van-e az ár -> screenerbe 
+
+---------------portfólió követés----------------- 
+    mit milyen áron, mennyit vettem, adtam el
+    grafikonon mutatni, 
+    mi hogy áll cég, szektorszinten 
+    alert ha valami kilő(el kéne adni) vagy épp esik és újabb vételgyanús
+    kördiagrammon fontos követni hogy miben ? % van a portfólió miatt nagyon fontos látni
+    devizaátváltások ára is fontos
+    változásgrafikon naponta az egyes termékekre, csoportokra
+    havi bevételeket is hozzáadni esetleg egy pénzügyi segéd is lehet vagy csak a befektetett összegtől kezelni?
+    portfólió optimalizálás(Markowitz), szórásgörbe
+    mit miért vettem milyen stratégia, kül stratégiák felvétele
+    portfólió cél és aktuélis allokáció, újrarendezés (szendrei xls)
+    portfólió teljesítmény, eszközallokáció, benchmarkal összehas
+    historikus grafikon napi vs. benchmark, célszámokkal való reláció, kamat, osztalékbevételek
+    portfólió optim.
+    árfigyelő, milyen áron venne, mennyire van tőle %
+    portfólió, mi hány% legyen benne, eltéréseket mutatni, diverzifikáció mértéke
+    átlagár mutatása, újabb vásárlásokat eladásokat mutatni historikusan, átlagár jelenlegi ár kül.
+    kockázatok mutatása, kockázatvállalási hajlandóságok
+    diverzifikálás kördiagramm, kül szempontok mentén pld. földrajzi, iparági, cégméret, stb
+    mit miért vettem notes, spekukláció, value inv, osztalék, egyéb stratégia, custom notes
+
+    (az elején) egy nagyon egyszerű portfólió követés
+        mit vettem, milyen áron, hány db stock, mikor -> mi a jelenlegi ár, alap kimutatás hogy áll
+        db entryk
+        portfólió name, position id, user, created date
+        portfolio position a fenti adatokkal
+        portfólió name mint a screener db obj az alertes projektben
+        majd grafikon hegyek
+        gui add new pos gomb a portf belül(screener proj!!! minta) cég kikeres, adatok bevisz -> jelenlegi ár 
+            levétele, inteligens keresés, több providerben is keressen ár adatot -> jelenlegi ár mutatása + hogy áll a 
+            pozi p&l, %-osan is, de ezt a részét csak 1xűen, nem kell currency-t konvertálgatni az elején
+
+--------------------hagyományos hds, indicator chart-------------------
+    -line, candlestick chart
+    -zoom in out(mouse scroll)
+    -horizontal scroll on mouse + shift
+    -reset view
+    -indicator subwindow, main window
+    Techan JS is tud annyit amennyit kell csak customizálni kell az indikátorok esetén vagy egyedieket hozzáadni !!!
+
+---------------------marketwatch--------------------
+market watch modul
+    egyedi lista a user álltal
+    pld. figyelem a battery recycling cégeket
+
+egyszeri eventek emailben
+    amit csak lehet gyors sql lekérdezésekkel megoldani
+    fontos hogy azokat a cégeket előbb felupdateljük amikhez van event, illetve minnél többet a közös minden céget érintő alertekhez
+    egyszeri eventek
+        sched jobban
+        pld adott ár elérése, adott ár visszaesés tdaf short condi
+        comp calc -> eredményeket használni az eventhez ha lehet
+        events
+            ha megvan az adat, calc(cache), event kiolvassa -> send email 
+                csak akkor fut le ha van új adat, fq, fy, daily, hds
+            subscribes
+                melyik user, melyik event(id), stb
+            running_events
+                creation date, close_date, expiration, last trigger date
+                event id,
+                symbol_id(ez lehet dummy instrument, comp is is is ha nem cégspecifikus az event), 
+                input_json, state_json
+                last_checked_with_data_date, teljesült(folyamatosnál ez mindig 0)
+                flag ami jelzni hogy az új adattal lefutott-e, ha nem, akkor kevesebbet vár míg jön új adat, onnantól ismét a normál waiting
+                mennyi secenként fusson a last_data_date-től számolva
+                state 0 prepared, 1 running, 2 finished, expired 3
+            event_def
+                event id, event name, description, type(once,continous), stb
+            event_input_desc(event_def_id, input_key(eg. target_price),input_name,tipus(vagy input field type))
+
+        alert projektből átvenni minden hasznos funkciót
+        kiolv azokat az aktív eventeket(sql) amikhez van aktív event, aktív user, last_checked_event_data_date < last_data_date_in_db -> foreach, check event -> send email for subscribers
+        limitálni h egy usernek max x eventje lehet
+        nem is igen kell hozzá compot kiolvasni, recent adatokból dolgozzon, 
+            amit a sched jobok végeznek(update comps for active events)
+                kiolv azokat a cégeket amikhez vannak aktív eventek
+    közös eventek ahol csak 1 fix input van a szerver spórolás végett, egyedi inputokat, eventeket csak prémium usereknek
+        egyenlőre csak közös eventeket gyártani de a lehetőség legyen meg az egyedire
+        vagy bármennyi közös és x db egyedi attól függően milyen előfizetés
+    napi check jó minden eventhez
+    a GUI-n kiválasztható melyik eventre akar a user feliratkozni, 
+        lehet x egyedi eventre(egyedi input, külön kell futtatni) való feliratkozás is
+        kiválasztható eventek listában
+        egyedi input cbx -> megjelenik a form -> inputs -> {aktív event input_json}
+            ne formként hanem ajax requestként küldjük el json-ként
+            validáció legyen a formoknak
+        feliratkozások listában
+        egyedi input fieldek generálása,megjelenítése az adott eventhez
+    olyan eventek, amik cégfüggetlenek, tehát több cégre vizsgálódik, az inst_id-ja dummy
+        vagy industrial, vagy minden cégre vizsgálódik 1-1 eseményre pld. minden cégnél adott fairp leárazottság
+        ez egyediként usernek nem lehet csak közös és csak prémium usereknek
+        sql alapon csinál mindent, recent adatok, illetve ha kell az update az is csak sql, de szerintem pure sql-ben mehet
+        lehet ez csak screener funkció kell hogy legyen
+            időrendben kell megjeleníteni majd since asc orderben hogy mikor lett érvényes az adott cégre, tehát a recent adat date-re !!!
+        vagy olyan eventek amik a recent értékeknél csak az újakat küldik ki a subscribereknek
+        usernek nem kell a screener-t nézegetni, hanem meg kapja amint megtörténik az event
+            az event last_check_data_date-jéhez képest, ha új adat van az adott metrikánál és teljesül a feltétel akkor küld emaileket, az adott cégekről
+            elmenti statebe milyen last date volt az utolsó küldés dátuma és ami ennél újabb, küldi az email-t
+        itt a cégupdate fontos hogy minnél több cégnek tudja figyelni a recent adatát
+    ne csak egyszeri eventek legyenek feltétlenül és legyen statejük amit a db-be mentek
+        pld. amikor jelzek hogy lejebb esett a vételi áramnál az ár és a következő jelzés
+            kiolvassa a dből a state-t
+        nem kell futniuk non stop csak időnként sched jobként mivel a state a db-ben tárolódik
+    ne tickerenként menjenek az emailek a minden tickerre vonatk alerteknél hanem egy mailbe az összes ticker, value rendezve a legjobb lehetőség legelől
+    lássunk is rá a statejére a GUI-n ami fontos a usernek, pld. mi volt a legutolsó jelzett ár a buy low stratin 
+    egy long, short, netural státusz is elhelyezhető a state-ben ha folyamatos az event
+
+    adott ár elérése, open <> close <>
+    adott leárazottság
+    adott %-os-os fairp leárazottság
+    ma200, jó lesz d1 calc iskolapéldának is, daily_fin-ben is tárolni, recentet is, csak új adatra számolni
+    tdaf event
+    amikor a ta leárazottság 80-100%-ra vált
+
+    events running, state 1, last trigger info
+
+https://freeallcourse.com/course/
+
+responsive grid mobilfriendly, normális kinézet full alap persze
+
+hírek letöltése céghez listában mutatni
+
+intenzív tesztelés
+    más időzónába pl
+
+Crypto finanszírozás, presale ico, cryptoval lehetne fizetni
+    minnél több felhasználó annál nagyobb értéke van a coinnak
+    a havidíj lehetne dollár alapon coinban fizetve
+    az elején már tartanánk adott coint, az eladottokon felül is eladhatnánk később
+    kellene neki egy promó oldal, venni rá egy templatet, idővonal kell bele, listázni ico oldalakon
+
+ticker keresés
+    tencent tiingóba + miért nem adja ki a kereső
+    mert pink listesként van benne
+    kereső api + céglista file naponta updatelve
+        https://api.tiingo.com/documentation/utilities/search
+    companies db exchange, currency megvan
+    csak a stock type kell
+    metaadatokat le kell kérni név, sector, industry, country, company_type, description, cik máshonnan
+    https://api.tiingo.com/tiingo/utilities/search?query=TCEHY&token=
+        először ticker, majd nevet keres
+        isActive delisted vagy aktív
+
+-----átfogó featureok
+rendszert építeni mind css, js, stb esetén, mindent jól átgondolni mielőtt fejlesztünk!!!
+éjszakai mód
+    csak pár css módosítása(ha már kész a base css-ünk)
+        bg valami sötétszürkére
+        +néhány szöveg színe(min. 2 kül.)
+            pld. light blue, dark yellow
+                 light black vagy sötétszürke, dark fehér vagy nagyon világos szürke 
+            valami(k) változatlanok pld. green ami mind2 módban jól olvasható
+    oldal aljára is mehet privacy policy, discleamer, contact, copyright-hoz
+    color: #EEE 
+multi lang
+    magyarul is !!!
+generál alap grid
+a lehető legkevesebb adatforgalomból kihozni egy lapletöltést
+copy paste védelem a contentnek
+zen mode
+    minden menü-t oldalsávot eltüntet, csak az olvasott content látszódik
+ne csak Tiingora menjen hanem tetszőleges data sourcera, csak a dl-ben térjen el
+
+nagyobb featureok
+    értékeltség 
+        p/s,p/chf, p/book val, industrial, sector,stb...
+        5 kiválasztható (fentiek) értékeltség mutatása a charton
+    minőség, kockázatosság 
+    ez a fenti 3 szempont adja a kocka 3 oldalát, a végső pontszámát a cégnek
+    fq,fy adatok chartosítása a jobb áttekinthetőség érekében 
+    screener
+    értesítések küldése eseményekkor(screener esem.)
+    market watch, user általi lista bekategorizálva
+    portfólió
+    hagyományos hds, indicator chart
+    sched data update
+    Bubble chart
+
+-------------------------
+pricing chart
+    minden y + egyéb értéket formázni
+        log skála y format nem oké
+        revenuenál nagyon vacak pontosság valahol pl ugyanaz az érték mégis eltér a bar méret
+    show hidenál a duration-t rövidíteni kell szerintem, néha nehézkes
+        rolling rev baroknál nagyon nehézkes
+    régi kommentek megoldások kivétele esetleg lementeni aminek van értelme
+    *rolling árbevétel %-os változása a charton, toggle hozzá mint az éjszakai nappali
+        lehet ezt nem így kéne kirajzolni hanem 0 origóból fel le
+metric chart
+    metric chart datefilter nem reagál
+gauge
+    gauge aktuális values tootip
+    gauge az egész értékeket számozza az adott tartományon belül getScaleCorrection-ben megfelelő segítség
+        max 18 -> 20-ra kerek -> / 10(max ennyi szám) db érték max -> 2-ként számozza
+        max 14 -> 20-re kerek -> / 10 -> 2
+        max 1.45 -> 2 / 10 -> 0.2
+        max 0.345 -> 0.4 /10 -> 0.04
+    gauge csak 90'-os
+    csak miután beáll a date filtert akkor állítódjon be a gauge
+    a számok még nem responsiveok
+    "multi gauge chart" szekcióból még mit?
+    optimalizálni a kódot
+mindenes    
+    checkbox formok, headerek ne jelenjenek meg még a loading statenel ha első betöltés
+    
+    ne akadjanak össze a chartok közös class id miatt
+
+    visibility helyett display: none, inline 
+        patheknél nem tünt el visiblityvel de lehet csak nem opac 0 end nél triggereltem a visibilty hidden-t
+        megnézni így is
+
+    gauge css, lehet ezek miatt nem látszódik a gauge !!!, legyen közelebb a 2 chart
+    mobilon még nem okés, reszponzív és nem is egyszerre + gauge túl nagy
+
+    cégazonosítás ticker, exchange álltal
+        nem is támogatja feltétlen minden modul szerintem nem megoldható
+
+    Raytheon tech, RTX invalid description value for sql
+
+    chartnál width: xxx, height 100% megadás?
+        ilyen sor oszlop elrendezésben lehetnének a chartok
+        fix aspect ratio kell, a grid cellben középre rendezve, adott widthnél megtörve
+        vw függvényében megadni a szélességüket
+
+    color sheme
+        business, corporate, financial website color palettes
+
+        fekete- #303030, #272727
+        fehér - #f2f2f2
+        sötétszürke - #818385
+        zöld - #a7bf50, #9bbf63, #6c8d43, #8dbf41, #025928, #3c8c30, #aebf2a
+        barna - #590202, #bf7e04, #8c1c03
+        narancs - #d96704, #f27b35
+        vörös,piros - #cc171d, #bf0404, #8c2020
+        sötétkék - #3e688c, #0568a6, #325765, #4d818c, #162336, #0378a6, #0477bf, #1A82A9
+
+        https://venngage.com/blog/blue-color-palettes/
+
+        Orange + Honey Yellow + Prussian Blue Color Palette
+        #8ecae6 // #219ebc // #023047 // #ffb703 // #fb8500
+
+        Burnt Sienna Orange + Bedazzled Blue Color Palette
+        #3d5a80 // #98c1d9 // #e0fbfc // #ee6c4d //#293241
+
+        Paradise Pink + Caribbean Green + NCS Blue Color Palette
+        #ef476f // #ffd166 // #06d6a0 // #118ab2 // #073b4c
+
+        Carolina Blue + CG Blue Color Palette
+        #ffffff // #00171f // #003459 // #007ea7 // #00a8e8
+
+        narancs + fekete + fehér
+        zöld + szürke + fehér + fekete
+        sötétkék + fehér + fekete
+        fekete + fehér bloghoz
+        kék + szürke?
+        Gabi logó alapján
+        paypal, mastercard, bp logók
+
+        blue - calm, confidence, trust, security, most loved color
+        red, black - energy, authority
+        green - wealth
+
+        https://blueedgefinancial.com/crypto - jó alap design kezdéshez
+
+    szerveroldani calc cég lekérdezéskor + date filterkor
+
+    asreported true-nál az adatsor elején több fq fy adat mint 4,1 , false esetén csak 1 fq adat
+        false esetén nem a valós report datek
+        pontosan hogy állítja elő a falseos adatokat a true-sból
+
+    számolásnál az end dateket is kezelni kellene, igaz most még nem számít
+
+    chartok ne hirtelen robbanjanak be ha betöltöttek hanem egy folyamatos effektel
+
+    iparági, szektor vizsgálat
+
+        tickerlista sched job update(available tickers with fin data)
+            
+            az automata cégletöltés már csak 1 lépés
+            
+            ticker, meta hozzáadás
+                intelligens ticker duplikáció kezelés
+                    # ha a duplikációnál isActive csak false érték van akkor kiesik a cég végleg a listából !!! ha van isActive = true az megmarad
+                        # groupolt tickereknél isactive csak false, true vagy mind2 előfordul, máshogy kell dropolni, van-e start end date
+                        # ha csak true, az újabb dateű kell, ha csak false szintén a legújabb(most droppolódik), ha mixelt az aktív kell(több aktív esetén a legújabb)
+                        # groupolt adat apply kell ide
+
+        last_check date nem 1970 lett hozzáadva a db-be 
+
+        adatbázis alapú log
+            hiba pontos behatárolása
+            trycatch
+            adminfelületen elemzzük
+            főbb eseményeket is logolni pld. új tickerek
+                file logba mehetnek a folyamat allépések
+            időpont, log level, hiba tipus py js, lokáció file obj név, fgv neve, üzi id ami beazonosítja(konkrét tevékenység) stacktrace, msg, client adatok json
+                log level, hibe tipus, (+obj név?) fgvnév, konkrét tev.(ha én dobom vagy tudom mi okozta pld. catch spec except) azonosítja az üzit 
+                    pld. ERROR_py_userobj_login_currerror
+                saját exc benne az adatokkal ill manual beadás
+
+        500, 404 oldalak tökéletesen mint talán a bs systemben?
+            beintegrálni az oldalba
+            hiba esetén elég legyen felcsapni a db-t illetve kiírni a consolera a logom
+
+        admin lap
+            egyes dolgokat figyelni egy helyen mindent amit összegyűjtöttem, alert ha valami aktuális
+            config settings beáll
+            log viewer adminlapra
+            requestek honnan, ki melyik lapot stb
+            melyik céget kérik le a leggyakrabban
+            hibák, melyek a meggyakoribbak
+            levelezés adminnal, customer service
+
+        adatelemzés
+        cégszámolások
+        db-be mentése
+        szinkronizálása a js kóddal
+
+        iparági, szektorátlagok
+            bg worker több szálon x időnként számolva
+            hiba esetén log és továbblépni
+            eredmények db-be mentése
+            minden szektor iparág stb-re számoolni, külön tábla
+            
+    
+    compmanager, alaposan átgondolni az architechtjét
+        főleg a metrika opc lekérés, db-be visszamentés, date filter
+
+    metódusokat kitalálni ami nagyon sokat ismétlődik
+        axis-ra is show hide + visibility .attr("opacity", 0), 1 -re keresni
+        svg_obj elnevezések 
+        d3.select-ek helyett a self.objname-t is haszn
+        
+        mindennél pontosabb variable elnevezések
+        nagyon alaposan átgondolni az architectúrákat
+
+
+    chartoknak értelmes színek, inputnak kivenni mindent
+    néha a gauge nem látszódik kisebb felbontásban
+    *tooltip látszódjon a szélén is -> nagyobb chart border
+    hooverek kicsit még vackok
+        a revenue x közepe fele y fent nem megy a tooltip
+        valami opacity, visibility probléma, minden elemnél korrekten megoldani
+    db conn zárás
+
+    pg beesik a fairp, a rollin rev meg emelkedik
+    A WPC nevű céget h nézem, furán alakul a fair ár az árbevétel fényében
+        Hiába magasabb az utolsó néhány évben a bevétel, nem nő aranyosan a fair ár  a megelőző időszakhoz képest, mintha lenne benne egy törés 
+        sharesBasic átlagértékkel számolni?, részvény dilute miatt van
+
+    cégbetöltés hibakezelés, bármi hiba esetén
+        error handling js midenhol toast üzi
+
+    js pluginokból külön file rendezett lista
+        js animokat is mindent kategórikusan külön szedni
+
+    mindennek input a file elejére
+ 
+    metrika chart datefilter funkcionalitás hogy működik?
+    adott metrika dl ne az egész, hds tömörebben dl
+    kódoptim
+
+    control panel túl széles
+    ha nincs bepipálva valami de céget váltok akkor egy pillanatra még látszódik az obj majd eltűnik
+    cookie disc
+    chart oldalán egy nyil az adott időszak átlaga + a historikus is ha beleesik ebbe
+    bugok
+        calculcatehdsdata
+            if (d.date >= linevals_fp[fpIndex].date) nincs date hiba
+        pos = lineNode.getPointAtLength(target); linepath empty metricchartnál
+        a 2 chart ne akadjon össze 1 lapon, minden chart egy önálló komponens
+        uncaughtin promise error a gaugenál
+    megjelenés opt
+        transition ahol csak lehet
+            sokszor bekavarnak, néhol el kell hagyni
+        az inputok csak a chartok után transitionnel
+        + csak aminek látszódnia kell egy adott időben
+        szebb váltások pld. clear date filter gomb egy transition + loading screen, sorrend
+        opacity, display none, visibility tisztázni hol mit
+        a chartok minden apró megjelenítési részletét átgondolni pld. vonalvastagságok
+        hogy lehet mégszebb az egész
+    minden chart stílus css-be ne kódból adjuk hozzá
+    "pricing chart" szekció featurejei amik fel vannak még írva
+js error handling
+    izitoast vagy a meglévő toastr megfelelő level-el
+most recent hds on chart
+    szaggatott vonal ahol már nincs új adat?
+laptop productive host
+responsive grid design
+charts responsive design
+    responsive design pricingchart
+        datefilter ne külön svg elem legyen
+        vonalvastagságok is resp
+hírek mutatása
+többféle értékelés pps-en kívül a comp pricingbe
+pontot adni a comppricing chart alapján egyenlőre
+user login kelljen az oldalhoz
+portfólio kezelés menthetőség
+    cube-ban mutatni a cégeket
+    portfólióba mentett cégeknek egy cégticker(név) legutóbbi qy adat dátuma, mióta jött ki a gyorsjelentés táblázat widget
+        csak a legutolsó qy adat és mióta jött ki alapján rendezni növekvő sorrend
+save calc metrics to db from js code
+    ha a db utolsó adat kisebb mint a számolt legutóbbi ami db-be is menthető
+    save metrics data to db
+    vagy ha egyáltalán nincs db-be mentett érték
+    getMetricForCompanyDb api method
+python metrika calc
+mass python calc, save to db amit van értelme
+    sched. jobs
+screener
+chartok pü.-i adatokhoz számok helyett chartok pld. hitelek arányai area charttal
+    kitalálni hasznos chartokat, predefined chartok
+adatelemző modul
+    json file olvasása hdd-ről, a cégek adatait ide is lementjük
+    felolvasni, foreach, python adatelemző modul mint a js-es, pld. hol van 5 qy adat 4 helyett egy adott évre
+    minden furcsaságot kiírni mint js-ben
+    vagy python helyett a js kódom és node.js-ben felolvasni a fileokat
+
+
+-------------------ötletek
+chartok 3D-ben
+crypto fizetés saját coinnal, tőkebevonással
+valami makrochartot is csinálni akár több datasourceból scrapelve
+    hasznos chartok BB: https://www.youtube.com/watch?v=YR8fS6SrBhA
+iparági, versenytárs cégek keres, majd átlag számolása, mutatni az adott cég hogy áll ahhoz képest
+    cégkereső lényegében
+gépi tanulás bevetése, megkeresni a biasokat vele, mi hajtja az árfolyamokat
+
+*----------------industrial, competitors fairp------------
+
+    csv-ből szűrni a megadott feltételekkel egy adott cégre(alább), kiszedni az industrial competitorokat -> ticker listát sched dl
+        -> jupyter nb-hoz db-ből szedni az adatokat
+
+    ticker csv, ahol a datek megvannak filter
+    "NYSE", "NASDAQ", assetType == "Stock", priceCurrency == "USD" szűrés
+    azonos tickerek kidobása
+    csak amikhez van metaadat
+    csak aminél van industry data
+
+    start, end date, ticker amihez a saját industryját hasonlítjuk
+
+    tickerhez D1 hds, fq fundi adat dl
+    ticker, date, sharesBasic, sb roll avg(mean) 4 period calc
+    ticker, date, rev, rev roll sum 4 period calc
+    sps = sales_rollsum / shs_rollavg
+
+    azonos industry-s tickerek begyűjtése
+    fq adataik lekérése
+    ticker, date, rev, rev roll sum 4 period calc minden cégre 1 df-ben(R kód)
+    market cap (D1) adataik lekérése
+    left join sales, market cap df-ek ticker, date, marketCap, sales_rollsum) %>% group_by(ticker) %>% fill(sales_rollsum, .direction = "down")
+    a main ticker szerinti fq dátumok megtartása a fentiben + ahol minden adat megvan a sorban
+    date groupby hogy egy adott napon ? cég volt in question
+    date-enként összegezni market cap,sales_rollsum , ezek egymás mellé pakolása(ha nincsennek date szerint), PtoS_ind = mCap_ind / sales_ind
+    main ticker sps df + fenti eredményének egymásmellé rendezése, fair_price_ind = sps * PtoS_ind
+
+gui element loading effect, amíg nincs adat bárhol, egy blank elem szürke egy slide balról jobbra ismétlődő effektel
+    ahol async adatbetöltés van
+    lehet ez felesleges egy loading körbe körbe járó cucc sokkal egyszerűbb
+
+isActive stb update adatbázisban, metaadatok, újak bevitele
+    semmit nem töröljünk adatot, amit csak lehet le kell menteni
+    státuszok frissítése
+    mindent updatelni kell minden cég, meta, ticker stb periodikusan
+    amit lehet azt meg kell mutatni egy cégről mégha nem is aktív
+    Metaadat update magyarán company tábla
+        isactive de lehet ez se annyira nagy prio
+
+ha hiba van mind js-ben, mind pytonban megfelelően lekezelni egy értelmes modal ablakban értesíteni a user-t
+    hibakezelés legyen már korrekt mindenhol, céglekéréskor kezeljük már le normálisan js-ben
+    exceptionoket, raseket, stb átgondolni, logok jók-e
+
+néha eldobja a db connection-t
+    'Connection aborted.', ConnectionAbortedError(10053, 'A felépített kapcsolatot az állomás szoftvere megszakította', ilyen menetközben ne legyen már
+    (2006, "MySQL server has gone away (ConnectionAbortedError(10053, 'A felépített kapcsolatot az állomás szoftvere megszakította'
+    sqlalchemy.exc.PendingRollbackError: Can't reconnect until invalid transaction is rolled back
+
+kéne valami flag amit behúzunk ha egy céggel valami gond van pld. nem sikerül hozzáadni mindent vagy nincs hds-e ilyenek
+    és akkor az le se kérhető nem dolgozható fel
+    legyen egy not ok reason is, leírva a hibaokot
+    sok tickernek nincs fin_fq,stb adata egyszerűen
+
+json decode error random módon előjön rögtön dl után reqest.get_json-nál !!!
+
+industrial average fairp calc
+    *több céggel teszt, több industry
+    teljesen sched jobban menjen minden industry-ra vagy amire megadjuk, competitorokra, sectorra, stb
+        sched jobban végig lehetne számolni az időigényes (közös) dolgokat és lementeni az eredményeket, ami gyorsabban lefut azt meg adhoc
+        újraszámolni meg ha már van elég adat hozzá, pld. minden comp. céghez következő fq adat
+        tudunk limitálni is tickereket hogy max x-el számoljon + ha le is töltjük schedben elég felolvasni
+        ha kellően gyors akkor lehet akár start end dateket is illetve comp kateget inputnak és live recalc, persze eltart jónéhány secig így is
+        fix periódusra comp kategre előre számolva egész gyors lehet
+            ha a date filter változtatásával nem változnak az egyes dateken az értékek akkor elég full date range-re végigszámolni és azt felolvasni
+            és filterezni és adott comp. kategen belüli tickerrel végigszámoltatni
+        mikor volt a számolás fontos, milyen start end date, comp kat meg még mit eltárolni?
+        asReported = false esetén nem is kell az adott cég fq dateje mert mindnek ua.
+            INTC-nek nem!!!
+        ind_ptos_df-t lementeni felolvasni
+        minden adott competitorsba benne levő tickerre számolható
+        szétszedni a sched ill a main ticker részét
+        megcsinálni gyorsra, szétszedve egy 3. ipynb-be
+
+ha nincs hds vagy egyéb a GUI-n kezelni, hibaüzi vagy valami, lekezelni ha bármi miatt nem tudunk chartot mutatni
+    az kéne hogy olyankor a kereső se dobja ki a céget -> + cég meta ha nincs meg valami adat
+description-t is le kéne tölteni céghozzáadáskor a sched jobsban, a ticker + company hozzáadáskor, most fq,fy adatok letöltésekor csinálja
+
+*industrial average fairp calc több céggel teszt, több industry
+
+-------------------
+unused references kivenni minden fileból, halványan jelzi is
+*first last fq, fy dates a comp metába amikor új fin adat érkezik
+    ha nulllok akkor nincs adat és ez ellenőrizhető a keresésnél is és onnantól nem kérhető le a cég
+    ha nincs letöltve adat még a céghez akkor search mutatja, amikor van adat (last_check_date > 1970) akkor a szükséges last_data_date_x ne legyen null
+    js-ben külön check és ha nincs adat akkor egy kezelt kivétel popup ablak valamint értelmes gui, újbóli keresés indítható
+        ha kiderül hogy nincs meg minden adat egy új céghez akkor egy hibát adunk vissza
+get company apinál ha nincs adat valamelyik főkategória adathoz akkor legyen null vagy valami hasonló a key value
+    js-ben is lekezelni és raise exc ha nincs meg valamelyik fő kateg adat
+marketcap MSFT-nél gapekkel nullok, db-hez adás előtt ffill?
+    market cap ahol NULL középen !!!! ott hiba, ffillezni kell ahol lehet, de már adatletöltés után a db-be is úgy kerüljön be !!!
+    adat lyukakat mindenhol kezelni kéne...legalább egy ffillel
+js-be a fin_daily marketcap, de lehet nem is kell daily adat még, max ha kelleni fog akkor leimpl.
+requestek menjen már fileba legalább mikor ki, melyik lap, stb
+    admin felületen olvasható
+
+legelőször az event system kidolg
+    market cap alapán leszedni az x legnagyobb céget, azokra is fairp esés event
+    https://companiesmarketcap.com/ vagy egy netes listából
+
+screener
+    bekategorizálni az mt5 tickereket
+    screenerbe hogy milyen tipusú tickert akarunk szűrni(ADR stock egyéb)
+    data provider a table-be?
+    *egy dátum muatatása hooverra hogy mi a dateje a recent adatnak 
+    valamiért a metric váltáskor mindet átváltja 
+
+szükséges dolgok a produktív használathoz
+    kidolgozni az oldal flow-t regisztrációtól kezdve, hova navigáljuk, mit kell tennie az előfizetéshez, minden apróságot kitalálni
+    más oldalakról struktúrát, html-t lopni
+    a funkcionalitás legyen meg, csak a legszükségesebbek, a design később is ráér max egy alap(pld. canvas) kell
+        a fizetés rész dummy lesz egyenlőre, de funkcionálisan épüljön be, csak a fizetési szolg. felé nem megy egyenlőre request
+
+    utolsó fizetések tábla
+    *screener imporvement amiket összeírtam, több filter sector stb
+        jelenlegi subscribe, login rendszerrel összeintegrálni
+    *eventek működjenek
+        gui
+        bizonyos eventeknél recent metric értéket csinálni, menteni
+    sched jobok kidolg
+        inkrementálisan, elsőnek csak azt update aminek kell event van rá pl, megtervezni a sched sorrendet
+    (az elején) egy nagyon egyszerű portfólió követés
+    investing.com implement, admiral is menjen vele egyszerre, + a tiingo is
+    Alap gui + css( forexes siteról jöhet az a karcsú elegáns design)
+    ha valami hiba történik loading közben azt az end usernak feltétlen vissza kell jelezni, mind szerverside mind client side
+    descriptív 3 statements chart
+
+    adott tipusnak adott végződés pld. d3 object, vagy sima 
+
+    -------------
+    az eddigiek működjenek jól + a gui is logikuan reagáljon
+        initnek is transi mindenhol ne robbanjon be ilyen durván
+
+    logókat leszedni amihez csak lehet https://companiesmarketcap.com/usa/largest-companies-in-the-usa-by-market-cap/?page=2
+        beolvasni
+
+    optimalizálni a lekért adatokat a chartingnál
+        a hds visszaadás nagyon pazarló, sok redundáns string
+            orient = list formátum(key is meglesz)
+        pricinghoz messze nem kell ennyi adatot lekérni
+            célzott query kéne, hogy gyors legyen cégupdate nélkül
+                vagy csak akkor update ha a napi sched update nem történt meg
+        a metric chart külön lapra kéne külön lapra tenni
+            almenu mint account, adminnél
+        statement charthoz is célzott query majd
+    gyorsító optim(adatlekérés optim)
+        adatlekérés mindent hds, fq, fy, daily, stb külön külön amit a getcomp tud
+            records list adatstruktúra, date filterrel 
+        hds-nél is hogy melyik mezőt szeretném
+        a visszaadott getcompanyba kevesebb string adat kéne, list adatstruktúrákat visszaadni + ne kelljen fölöslegesen konvertálgatni a chartokhoz(metric chart)
+
+    olyat lehet hogy server side calc egy date filter, majd egy zoom funkció egy másik date filter clientside  
+        zoom funkció a lekért adatokra, akár az egérrel is  
+    
+    a circle nagyon rajta van az y tengelyen néha
+
+    piotriski score - 10 mutató alapján mutatja meg a cég minőségét
+        ez alapján is lehessen szűrni
+        updatelni kéne azt is hol tárolódik a db-ben?
+
+    a chartokhoz egy from to info hogy pontosan min számol, az R-es kóddal összevethető legyen
+        lehet már szinkronban vannak és ez nem kell
+
+    portfólió, azokhoz a cégekhez event amiket holdol a user pld. ha a el kellene adni a céget, legyen 1-2 alap event ezekhez
+
+    keresésnél is a legtöbbet lekért először + ticker exact match az elején
+
+    egy delete comp magán api endpoint, hogy hiba esetén újra lekérhessem
+
+    chart szakadások
+    *summa historikus értékeltség recent mutató
+    mass dl calc + ticker update
+
+    price area gradiensen, minnél közelebb van a fairp-hoz sárga ha magasabb pirosabb, ha alatta zöldebb
+
+    megengedőbb verzió ha az utolsó 6 fq adat negatív, opció hogy lássuk a chartot
+        vagy legalább az adatokat kéne látni valahogy
+    naponta recalc a fairp percenteket, fairp-t elég új fq esetén
+
+    optistock ötletek
+        egy csúszka és mutató, gradient bg az 52 hetes ár range jelenlegi ár viszonya?
+        datatables táblázatban az értékeltségi szempontok szerint csökkenő sorrendben a cégek
+            %-ok bg színnel való mutatása
+        1-1 híres idézet feldobása?
+        keresés egy szélesebb ömlesztett listát mutasson?
+        felső summary block, alatta az elemzésfajta, select alatta az elemzés contentje elrendezés
+
+    minden chartra más metrika fcf, stb megnézni a Gabi chartjait mit tett fel
+        bookval
+            sima bookVal. + értékek zöld, - piros barchart
+            bookval nem kell perc cbx
+        so bar nem bottom kezd, 0 kell kezdőadatnak vagy nem kell neki a corrrange
+        gauge feliratok feljebb
+        capex chart pontosítás
+        tooltip html mindenhol (data window)?
+
+    sebesség opt, kivenni a manager calc-ot
+        refactor,refactor...
+    gradient kijelölt szakaszra
+    fair price szakadások
+    industry számolások, charton mutatni
+
+    refactor pricing chart
+        mindenhol init, update, delete, pattern mint az fcf stacked chartnál
+        elem elnevezések módosítása +svg, call -> def, stb
+        comp manager ne számoljon semmit ne validáljon printeljen
+        sok helyen show hide használata egyedi opacity, display, stb helyett, gazdag paraméterezhetőség
+        data windownál chart specif infók egyedileg
+        show hide lehet a g_holder-jét is...
+            ToggleDataWindow is
+        ahol csak lehet self.svg_obj, hogy ne kelljen külön lekérd
+        tökéletes var nevek
+        kód tömörítés, duplikáció elimin + minify
+        _showAllElements nem haszn. + g_-k
+        ahol lehet ott az svg objot self... ekben tároljuk ne selecteljük
+        minnél kevesebb self, amit nem kell ne tároljunk memory management legyen optimal
+        tooltip html-ben és csak 1 db elem
+        konzisztens id, class, var elnevezések + több chart instance feature
+
+        több transition ahol csak lehet
+            z-order megfelelő legyen mindenhol
+        a chart széleitől legyen egy minimális távolság x,y esetén is mindenhol
+        id-classokat kigyűjteni input részhez
+
+        subchart hoovereléskor kerüljön az előtérbe a hooverelt, hideolódjon az unhooverelt
+        egyedi easing a transitionokbe
+        tweeneket alkalmazni mint a gaugenál
+
+    527.59 day-t kiválasztva csak 5 adat van és 6.-at indexelek fairp calc fileokban
+        first_fq_date_train = df_fin_fq['period_end_date'].values[-6]
+        IndexError: index -6 is out of bounds for axis 0 with size 5
+
+    a gradiens recht külön legyen a date filtertől, date filter a hds area-t tartalmazza
+
+    industrials
+        minden charttipusra számoljuk sales, fcf,stb
+        cég első fq adat - utolsó ismert hds között
+        adott cégre calc
+            szombat, vasárnap, ünnepnapokra az előző ismert árak
+            árletöltés, szombat stb kitöltés ami eddig is volt
+            revenue, shsout kell
+            sales_rollsum calc
+            sps calc -> sales_rollsum / shs_out
+        "tick_ind" a kategória
+        db-ben mik tartoznak ugyanide
+            minden egyéb cégnek a statementjét lekéri
+            sales adat kell, ttm calc
+            group by ticker ->  sales_rollsum mindenre     
+            market cap lekérése vagy s_adj_close al számolni
+                minden cégnek más a kezdő végdátuma
+                minden cégnek min max meddig tart, hétvégéket is betölteni, az összes naptárai napot
+                    előző napi mcapot betölteni
+            mcap ind, sales_ind(fq) összekapcs - ezért kelett a mcap-ban minden dátum
+                üres sales_rollsum-ok kitöltése (ha vannak)
+            csak az adott cég adatpontjaira szűrűnk (és ha mások az fq datek???!!!)
+                PtoS_ind, sps adott cég
+            csak azokat a sorokat tartjuk meg ahol minden adat megvan
+            cégcount az adott dátumhoz df meghat
+            adott dátumhoz ind df sales_rollsum, marketcap sum -> PtoS_ind = mCap_ind / sales_ind
+                külön df-be
+            date sum ind df, adott cég fq df-je join -> fair_price_ind = sps * PtoS_ind
+
+        log scale a current fairp circle-t nem állítja
+            + a performance vonalat is updatelni kell
+        amazon gauge nagyon sűrű beosztás
+        sbux 2021 dec fq ind adat hiányzik
+        minden subchart menjen, tesztelgetni kicsit
+        _showelement, hide transition nélkül is
+
+
+        minden sched jobot elindítani a szerveren is
+            try catch, logolás !!!
+        robots + kötelező egyebeket betenni portfolio site szerint
+        szerver ujrainduláskor autostart server
+
+        sched job-ban fog futni
+        legutolsó kiszámolt adatot lekérjük db-ből
+
+        industrialhoz valami mass data get sql?
+
+        competitor(peer) ua. csak mcap-ben a legközelebbi 6 céggel 
+
+        a peer, ind + 2 fairp a charton
+
+        chart 
+            fairp industry vonal + gombócok az árfolyamon
+            gombóc hoover, ind fair price érték, hány cég alapján számolt, céglista de ez nagyon hosszú is lehet
+            chart még1 fp line, a kettő között válthatunk, fp, hds areak- újraszámolódnak
+                p/s grad subchart + gauge hogy legyen?
+
+        az industry-t is mutatni pld. a checkboxnál () jelben
+
+    histotorical performance
+
+    drag and droppal a user meghatározhatná mi hol legyen, mozgatható lenne minden elem mint egy widget
+
+    nyers adatokkal kitölteni a db-t(dl), számolás nélkül   
+
+    nagy ugráso az árfolyamban s_adj_close-t használom
+
+    *hds volnal hogy látszódjon a kontúr
+    gauge 90'
+    
+    hogy mutathat a price hoover jövőbeli dátumokat...
+    gauge túl sűrű beosztás
+    ha floatol a kereső, nem választható ki a cég keresésnél
+    ha nincs megfelelő adat, eltünteti a date filter-t
+        gauge-nál is egy megfelelő felirat ha nincs adat setloadingstate helyett
+
+    minden historikus értékeltségre egy summa recent value
+        számoljunk hibatűrően esetleg fairp értéket és azzal számoljunk ezt a metrikát?
+            chartolni ugyan nem lehet de mondjuk 1 kimaradt érték miatt számolható recent fairp
+        és ha nem számolható? rontani kell az értéket 0 pont ilyenkor vagy -20?
+        0..20 pont / metric, 20 - 100%, 21 is lehessen ha jobban leárazott, - pont is ha túlvett
+
+    metrics chart - a fő charton lévő metrikákat mutatni
+        a labelre kattolva is aktiválódjon
+        pöttyök a data pointokhoz
+
+    először laptopra release sched update nélkül, elég a kiválasztott cégnél update és git update-el releaselgetni
+    ---------------
+
+    asreported false esetén se mindig ugyanazok a datek INTC
+
+    order imbalance értékeket levenni valahonnan
+    t-Statistic értékek tradingbe, > 2, 95% confidence, 3 > 99 % conf
+
+    mik a makrotrendek?
+        mutatni a piaci sentimentet, pld. negatív piacon nem érdemes venni mert tovább csökken az ár
+    túlhypeolt részvények amiknek kilőtt az áruk exponenciálisan
+        ótvar túlvett legyen mind 0 eredménnyel
+        shortolni
+        a sok xar amit vettem, nem rég ipozott cégek
+    milyen trendeket kövessek a jövőben, összeírni, ezen iparágakból válogatni részvényeket
+        magánkórházak, globális felmelegedés, green energy, stb
+        etf-ek, industrial indexek hds-e alapján követni iparágakat
+    vásárolt részvényekre lower p buy alert higher p sell alert
+    vonal alatt felett részvényekre?
+    event amikor egy korábbi jelentősebb alj alá esik az árfolyam 
+        + tdaf
+
+    egy olyan hds chart ahol a főbb termékek arany, industrialok stb mozgásai láthatóak, %-os elmozdulásként
+        arany, btc, sp500, stb
+        végére a konkrét árakat kitenni
+        esetleg area chartra váltani ha kiválasztjuk és zöld piros bg.-vel jelezni a teljesítményét
+
+    indexekre számolni a buy the dip elvet(chart is)
+        csak indexekre működhet, egyedi részvényre nem
+        y tengely returns 1 year later
+        x tengely drawdown %
+        sok hds adat kell(50, 100 év)
+        adott %-os visszaesésnél hány % esély van 1 év múlva a hozamra
+        esetek hány%-a pozitív a hozam, átlagos egy éves hozam mennyi, pozitív, pozitív + negatív esetekben is
+        hány sample adatom van ami ehhez hasonló amit épp vizsgálok
+        20%-nál nagyobb esést bear marketként jelölni illetve korrekció-t is
+        minden esés statot számolni amit az elemzésközpontos faszi is tesz, hány medveipac volt átlagos hossz
+        statisztikailag hol várható a visszapattanás, ilyeneket is felvinni, meddig eshet a jelen adatok tükrében
+        ml powered is lehet
+
+    fcf chart
+        ptofcf_hist_rev01.r
+        legyen az adatlekérés a lehető leggyorsabb(comp update legyen okos, csak akkor check ah már kell lennie új adatnak)
+        lefutás követelménye, milyen adatok kellenek a számoláshoz -> majd chart mutat, fairp számolási kritériumok
+
+        price lekér split adj close
+        sharesbasic sima
+        fcf ttm(roll sum 4 fq)
+        chart mikor nem készíthető
+            kiválasztott időtávon az összzes ttm fcf negatív
+            ha csak 1-2 helyen ott csak szakadás
+            ha az utolsó 6 fcf ttm-ből bármelyik - akkor sincs chart
+        price - pü jelentés dátumánál, a hiányzó price az fq-nál az előző napi price-al feltölteni
+        price fcf data left join
+        ptfcf adj illetve kivéve a negatívakat
+        a fenti 2 osztása -> 1 az ideális, ez alapján majd 10 decilisbe rendezzük őket
+        fcfps számolása
+        a negatív fcfps ek kidobása , itt szakadás lesz
+        fcfps * adj ptfcf adj -> fairp
+
+        start end datek ticker inputs
+        fq start date = hds start - 1year
+        get D1 sadjclose prices between range
+        get fq financials asrep false between range
+        get sharesBasic values ()
+        get freeCashFlow, calc fcf_rollsum
+        ahol nincs price fq fcf adatnál ott az előző elérhető price-t ffill(industrial calc)
+            hol nincs ár az fq datekhez, ott ffill
+            prices df-be beletette a hiányzó fq dateket, új sorként, sort, megnézi minden fq date benne van-e a price date-ben
+                ffill (és kiszedi az na-kat a prices elejéről locf r fgv.)
+        left join fcf, prices,(shs out too) egymás mellé pakoljuk date szerint, ffill minden colra
+        calc mcap = sAdjClose * shs_out, daily_ptfcf = mcap / fcf_rollsum)
+        ptfcf_avg_adj = sum(Price_to_fcf$mcap) / sum(Price_to_fcf$fcf_rollsum))
+        Price_to_fcf_negEx <- subset(Price_to_fcf, fcf_rollsum > 0), ez egy új tábla hol negatív fcf_rollsum rollsum érték nincs
+        és ebből calc (ptfcf_avg_negEx <- sum(Price_to_fcf_negEx$mcap) / sum(Price_to_fcf_negEx$fcf_rollsum))
+        ratio_ptfcf <- ptfcf_avg_adj / ptfcf_avg_negEx
+        Price_to_fcf első datetől fcf,shsout adatokat szűrni -> fcfps = fcf_rollsum / shs_out
+        fcfps szűrése ahol a date benne van a Price_to_fcf-ben
+        ahol kisebb fcfps mint 0 -> NA, itt lesz szakadás
+        fair_price = ptfcf_avg_adj * fcfps
+
+        merge helyett join kell mindehol !!! ahol gabival van számolás, fairp, industrial revisit !!!
+
+    keep me logged in funkció?
+
+    bevétel, adósság, költség, tax - chart lehetséges?
+        revenue, net income közös axis? - income stat
+        equity, sh, lt liab, stakeholders eq barchartok
+        cash from op, inv, financ alakulása egymásra helyezett area chart?
+        amit lehet kattintásra ki be ugrálni pld. assets -> current, lt -> lt -> invest, pp&e, other, stb
+        3 checkboxal váltható a 3 fő accounting kateg
+
+        https://d3-graph-gallery.com/graph/barplot_grouped_basicWide.html
+            var x = d3.scaleBand()....
+            var y = d3.scaleLinear()
+            2 x scale kell, 1 a bar groupoknak, 1 baroknak
+            x az x tengelyben
+        https://d3-graph-gallery.com/graph/barplot_stacked_basicWide.html
+            d3.stack() 
+            var x = d3.scaleBand()....
+            var y = d3.scaleLinear()
+            {key: [val1,2,3],...adatstrukt
+        grouped stacked, de a fenti 2 elég hogy összerakjam simple módon
+            https://bl.ocks.org/SpaceActuary/6233700e7f443b719855a227f4749ee5
+
+    .style("fill-opacity", 0.5)
+    .style("stroke-opacity", 1)
+    oldalról beúszó legend
+        https://flowingdata.com/projects/tut/chart_transitions_demo/
+
+    
+    -----kigyomlálni
+    mindenhol log, hibakezelés, stb a meglévő dolgokhoz
+    qfs tickerek kigyomlálása
+    kigyomlálni a trades stb eprojekti dolgokat sql-t is
+        unused refs too
+    css minden sass-ba rendezetten mostmár + alap gui
+    old kódok archive mappába
+
+    alap admin felület
+        az admin templatekből lopni amiket meg lehet venni
+        
+        hibafajtákat csökkenő sorrendben, hierarchikusan lefelé
+            hiba datatable filterezhető minden column és időrendben csökkenő alapból
+            részletes textet csak hoover esetén
+        +miket még? adatbázist elemezni
+        +azt ne mérjük amit a tracking sw-k tudnak mérni !!!
+
+        admin db settings, config file management, minden beállítás
+        log viewer is hasznos táblázatban, filterekkel (datatables biztos tud column filter funkciót)
+        requestek honnan, ki melyik lapot
+        melyik céget kérik le a leggyakrabban
+        levelezés adminnal, customer service
+        requestek menjen már fileba,db-be legalább mikor ki, melyik lap, stb
+            admin felületen olvasható
+
+
+MT5 minden ticker export leírással -> db -> D1 hds adatok kimentése ->periodic update -> hds calc, leárazottságok, tdaf stb recent értékek
+    sched job, adott időszakonként fusson 
+        sched jobt tábla, alap kidolg, utolsó futás óta óránként futtatni
+    csak ha a symbol last hd óta eltelt egy candlenyi idő akkor csináljon bármit is
+        ne töltsön fölös 1 hds-t
+        inkább töltse, 1xűbb
+
+investing.com py modul beinteg
+
+legalább alapszinten helyrehozni a metric chart gui-t
+    Tiingohoz hasonlóan wigetizálni
+    https://www.tiingo.com/
+
+Tiingoról milyen kül insturm kategeket lehet beszerezni, oil, gold corn stb
+    minnél olcsóbb átlagáron venni a dolgokat stratihoz
+    egyszeri eventek jól jönnének
+    minnél többmindent figyelni, minden nap hds update
+    + screenerhez is valami metrikát amivel jól lehet kiszúrni ezeket
+    dummy cégként berakni őket vagy valami + kategória
+    ezeknek külön lekérés kell
+    MT5-ből is lehetne feedelni python api-n keresztül
+        recent metrikák, indik, stb számolható
+        akár intraday adatokat is
+        akár cryptot is lehet, minnél több adatot streamelni
+        tdaf-ot is, indiket nem lehet lekérd?
+
+        3rd party bróker kezelése ahol kell, pld. hds, mt5 instumentum integráció
+        mt5 lementeni minden figyelt instrumentum recent metrikáit json
+            symbol, last data date, metric1 val, metric2 val.....
+            rendszer olvassa fel, új adatok lekérése mentése, nem is kell új file-t nyitni mindig
+            python minden meg fog találni milyen metrikák a colok alapján, időrendbe rendezve df képességek
+                milliónyi metrika...
+            összetettebb eventeket is figyelni
+            valahogy kéne input is nekik amit az mt5 olvasna
+            az alertes rendszeremet kellene összehozni ezzel
+            a python triggerelje egy jsonnal mi fusson le
+                az mt5 ugyanazzal az azonosítóval adja vissza az adatok amit kapott pythontól
+                    python event, egyéb id -> mt5 olvas -> feladat megold -> res vissza event,stb id-val
+                    a bonyolult dolgokat pld. indikátorokat így is lehet olvasni illetve complex conditionokat
+                kell az eventeknek is mt5 futtatás
+                illetve csak recent adatok lementése
+            lehet egyszerűbb lenne mt5 hds adatokat lementeni és konzisztensen számolni pythonban
+                vagy ha a symbol mt5 akkor json write -> trigger mt5 -> state, eredmény read
+                    tehát a számolás adatlekérés stb mt5 sideon megy
+                    és csak akkor fut amikor a python is kéri az adatokat, nem állandóan
+                    mt5 figyel, érkezik egy python request adott inputtal -> mt5 számol, return data
+                    sokkal több lehetőség
+        hds-eket is mentsünk
+        az elsődleges a mindig olcsóbban vásárolni valamit stratégia
+            mindig jelezzen ha helyzet van ha x dolcsit csökkent az ár egy adott instrumentumon
+                a legutolsó jelzés/vásárlás óta
+
+pricing chart
+    *data browser
+        bekapcsolható legyen további metrikák is?
+    title ne lógjon bele a rec rec-be
+    chartoknál ahol sok d3.select hivatk egy node-ra  ott self.xxx lementeni az obj
+    hoverek javítása opacity, transition, visibility,pointer-events..., g sorrendek nem jók?
+    lehet mindenhol az adatokból kellene kinyerni a konkrét, pontos értékeket a axisok helyett
+        x scale date get -> filtered data ,get nearest known data
+    dividend mértékét idejét markoljuk?
+
+metric chart
+    a metric chartnál a labelre kattolva is select metric
+    a metrika labelekhez metric kateg elválasztás CF,Income stmt, Bal. sheet
+    fq, fy metrikákat le kéne kérni ha váltok fq,fy között mert eltérő lehet a mennyiségük a jövőben
+    lehet mindenhol az adatokból kellene kinyerni a konkrét, pontos értékeket a axisok helyett
+        x scale date get -> filtered data ,get nearest known data
+    a legvégén nem működik a hoover ha ki van választva a metrika, alulról hoverelve a charton megy
+
+fontosabb metrikákat alapból feldobni a metric chartra (ez nemigen kell)
+    egy olyan chart kéne ami mutatja egy jó summaryval a kül. sheeteket lényegretörően
+    úgy kéne hogy bele is lehetne mászni a kül nagyobb kategóriákba és mutatni mikből tevődik össze
+    egyválasztásos checkbox income,cf,bs egyszerre csak 1 jelenik meg
+    fő metrikákat megjel, fő kategre kattolva előjön a komponensei, minden felrajzol csak nem show, transitionnel show
+    a 3 fő kategnél a legfontosabb a végső summa, ezeket a metric charton mutatni egyből, ami nincs számolva azt comp calcnál
+    bevételek zöld + árnyalatai, kiadások piros + árnyalatai
+    akár egyéb alkategoknak külön combobox
+    kiválasztva a account kateget először a top level jelenik meg és le lehet mászni az aljáig, ahol appropriate ott megjelenik + combobox kiválasztható 
+        a megfelelő kategória to show
+        vagy lehetne valami animált node ahol kiválasztható a megfelelő kateg, kinyitható, összezárható
+    kiírni hooverre illetve a közepére az areanak metric name-t + esetleg + infókat mit jelent tömören
+    common financial ratio-kat is számolni kellene illetve mutathatóvá tenni ezen a charton
+    a 3 fő account kategóriára lehet egyedi ábrázolás is ha jobban kifejezi a cég állapotát
+
+    https://www.vertex42.com/ExcelTemplates/income-statement.html
+    https://www.vertex42.com/ExcelTemplates/balance-sheet.html
+    https://www.vertex42.com/ExcelTemplates/cash-flow-statement.html
+
+js
+    "metric_id" már duplikált pontosabb meghatározás kell fq,fy !!!
+    get_all_metric_info js-ből hívva !!!
+    js-ben mindehol javítani
+industrial
+    getnearestprice helyett gabi módszere
+        get_first_past_hds_value replace
+
+ezzel a sok printel kezdeni kell valamit activate deactivate fileba ment opciók
+
+comp events gui, egyszeri eventek
+
+-------------
+
+hibakezelés legyen teljesen korrekt illetve a hibalapok
+egy alap külső a leggrabbelt template-el
+
+cégadatokhoz meta mint legfrisebb adatok pld. marketcap? vagy csak sql-el kérdezgessem le?
+    bizonyos dolgokat sql-ben gyorsabb egyszerűbb lehet megoldani
+
+chat ablak az oldalra
+
+ticker update sched job helyrehozni, printelni a folyamatot
+
+recent metrics tábla
+    lehet hogy symbol független metrikák is lesznek vagy nem fk a db col vagy egy dummy instrument
+    marketcap - marketCap
+
+Gabinak issuek
+    hds, fin fq, fy stb nincs date szerint szinkronban
+    fin daily marketcap-ben gapek, egyéb adatokban is?
+    egyáltalán nincs valamelyik fő adat pld hds meg
+
+db dump db_with_data
+    metrics, event_def, mail_templates, settings, subscription_def
+
+verziók
+    10.6.5-MariaDB
+    Python 3.9.5 (tags/v3.9.5:0a7dcbd, May  3 2021, 17:27:52) [MSC v.1928 64 bit (AMD64)] on win32
+    +requirements.txt
+    +Apache verzió
+    +windows verzió
+    +MT5 verzió
+
+flask debug=True venv high cpu load - watchdog installáció, ekkor a stat helyett ezt a reloadert használja, hatékonyabb
+    vagy debug false és nem használ reloadert
+    vagy flask run(use_reloader=False)
+
+https://www.creativebloq.com/how-to/boost-d3js-charts-with-svg-gradients
+https://d3-graph-gallery.com/graph/line_color_gradient_svg.html
+https://www.google.com/search?q=d3+gradient+opacity&oq=d3+gradient+opac&aqs=chrome.1.69i57j33i160.5261j0j7&sourceid=chrome&ie=UTF-8
+
+----------------------ML support--------------
+árak előrejelzése regresszió hds + funamentum + egyebek alapján
+
+-------------------------- SEO
+keresőoptimalizálás
+
+-----------------------------közösségi finanszírozás--------------
+crowdfunding
+Kickstarter, Indiegogo
+A siker kulcsa a kommunikáció, a probléma/ igény, a megvalósítás (ami a termék) megfelelő bemutatása
+kell előmarketing is
+timeline mi mikor valósul meg
+
+----------------------jó oldal
+marketingben oldalkialakításban másolni a profikat
+similarweb.com
+SEO barát
+SSL tanúsítvány, egyedi a domainhez
+gyors oldalbetöltés
+mobil reszponzív
+meglévő minta oldalakat másolni, megkeresni mik működnek a legjobban
+az egész oldal, aloldal célja egyetlen: a konverzió, az emberek navigálása az oldalon belül
+a nyitó, promódolal legyen teljes szélességű
+slider, videó a siteon
+    rögtön egy videót pillantson meg a user ahogy betölt az oldal (bűvös 8 mp, 86%-kal növelhető a konverziók / vásárlók száma)
+CTA, konverzió az oldal céljának elérése
+    vásárlás, hírlevél feliratkozás, ajánlatkérés, videó megnézése, átlagos konnverzió 2%
+aktuális ajánlat a sliderbe, második slideba cserélni 2-4 havonta az ajánlatot
+chat, chatbot az oldalon 
+az egész oldalon segítsük hogy a látogató elérjen mindent könnyedén -> több konverzió
+a menuben akár egyből ki is nyilhat pld. mobil mód esetén a termékek fül és a fő ajánlat látszódhat is akár diszkréten kiemelve
+    kapcsolat elég alulra, menube nem kell
+ha legörget az user, popup box, amit nem lehet bezárni félrekattolással
+amit promózunk az legyen az oldal tetején
+kalulátor a várható profitra
+amit csak lehet vizuálisan átadni
+    funkcionális analfabétizmus
+    piktogramot, ábrát, képet, videót
+blog a nagyobb látogatottságért
+social proof eszköz használata, visszacsatolás a vevők által
+hosszú promóciós oldal, növeli a konverziót
+vélemény, értékelés, ábra, bővebb leírás, piktogram, többféle kép, és persze videó.
+A/B tesztek alkalmazása mi hoz nagyobb konverziót Hotjar(weboldal hőtérkép), Google Analytics
+vevő továbbmegy ha nincs elég infó, nem elég vonzó a termék
+kellemes átmenet betöltődés, kellemes a szemnek a legsmoothabb megoldás
+szolgáltatás ajánlás kalkulátor adott embernek mit érdemes választania
+footer colokra osztott sitemap legyen
+megfelelő betűméretek
+akció, ajánlat, sürgetés
+minél több vélemény található egy terméknél / szolgáltatásnál annál nagyobb az esély a vásárlásra
+érezze a user hogy nem 1 a sok közül
+véleményírás az oldalra közvetlenül, kiírja melyk user írta
+    minnél több vélemény gyűjtése
+aktuális újdonságokat felhívásokat, pld. egy új eszköz az oldalon egy vékony sávban mutatni a header alatt közv.
+user visszajelzések, kérdőívek, egyedi javaslatok, akár 1-1 rövid kattintós kérés használat közben
+    piackutatás
+        melyik régióban erősítsék a marketingjüket – hol mi a fő probléma
+        kommunikációjukban, reklámjukban milyen szavakat használjanak, milyen témát dolgozzanak fel a blogjukban
+        milyen új termékeket vezessenek be
+        piackutatások eredményeit megosztják a blogjukban, főleg azokat, amikben azonosulni is tudnak a felhasználók, vagy választ kapnak kérdéseikre
+napi 1 vélemény 20% forgalomnövekedés, marketingben használva még 20% növekedés
+user generated content pld. portfólió megosztása funkció, ami vagy egy kép vagy egy link az oldalra
+Vásárlói kérdések, chatüzenet / e-mailek megmutatása marketing eszköznek
+a vevők, látogatók megismerése
+sok promóoldal növeli az eladásokat
+
+
+example-k
+    https://www.umbroll.hu/
+    https://manna.hu
+    https://www.kite.hu/
+
+--------------------------nyitóoldal
+minimalista, komolyabb design, fehér, fekete, olajkék(lila) színek
+egész oldalas video vagy kép + egy szlogen alszlogennel
+block a value fontosságáról value vs worthless befektetések pld btc valami infografika
+a mi oldalunk hogyan oldja meg a value, pénz jó helyre tételét
+    bubble univerzum
+featureok külön blockokon fentre szekcióhatároló block titlevel
+    a céglistánál, kínálatnál a bubble
+    counterek hány cég elérhető stb
+profitkalkulátor
+visszajelzések
+call to action feliratkozás, regisztáció stb
+
+----------------------minnél több adat eltárolása---------------
+látogatók tevékenysége, külső google toolok pl, mindenből hasznot kiszedni
+látogatószámok
+átlagos oldalon töltött idő, 
+átlagos oldalmegtekintés látogatásonként
+navigációs útvonal hova kattint stb, mit néz a legtovább
+    js kódok, van rá 3rd party tool?
+honnan jön a látogató 
+    direct bepötyögte (visszatérő vásárló) 
+    email, 
+    referrals másik oldalról, 
+    social oldalakról
+    organic search kereső oldalról
+    paid search - google adwords pl.
+
+------------------------optistock
+
+Küszöbszám	Bevétel	Eltérés	Eltérés (%)
+700M        79.02B   -78.32B  11189.14%
+
+zöld(megfelel), sárga(majdnem), piros státusz az alábbi elemeknek
+minden katra egy külön %-os érték + az egészre
+    szerintem a zöld az 1 pont, sárga 0.5, piros 0
+    100 / 13 szempont -> ~7% -> piros 7%-ot von le, sárga 3.5%-ot, zöld 0%-ot
+
+cég minőség: A Cég minőség a Méret, a Stabilitás, az Osztalék és a Növekedés átlaga.
+momentum : A Momentum a Cég minőség és az Értékelés átlaga.
+
+aktuális ár, 52 hetes árak relációja egy csúszkával
+
+táblázatban ticker, név, iparág, méret, stab, osztalék, cég min, értékeltség, momentum % értékekkel, színekkel jelezve
+
+méret : A bevételeket és a piaci kapitalizációt vizsgáljuk.
+    Megfelelő a bevétel? Éves minimum 700M USD bevétel vizsgálata (inflációval korrigált)
+    Megfelelő a piaci érték? 3B USD piaci érték vizsgálat (inflációval korrigált)
+stabilitás : A rövid- és a hosszúlejáratú hitelek fedezét vizsgáljuk.
+    Teljes hitelállomány vizsgálat (az operatív cash flowra vetíve) (2021)
+        Megvizsgáljuk, hogy a teljes hitelállomány nagyobb-e, mint a cég nettó operatív cash flow-jának az 5x értéke
+    Rövid lejáratú adósságok fedezve vannak? (CURRENT RATIO) (kalkulált) (2021)
+        Minden rövid lejáratú adósság dollárra kétszer annyi gyorsan felhasználható forgóeszköz dollár szükséges | az értéknek 2 fölött kell lennie | 1 alatt pedig nagy baj van
+    Rövid lejáratú adósságok fedezve vannak? (CURRENT RATIO) (hivatalos) (2021)
+        Minden rövid lejáratú adósság dollárra kétszer annyi gyorsan felhasználható forgóeszköz dollár szükséges | az értéknek 2 fölött kell lennie | 1 alatt pedig nagy baj van
+    Hosszú lejáratú adósságok fedezve vannak? (LONG DEBT TO NET ASSETS) (2021)
+        A hosszú távú hitel abszolút fedezve kell, hogy legyen a nettó eszközértékkel | az értéknek 1 fölött kell lennie
+    Csökken a kibocsátott részvények száma? (2012 - 2021)
+        Az nem megfelelő dolog, ha egy cég folyamatosan bocsájtja ki a részvényeket, mert így inflálja a már kintlévő részvények értékét | 1 fölött több a kibocsátott részvény, mint 10 éve | 1 alatt viszont kevesebb
+értékeltség : Legyen bármennyire jó minőségű egy cég, van olyan összeg, amelyet már nem ér meg. Vásároljunk jó minőséget kedvező áron!
+    Részvényenkénti nettó eszközérték alatt kapható a részvény?
+        Az egyik legjobb indikátora a jó vételnek a részvényenkénti nettó eszközérték (7.40) alatti árfolyamérték (36.97)
+    Árfolyam és nyereség arány (P/E) (2019-2021)
+        A P/E érték 15-nél nem lehet több (az utóbbi 3 év átlagnyereségéből számolunk)
+    Aktuális árfolyam és nyereség arány (P/E)
+        A befektetői közösség szerint P/E érték 15-nél nem lehet több (az aktuális EPS-ből kalkulál valószínűleg)
+    Könyv szerinti árfolyamérték (P/B) (2021)
+        Az árfolyamot rávetítjük az eszközök könyv szerinti értékéhez | az arány nem lehet több, mint 1.5
+    Aktuális árfolyam és könyvérték arány (P/B)
+        A befektetői közösség szerint nincs iránymutatás a P/B értékre
+        1.5 küszöbszámot használt itt is
+    Ökölszabály az árolyamértékek vizsgálatára (P/B*P/E) (2019-2021)
+        A P/E és a P/B szorzata nem lehet több, mint 22.5
+    Ökölszabály az árolyamértékek vizsgálatára (P/B*P/E) (AKTUÁLIS)
+        A P/E és a P/B szorzata nem lehet több, mint 22.5
+    Átlagos osztalékhozam (3 év)
+        Az aktuális osztalékhozam jobb-e, mint az utóbb 3 év átlagos osztalékozama (2.46%)
+        az átlagnál ha nagyobb -> megfelelő
+    Átlagos osztalékhozam (3 év) (MEDIÁN)
+        Az aktuális osztalékhozam jobb-e, mint az utóbb 3 év átlagos osztalékozama (2.46%) | kivettük a kiurgró eséseket és emeléseket
+    Átlagos osztalékhozam (5 év)
+        Az aktuális osztalékhozam jobb-e, mint az utóbb 5 év átlagos osztalékozama (2.50%)
+    Átlagos osztalékhozam (5 év) (MEDIÁN)
+        Az aktuális osztalékhozam jobb-e, mint az utóbb 5 év átlagos osztalékozama (2.50%) | kivettük a kiurgró eséseket és emeléseket
+    Átlagos osztalékhozam (10 év)
+        Az aktuális osztalékhozam jobb-e, mint az utóbb 10 év átlagos osztalékozama (2.92%)
+    Átlagos osztalékhozam (10 év) (MEDIÁN)
+        Az aktuális osztalékhozam jobb-e, mint az utóbb 10 év átlagos osztalékozama (2.92%) | kivettük a kiurgró eséseket és emeléseket
+osztalék : Az osztalék hozamát, fedezetét és az osztalékfizetési múltat vizsgáljuk
+    20 éves megszakítás nélküli osztalékfizetés
+        Fontos hogy minimum 20 éve megszakítás nélkül fizessen osztalékot a cég
+    Volt osztalékvágás az utóbbi 5 évben?
+        Kiváló mérőszám egy cég minőségének vizsgálatában az, hogy mióta emeli folyamatosan az osztalékát
+    Volt osztalékvágás az utóbbi 10 évben?
+        Kiváló mérőszám egy cég minőségének vizsgálatában az, hogy mióta emeli folyamatosan az osztalékát
+    Volt osztalékvágás az utóbbi 15 évben?
+        Kiváló mérőszám egy cég minőségének vizsgálatában az, hogy mióta emeli folyamatosan az osztalékát
+    Volt osztalékvágás az utóbbi 20 évben?
+        Kiváló mérőszám egy cég minőségének vizsgálatában az, hogy mióta emeli folyamatosan az osztalékát
+    Megfelelő osztalékhozam (S&P 500)
+        Az osztaléknak minimum az S&P 500 osztalékhozamának 1.5 szerese kell, hogy legyen
+    Megfelelő osztalékhozam növekedési ütem (5 éves DGR)
+        Az osztalékhozam és az osztalékhozam növekedés együtt 9%-ot kell, hogy adjanak: DGR5 (5.99%) + DIV_YIELD (3.86%) > 9%
+    Osztalékkifizetési arány ellenőrzés (PAYOUT RATIO - FREE CASH FLOW) (2017-2021)
+        Az utóbbi évek osztalékkifizetései alacsonyabbak, mint a free cash flow | 75% alatt kell, hogy legyen
+        Küszöbszám 75.00%, Payout Ratio 41.18%
+    Osztalékkifizetési arány ellenőrzés (PAYOUT RATIO - NET INCOME) (2017-2021)
+        Utóbbi évek osztalékkifizetései alacsonyabbak, mint a net income
+        Küszöbszám 100.00%, Payout Ratio 32.14%
+    Osztalékkifizetési arány ellenőrzés (PAYOUT RATIO - FREE CASH FLOW) (2019-2021)
+        Az utóbbi évek osztalékkifizetései alacsonyabbak, mint a free cash flow | 75% alatt kell, hogy legyen
+    Osztalékkifizetési arány ellenőrzés (PAYOUT RATIO - NET INCOME) (2019-2021)
+        Utóbbi évek osztalékkifizetései alacsonyabbak, mint a net income
+    Osztalékkifizetési arány ellenőrzés (PAYOUT RATIO - FREE CASH FLOW) (2021)
+        Az utóbbi év osztalékkifizetései alacsonyabbak, mint a free cash flow | 75% alatt kell, hogy legyen
+    Osztalékkifizetési arány ellenőrzés (PAYOUT RATIO - NET INCOME) (2021)
+        Utóbbi év osztalékkifizetései alacsonyabbak, mint a net income
+    Aktuális osztalékkifizetési arány ellenőrzés (PAYOUT RATIO - NET INCOME)
+        Legfrissebb adatok szerinti érték, ami a net income alapján kalkulálódik
+növekedés : Vizsgáljuk a részvényenkénti profitot és befektetésre vetített hozamot.
+    Visszamenőlegesen nem volt negatív eredmény (2012-2021)
+        10 éven keresztül pozitív eredményt produkált a cég?(diluted EPS)
+    Átlagos (Diluted) EPS növekedés - 3% (2012-2021)
+        Az utóbbi 10 évben átlagosan éves 3%-os eredménynövekedés volt?
+    Átlagos (Diluted) EPS növekedés - 5% (2012-2021)
+        Az utóbbi 10 évben átlagosan éves 5%-os eredménynövekedés volt?
+    Átlagos (Diluted) EPS növekedés - 7% (2012-2021)
+        Az utóbbi 10 évben átlagosan éves 7%-os eredménynövekedés volt?
+    Átlagos (Diluted) EPS növekedés - 10% (2012-2021)
+        Az utóbbi 10 évben átlagosan éves 10%-os eredménynövekedés volt?
+    Átlagos (Diluted) EPS növekedés - 15% (2012-2021)
+        Az utóbbi 10 évben átlagosan éves 15%-os eredménynövekedés volt?
+    A befektetett összegre vonatkozó megtérülési szám
+        A ROIC egy jobb mutató az EPS-nél - 10% felett kell lennie, és az jó - NOPAT/INVESTED CAPITAL
+
+
+diverzifikálást elősegítő modul, minden kül egymással legkevésbé korreláló szektorokból mutatni a legjobb cégeket
+a szektormozgás kimutatáshoz egy indikátor hogy mik mennek a leginkább
+a szektormozgásnál mutatni hogy melyiknél milyen a fairp ratio átlaga, súlyozzuk is
+mik azok a szektorok régiók amik megindultak illetve momentumuk van
+    sose 1 részvénybe gondolkodni hanem csomagban
+
+FQ jelentés naptár a vett illetve nem vett cégekre
+
+mindig a sereghajtókba fektetni
+    kik viszik az indexek hozamát
+    momentum hatás
+
+metrikákhoz egy áttekinthető flow chart nyilakkal mi hogy változott
+    area charttal kellene kül színekkel mutatni
+    
+hova áramlik a pénz egy adott indexben, kiválasztott szektorban, tőzsde egészében
+    szektor, industry, cég szerinti felbontások
+    multi area chart jó hozzá, additív módon stackelve, chart meredeksége mutatja az overall tőké növekedését, csökkenését
+
+    melyik stock ment a legtöbbet %-osan de szerintem itt a market cap szerint kellene nézni egy adott időszak alatt és miért
+	    hova áramlik a pénz és miért, szektorok szerint is nézni
+    
+dasboard
+    különböző dolgokat ki lehet pakolni wigetként, széles monitorra optimalizálva
+    pld. USDHUF árfolyam, egyéb egyedi metrikák kalkulációk
+    táblázatokat is kipakolni kül kalkulációk egyedi dolgok, react komponens jól modelezi
+
+gépi tanulás generál minden adatbázisban szereplő részvényre
+    jövőbeli hozam becslése millió metrika alapján adott időszakra előre
+    general solution illetve kategórizálni is pld. növekedési részvények stb
+
+-----------------------------------------------------új rendszer--------------------------
+
+env.[NODE_ENV].local - secret dolgok tárolása, development, production,test
+
+auth serveren mindenhol json response
+
+login, handle
+    localstoreban tárolni majd a loginkor a tokeneket
+data manager token refresh
+    login, refresh, query
+
+szövegek jsonban, többnyelvűség (opening page react tailwind example)
+    
+deploy
+    frinwork frontend
+        scripts/dev -> ... -H 192.168.88.244 -p 8080
+
+mobile debug
+    tap 7x to version number
+    enable usb debugging
+    asztal chrome url "chrome://inspect/#devices"
+
+plugins
+    inline fold vs. ext. - hideolja a taliwind css megadásokat
+    Intellicode install, tutorial
+    Code Runner
+
+megvalósítani
+    1)sched jobs külön szerver + számolások + container
+        minden cég letöltése
+        marketcap számolása top 500-hoz
+    2)flask data api külön szerver + container
+        dinam adatlekérés, céglista cserélődhet
+        company meta adatok lekérése
+
+    bubbi chart
+        *előfiz filter
+        *free(dow30), basic(top 500 marketcap)
+        *dinamikus adatlekérés
+
+        a cont div-ben csak a canvas legyen
+        canvas legyen display: "block"
+
+        pixelratio figyelembevétele mindenhol
+            telómon 2.75 a pixel ratio -> sokkal nagyobb canvas felbontás !!!
+
+        "xxx!" annotationok utánaolvasni
+        number[] -> [number,number,number,number], REGL.Vec4
+            egységes color var !!! regl.vec4
+        custom hookot csinálni amiből csak lehet
+        interrupt anim közepén illetve az ehhez tartozó propok meghagyása vagy leegyszerűsítése
+        interface IXxx kezdet
+        amit nem haszn, kipucolni egy dump vagy archive file-ba
+        rendbetenni, refaktorálni a kódot, tökéletes clean struktúra
+            ami nem használ state-t az külső method, illetve ha univerzális
+        MINDEN-t kikommentelni
+
+        anim manager
+            kellene a sim is bele, lehet kell + animtype(interp, sim) enum is
+                ennek külön mutálódott adat is kell
+                vagy ezt külön kezelem(initial csak hogy mozogjanak kicsit a bubik)
+                majd simulationnel is megoldani ezt az anim manager-t(ott meg egy adatsor kell ami mutálódik) de a legjobb lenne kombinálni a 2-t
+            addAnimation bool hogy törölje a listát nextAnims
+                különben sok egymásutáni cbx váltásnál inkonzisztens animok sorban lejátszva
+                flag esetán az első hozzáadottnál cbxváltásnál törölje majd false
+                továbbra is külön, egyen is hozzáadhatóak az animok
+
+        néha kilóg a tooltipből
+        egymástól elütő színek
+        ahol kevés bubi ott jobban tölse ki a teret
+        groupok nem csak az adott szektorból, exchből tartalmaznak adatokat
+           !!! csak a bubble boardereken mutat valamiért egyéb dolgokat
+        tooltip sleep, proci tehermentesítés
+
+        maxR meghat hogy kitöltse a collapsed, packed layout is a canvast
+
+        console.log kiszedése
+
+        sim animok jobb testreszabhatósága több input
+
+        interp split method beinteg, módszerek modularizálása
+            többféle easinget is lehetne beleteni webgl kód
+
+        chart teljesen moduláris legyen, mindennek input aminek csak lehet struktúrált, önálló react komponens
+            az animok teljes moduláris letisztult input output
+
+        minden új dolog átnézése, elmaradt dolgok pontosítása
+            pontos adatquaility sql feltétel!!!
+                NYSE, NASDAQ, AMEX tőzsdék
+            premium(minden amihez csak van elérhető adat)
+                min 3 évnyi fq(min 12 fq adat) és fy adat, isactive true cégek, kb 4307 cég   
+            minőségi adat előszűrés cégeknél bubihoz, elérhető searchable cégek, ha már minden adat le van töltve
+                legyen fq adat(tényleges ne null vagy egyéb a dátumnál), min 3 év recent + price data hozzá közös időintervallum, isactive true
+
+        minden cég letöltése
+        marketcap számolása top 500-hoz
+        ha lehet folyamatosan mozogjanak a bubik lassan	
+
+inaktív cégek kikerülnek a számításokból
+
+Gabi foglalatoskodik
+    cube
+    figma
+
+cube
+    a cube-ot egy wireframe three js anyagra kellene felhúzni
+
+gitingnore
+    out/, dist/,... -  build eredményei
+    node_modules/
+    coverage/ - teszt eredmények
+    logok
+    .vs/, .vscode/*.log
+    .eslintcache
+
+https://github.com/desktop/desktop/blob/development/.vscode/settings.json
+https://github.com/desktop/desktop - Github Desktop source code
+
+next js + TS starter kits, boilerplates
+    "nextjs-typescript-starter github"
+    https://github.com/ixartz/Next-JS-Landing-Page-Starter-Template
+    https://github.com/one-aalam/next-starter-kit
+    https://github.com/vuongddang/nextjs-tailwindcss-typescript-starter
+    https://github.com/chhpt/nextjs-starter
+    https://github.com/redimpulz/nextjs-typescript-starter
+    https://github.com/bisubus/next-typescript-starter
+    docker
+        https://github.com/martindavid/nextjs-typescript-starter
+    next js 13
+        https://github.com/theodorusclarence/ts-nextjs-tailwind-starter
+
+type defs, interfaces
+    mindig a saját logikus döntések a legjobbak best practisok alapján
+    co-locating
+        Place code as close to where it's relevant as possible, Things that change together should be located as close as reasonable
+    https://kentcdodds.com/blog/colocation
+        we should co-locate our types/interfaces files with the file or group of files that implement them
+    global, több helyen használt mindig a megfelelő helyen ill a specifikusak az adott comp-al egy fileban, dir-ben
+        https://github.com/blendsdk/blendjs/blob/devel/blend/src/common/Interfaces.ts
+        interface, type, enum egy fileba mehet
+        https://github.com/Microsoft/TypeScript/blob/main/src/compiler/types.ts
+            ...src/global/types.ts
+            ...src/types.ts
+            ...src/common/types.ts
+                ez nem ajánlott
+        jobb feldarabolni page, component szinten
+        interfaces/<feature/component name>/<interface name>.interface.ts
+        comp/comp.interfaces.ts az adott comp mellett
+    1)Global *.d.ts -> database.d.ts a proj rootban
+         use types without aneed forimport statements. The types are made available recursively in all subdirectories
+    2)az adott fileban vannak a type defek
+        components/compname/compname.component.types.ts
+    3)global or local types.ts fileok export-okkal
+    1-3 a legjobb, nem kell az importokkal vesződni
+    organized global structure
+        src/ts/enums/a.enums.ts, b.enums..., interfaces/..., types/...
+    hybrid approach uses a global(common types) and component(specific types) or model-based approach
+
+sql mindig a megfelelő adattípussal adja vissza az adatokat, mindig a data managerben konvertáljunk json kompatibilissá, eg. date -> str
+
+a legtöbb dolog elég a dev dep-be
+    https://github.com/jpedroschmitz/typescript-nextjs-starter/blob/main/package.json
+    összes @types/xxx,
+    typescript
+    összes @typescript-xxx
+    összes eslint-xxx
+pluginok is elegek lennének dev dep localba 
+    prettier, 
+prodba csak a 
+    next, react, react-dom + amiket használ még a project
+
+---------next-auth
+session db vagy jwt, jwt lehet db használat mellett is
+pages/api/auth/[...nextauth].js -  dynamic route handler, global NextAuth.js configurations,  Catch all API routes
+     every API request beginning with /api/auth/* should be handled by the code written in the [...nextauth] file
+    /api/auth/* (signIn, callback, signOut, etc.) will automatically be handled by NextAuth.js
+<SessionProvider session={session}> - React context, useSession mindenhol hozzáférhető
+options
+    secret - prod esetén kell vagy NEXTAUTH_SECRET
+    session - session object
+        strategy - db or jwt
+            by def. JWT, an encrypted JWT (JWE) stored in the session cookie
+            If you use an `adapter` however, we default it to `"database"` instead, You can still force a JWT session by explicitly defining `"jwt"
+            database mode: the session cookie will only contain a `sessionToken` value, which is used to look up the session in the database
+    jwt - JSON Web Tokens can be used for session tokens
+        maxAge, encode(), decode()
+        JSON Web Token contains a payload like this, {name, email, picture, iat, exp}
+    pages - Specify URLs to be used if you want to create custom sign in, sign out and error pages
+    callbacks - asynchronous functions you can use to control what happens when an action is performed
+    signIn, redirect, session, jwt
+    events - Events are asynchronous functions that do not return a response, they are useful for audit logging
+    adapter - 
+    debug - to enable debug messages for authentication and database operations
+    logger - Override any of the logger levels, You can use this to send NextAuth.js logs to a third-party logging service
+    theme - Changes the color scheme theme of pages as well as allows some minor customization
+
+client, react frontend
+    to interact with sessions from React applications
+    useSession csak clientside -> {data, status}
+    getSession - in case you want to read the session outside of the context of React
+    import { useSession, signIn, signOut } from "next-auth/react"
+    if (session) { ... {session.user.email} ... onClick={() => signOut()} ... onClick={() => signIn()}
+    session obj
+        not sensitive data, only to display purposes
+        {user{name, email,image}, expires}
+    session callback to customize the session object returned to the client if you need to return additional data in the session object
+    getCsrfToken() -  returns the current Cross Site Request Forgery Token (CSRF Token) required to make POST requests (e.g. for signing in and signing out)
+        if you are not using the built-in signIn() and signOut() methods
+server, SSR, api
+    import { getServerSession } from "next-auth/next"
+    import { authOptions } from "./auth/[...nextauth]"
+    const session = await getServerSession(req, res, authOptions)
+NextAuth.js Callbacks
+    https://next-auth.js.org/configuration/callbacks
+    hook into various parts of the authentication flow
+    control what happens when an action is performed
+    pages/api/auth/[...nextauth].js, NextAuth options ...callbacks: { async jwt...async session...
+    signIn, redirect, session, jwt
+    to pass a value from the sign-in to the frontend, client-side -> session + jwt callbacks, useSession,getSession tartalmazni fogja a beadott értékeket
+        https://next-auth.js.org/getting-started/example
+Rest API
+    /api/auth/..., custom path in NEXTAUTH_URL
+        signin - Displays the built-in/unbranded sign-in page
+        POST signin/:provider - Starts a provider-specific sign-in flow, requires CSRF token from /api/auth/csrf, signIn() method uses it
+        callback/:provider - Handles returning requests from OAuth services during sign-in
+        signout - Displays the built-in/unbranded sign out page
+        POST signout - Handles signing the user out, The user session will be invalidated/removed from the cookie/database, requires CSRF token from /api/auth/csrf,  signOut() 
+        session - Returns client-safe session object - or an empty object if there is no session
+        csrf - Returns object containing CSRF token, must be passed as form variable named csrfToken in all POST submissions to any API endpoint
+        providers - Returns a list of configured OAuth services and details (e.g. sign in and callback URLs) for each service, It is useful to dynamically generate custom sign up pages
+Oauth
+    callback URL
+Google Oauth
+    teszt üzemben csak a megadott userek, publisholni kell release esetén
+deployment
+    .env.local-ban NEXTAUTH_URL=https://example.com
+TS
+    JSDoc sima js-t használva, megkapjuk a TS hinteket(?), eg. /** @return { import("next-auth/adapters").Adapter } */
+    Module(Submodule) Augmentation
+        Define your shared interfaces in a single place, and get type-safety across your application
+        extend/augment this type, create a types/next-auth.d.ts
+        import NextAuth from "next-auth", declare module "next-auth" {interface Session {...
+            https://next-auth.js.org/getting-started/typescript
+        By default, TypeScript will merge new interface properties and overwrite existing ones
+        If you want to keep the default session user properties, you need to add them back into the newly declared interface
+        interface User, Account, Profile
+        Make sure that the types folder is added to typeRoots in your project's tsconfig.json file
+databases
+    persisting users, OAuth accounts, email sign in tokens and sessions
+    session-t jwt-vel is lehet db használattól függetlenül
+        használni
+    csak user store egyenlőre
+    User def. id, name, email and image, add more fields in provider google options ->  profile()
+
+kell db next auth mellé
+
+email, pw login
+
+pricing chart
+
+    "1.2em" megadások
+    .style px, em-ben
+    sok-sok behardcodeolt input érték withek, colorok
+        számok 6, -50,
+    "//resp"
+     as Iterable<number>);
+     font-size
+     !!! részek
+     _formatnumber nem kell -> .tickFormat("~s") helyette scale-nek
+    barchartoknak külön grow loss color inputok
+    inputoknak alaposabb mélyebb struct pld barchartok
+    #xxx colorkra keresni
+    behardcodolt textek ncfo textek pld
+        _show_bars_tooltip
+        _mouseover_bars
+        "black", "white", green, red,1,2,3,4... etc
+        circle színek stb
+        _getAndShowChartSpecificData
+    d3 select helyett mindenhol ahol csak lehet a self.obj
+    tipusoknál pontosan megadni a bound data typeot
+        initnél d3.select<SVGPathElement, StandardDataStructDateElement[]>("#g_hds_helper").append("path")
+
+
+        https://github.com/d3/d3-scale
+        https://github.com/d3/d3-format/blob/main/README.md#locale_format
+    x, y axis textek mint inputok? 
+       + egyéb tick count stb, scales, axes + svg obj-s
+    nincs minden class,id-nál prefix, kell egy a chartra jellemző prefix + id szám
+    self.color(... részekhez külön input colorok
+
+    inputok  minden + minden reszponzív
+
+    company-pricing-chart
+    company-pricing-chart-gradient-chart
+    company-pricing-chart-date-filter
+
+    gauge-ot is átvenni komplett komponensként
+    compmanager is kell
+    kiválasztások megőrzése page refreshkor, először a megszokott cookie, később local storage
+
+    radio select fairp by sales , etc
+    radio select fairp type historical, industrial
+    cbx 
+        show, hide revenue
+        revenue as percent change
+        fcf rollsum
+        fcf rollsum perc
+        show hide ncfo - capex chart
+        nics rollsum
+        nics rollsum perc
+        ebitda rollsum
+        ebitda rollsum perc
+        show hide bookval
+        show hide so
+        show hide prices
+        cbx_showhide_perf
+        Toggle scales
+        cbx_data_browser_pricing_chart
+        btn_clear_pricing_chart
+        btn_df_3y_pricing_chart
+        btn_df_5y_pricing_chart
+        btn_df_10y_pricing_chart
+
+    const adatstructok
+
+    compManager.getCompMeta - comp name kell
+
+    chart_type, ticker (compName) inputok
+
+    setChartTypeRadioValue - set chart type cookie if not set and select proper radio radio_chart_select_[sales]
+    setFairPriceTypeRadioTexts - set radio texts radio_fairp_type_historical, radio_fairp_type_industrial
+    setChartTypeRadioClickEvents
+    setFairPriceTypeRadioClickEvents
+    
+    get ticker from cookie if found or set 'MSFT' as def
+
+    setControlPanelCbxStates - set control panel checkbox states according to cookie values
+
+    new CompanyPricingChart(
+
+    setPricingChartControlPanelElements - act charttypenak mutatja a cbx-jeit
+
+    async LoadDataAndCharts - executes on page load and when changing company
+        compPricingChart.setLoadingState
+        compManager.getCompMeta - ezt a keresőnek kellene visszaadni illetve initial letölteni msft
+
+        compPricingChart.InitVis(chartType, symbol, compName)
+    compManager.increment_company_load_count
+
+    search comp event -> select -> 
+        CookieHandler.setCookie ticker
+        compManager.increment_company_load_count
+        LoadDataAndCharts
+
+    setControlPanelShowHideSubChartCbxEvent
+
+    events...
+
+    változtatások
+        comp meta letöltése initial + cégváltáskor, search comp res által
+
+    impl
+        component based, virtual dom, jsx, state mgm-t, react event handling
+        dinamic UI updates
+
+    UI megjelenítés vezérlése useState-el
+    document.addEventListener -> jsx onXXX=funcName
+    React.createElement, ReactDOM.render -> JSX
+    const element = <h1 className={title} children={text}/>;
+
+    compPricingChart.ManageBars - show, hide bar charts
+    compPricingChart.ToggleFairPriceType
+    compPricingChart.ShowHideFcfStackedChart
+    compPricingChart.ShowHideBookValSubChart
+    compPricingChart.ShowHideSharesOutstanding
+    compPricingChart.ShowHidePrices
+    compPricingChart.TogglePerformanceChart
+    compPricingChart.ToggleLogYScale
+    compPricingChart.ToggleDataWindow
+
+    compPricingChart.ClearDateFilter
+    compPricingChart.SetDateFilterXyrs
+
+loading skeleton míg betölt az app
+
+a sok ! assert helyett deklarációnál hogy a type eleve ne legyen null, eg. useref...(null!);
+
+hooks
+    https://swr.vercel.app/ hook lib, beinteg
+    https://github.com/streamich/react-use - legbővebb react hook lib
+    ahooks - sok react hook
+    https://usehooks.com/ - hook implementációk, magyarázatok
+
+preact - mint a react csak sokkal kisebb méret, teljesen azonos működés
+https://storybook.js.org/ - componens izolált elkészítése, majd app-ba helyezése
+
+admin felülethez egy kész reactos dolgot, template
+    https://github.com/LukasMasuch/best-of-react#admin-dashboards
+
+az animáció itt a hero sectionon
+    https://pro.ant.design/
+
+nyitólap ötlet egy adott sectionnál scrollozva  a lapot megáll és animáltan vált több section-t sectionon belül
+    bal oldalt rövid szöveg, jobb oldalt kép  pld. screenshot és kisiklik a képből eltűnik, helyére újabb jön
+    pld. a fő featureok bemutatása
+
+library lookup
+    "useful next js library collection github"
+    github keresés order by stars desc
+    npm trends
+    npm oldalon keresés order by popularity
+    ChatGPT
+
+metrikák megjelenítéséhez az a hullámos chart(levelezésben kép)
+    "visual breakdown chart"
+    https://d3-graph-gallery.com/sankey.html !!!
+sok-sok d3 chart example típus szerint
+    https://d3-graph-gallery.com/
+
+UI
+
+    Google-s Material design
+    MS Fluent UI
+
+    react-icons
+    
+    mui core
+    https://ant.design/components/overview/ - (antd) sok sok componens, date picker is
+    semantic-ui-react - sok style theme eg. google material,amazon, stb
+
+    react-hook-form
+    formik
+    yup -  obj. validation
+
+    headless ui - kevés twcss. componens
+    tailwindcss/forms
+    daisyui - twcss. viszonylag sok alap UI comp, ki is vehetőek weboldalról
+
+    github gyűjtemények
+        https://github.com/you-dont-need/You-Dont-Need-Momentjs
+        https://codesandbox.io/s/github/mui/material-ui/tree/master/examples/nextjs-with-typescript
+            Link, _Document fileok, extensionok lehet jellenek
+        React
+            https://github.com/LukasMasuch/best-of-react
+            https://github.com/typescript-cheatsheets/react
+        UI
+            https://github.com/brillout/awesome-react-components#slider
+            https://gist.github.com/nilshartmann/decb10d37a76ae3ab58f0c7755beb038
+        Next JS
+            https://github.com/unicodeveloper/awesome-nextjs#extensions
+
+mui
+    impl
+        https://mui.com/material-ui/react-css-baseline/ - global css reset lehet kell majd
+        clientsidera lehet kell majd headbe, <meta name="emotion-insertion-point" content="" />
+        lehet a create emotioncache fgv.-ből kell a másik
+            // Emotion’s default settings will be replaced with our custom styles and that this information will be configured both on the client and server sides
+            export default function createEmotionCache() {
+            return createCache({ key: "css", prepend: true }); //  prepend option is set to be true, which will cause our custom styles to load first
+            }
+            prepend kell-e
+        reactStrictMode: false ?
+        mui + ts example react v17.0.2-el jó? nextjs + react 18 issue lenne? -> next v12.1.7-el jó?
+        not to use emotionCache?
+
+        @tailwind base  írt felül mui style-t
+        
+        tailwind + MUI
+            a css resetjeikkel gond lehet, inkompatibilitások léphetnek fel, egyszerre csak 1-et érdemes használni
+            https://mui.com/material-ui/guides/interoperability/#tailwind-css
+            https://mui.com/base/guides/working-with-tailwind-css/
+
+            "@tailwind base" eltáv.
+            ha bármivel gond van itt keresgélni, ezt adja hozzá a fenti direktíva, global.css-be betenni
+                https://github.com/tailwindlabs/tailwindcss/blob/master/src/css/preflight.css
+
+            egyszerűbb változtatásokhoz a styled mui komponensekhez mehet a tailwind, ha conflict van akkor a  "@mui/base"-beli komponenst kell használni
+            
+            MUI + Tailwind theme összehangolás
+                https://github.com/damien-monni/material-ui-tailwind
+
+            tailwind.config.js
+                prefix: 'tw-', - To avoid the naming conflicts
+                important: true, -  tailwind classes to get more precedence than any other css styles
+
+            https://www.youtube.com/watch?v=QQIfuMlA6TI
+            fontos hogy milyen sorrendben olvassa fel a style-okat "css injection order", a tailwindnek kell legalul lennie
+                1)
+                    important: '#root' - main app div
+                    ilyenkor túl sok !important style usage
+                2)
+                    import {StyledEngineProvider} from @mui/material, az <App /> -t bewrappelni vele
+                3)
+                    return createCache({ key: "css", prepend: true });
+                    
+            https://github.com/mui/material-ui/tree/master/examples/tailwind-css
+            https://github.com/crimson-gao/nextjs-tailwinds-mui-template
+            https://tailwindcss.com/docs/preflight
+            "It is necessary to Remove Tailwind's base directive in favor of the CssBaseline component provided by @mui/material and fix the CSS injection order"
+            https://www.material-tailwind.com/ - mint a MUI csak tailwindre optimalizálva
+
+    téma obj kiterjeszthető custom propokkal
+    https://zenoo.github.io/mui-theme-creator/ - theme gen.
+    https://m2.material.io/inline-tools/color/ - color palette gen.
+
+login, logout
+debugolás beáll typescript !!!
+date filter csempék
+d3 + react olvas cikk, best practises gyűjt
+pricing chart átvesz
+
+---------------------------------act feladatok
+*git check file flter, rendbetenni szerver pull-hoz, egyszerű prod indíthatóság szerveren, egyenlőre docker nélkül
+*szerver git optim, elég legyen egy pulla szerveren
+*    normális prod indítás
+
+a screener, alert func menjen minden ami eddig kész lett minden cégre  
+   alertek az új transp rendszerbeliek legyenek, alert, robot egyben 
+      táblázatban vezérelhető, checkolható, alerteket is adjon a rendszer email pld.
+
+docker fix
+sched jobs teljes funkcionalitás
+    m cap számolása cégenként
+    minőségi check
+    és még mi?
+
+bubi chart
+    pixelratio figyelembevétele mindenhol
+        telómon 2.75 a pixel ratio -> sokkal nagyobb canvas felbontás !!!
+    optim, refaktorálni a kódot, tökéletes clean struktúra
+        number[] -> [number,number,number,number], REGL.Vec4
+            egységes color var !!! regl.vec4
+        custom hookot csinálni amiből csak lehet
+        interface IXxx kezdet, TS coding guide
+        amit nem haszn, kipucolni egy dump vagy archive file-ba
+        ami nem használ state-t az külső method, illetve ha univerzális
+        MINDEN-t kikommentelni
+        + a clean code elvek a dump.txt-ben
+
+    d3 js chartok reactal, részletesen komponensekre lebontva axist, stb    
+        https://blog.griddynamics.com/using-d3-js-with-react-js-an-8-step-comprehensive-manual/
+
+    néha kilóg a tooltipből a mcap
+    egymástól elütő színek, beállítani a color listát
+    initial simulation anim beintegrálása hogy éljen kicsit a scene
+        ha lehet folyamatosan mozogjanak a bubik lassan, van rá egy example bubi chart
+    ahol kevés bubi ott jobban tölse ki a teret
+    groupok nem csak az adott szektorból, exchből tartalmaznak adatokat
+        !!! csak a bubble boardereken mutat valamiért egyéb dolgokat
+    tooltip sleep, proci tehermentesítés
+    maxR meghat hogy kitöltse a collapsed, packed layout is a canvast
+    console.log kiszedése
+    teljesen moduláris komponens kial
+    többféle easinget is lehetne beleteni webgl kód, interp. módszer, glisify vagy mi
+csempék
+    y tengely felirat
+    x axis alatt info text
+    refactoring
+        minden svg elem külön komponens legyen a végén
+            d3 react cikkben a megoldások tanulm.
+    amíg nincs adat addig valami loading screen minden charthoz
+    date filter
+        date filter requery data from server
+        szerintem minden csempének egyszerre kell a filter
+pontos adatquaility sql feltétel!!!
+    NYSE, NASDAQ, AMEX tőzsdék
+users, login, register, user profile, mail sending
+pricing chart oldal
+    search func
+    chart
+    minden _own script integ
+fizetés integ, Stripe
+admin felület
+    sched jobokhoz egy státusz
+    rendszer summary hány cég stb
+screener gui
+
+sector industry leárazottság x legnagyobb legjobb céget venni
+    a legjobb cégeket venni ezen ágazatokból
+
+https://stackoverflow.com/questions/48757095/typescript-class-composition
+
+AI assisted web dev. tanfolyam
+
+next.js.config -  reactStrictMode: true - dev módban 2x renderelődik
+
+skeleton míg betöltenek bizonyos oldalak(https://www.youtube.com/watch?v=7MKEOfSP2s4)
+
+https://ui.shadcn.com/
+    UI component lib
+    nincs npm install csak copy paste, amit testre lehet szabni tetszőlegesen
+
+először kitakarítani material UI-t, helyrerakni a projektet
+    style.ts - Tailwindes tutor projectből
+alapvető struktúra, svg hierarchia rendbetétele, dimenzió, stb
+    viewbox context
+    mi mihez tartozik mekkora méretű
+mouse pointer elcsúszva
+nagyon lassú a lekérdezés
+!!! részek pricing chartnál illetve resp
+date filter baron svg-n hiba
+date filteren mousemove-ra az mouse pozi label látszódjon, hogy mit választok ki drag előtt
+css káosz clearing
+töltéskor átvezető kép elhalványult chartal(overlay)
+
+milestone
+    tökéletes looking charts
+    tökéletes html tailwindel
+    opció dockerrel és anélkül
+    struktúra mindenhol 100%, maximálisan átlátható projekt, mindenhol a megfelelő best practise
+
+react emails
+    https://react.email/
+    react html email lib, template gyártó
+    Tailwind kompatibilis
+resend
+    ez meg a levél elküldéséhez, de fizetős...
+
+https://github.com/gasti6/personal-portfolio
+
+----------------
+
+kell egy svg logo
+
+https://docs.tss-react.dev/ssr/next.js
+
+Tailwind CSS’s preflight vagy a MUI CSSBaseline használata css resethez
+
+pricing chart control groupok külön compokba
