@@ -14,7 +14,7 @@ const BubbleChartLegend: React.FC<BubbleChartLegendInputProps> = (inputs) => {
 				  borderColor: d.colorBorderHex,
 				}}
 			  ></span>
-			  <p>{d.title}</p>
+			  <p className="text-black">{d.title}</p>
 			</li>
 		  ))}
 		</ul>

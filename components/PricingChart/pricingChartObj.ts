@@ -988,6 +988,10 @@ export default class CompanyPricingChart {
     // set loading state
     self._show_loading_screen();
 
+    // !!!!!!!test
+    //self.startDate = new Date('2020-01-19')
+    //self.endDate = new Date('2023-01-20')
+
     let endDate = new Date(self.endDate);
     endDate.setDate(endDate.getDate() + 1);
 
@@ -1008,6 +1012,7 @@ export default class CompanyPricingChart {
           data: RequestCalcFairPriceCommon | RequestCalcFairPriceError;
           status: EnumApiResponseStatus;
         }) => {
+
           // can be charted?
           if (req_data.data.can_chart) {
             self._hideErrorMessage();
@@ -1713,10 +1718,8 @@ export default class CompanyPricingChart {
     if (self.startDate < newValues[0]) self.startDate = newValues[0];
 
     // do brush
-    self.brushComponent!.call(self.brush!.move, [
-      [self.xDateFilter!(self.startDate), 0],
-      [self.xDateFilter!(self.endDate), 0],
-    ]);
+    self.brushComponent!.call(self.brush!.move,
+      [self.xDateFilter!(self.startDate), self.xDateFilter!(self.endDate)]);
   }
 
   private _updateDebugConsole(metricId: string) {
@@ -1993,6 +1996,7 @@ export default class CompanyPricingChart {
     return `${(d.valueOf() * 100).toFixed(2)}%`;
   }
 
+  // html tooltip
   private _init_html_tooltip() {
     let self = this;
 
@@ -3015,36 +3019,27 @@ export default class CompanyPricingChart {
     }
   }
 
-  private _getMousePosAtElement(svg: SVGElement, event: MouseEvent) {
+  private _getMousePosAtElement(event: MouseEvent)
+  {
     const self = this;
 
-    const rect = svg.getBoundingClientRect();
+    // get main svg node, dims
+    const mainSvgNode = self.mainChartSvgNode.node()
+    const mainSvgPxDims = mainSvgNode!.getBoundingClientRect();
 
-    // Calculate the mouse position relative to the SVG element
-    const mouseX = event.clientX - rect.left;
-    const mouseY = event.clientY - rect.top;
+    // mouse px position relative to main svg 
+    const mousePosSvgPxX = event.clientX - mainSvgPxDims!.x; // mainSvgNode.clientX?
+    const mousePosSvgPxY= event.clientY - mainSvgPxDims!.y; // mainSvgNode.clientY?
 
-    // Convert the mouse position to the SVG coordinate system
-    const viewBox = self.mainChartSvgNode
-      .node()!
-      .getAttribute("viewBox")!
-      .split(" ");
-    const viewBoxX = parseFloat(viewBox[0]);
-    const viewBoxY = parseFloat(viewBox[1]);
-    const viewBoxWidth =
-      parseFloat(viewBox[2]) - self.inputs_json.size.margins.left * 2;
-    const viewBoxHeight =
-      parseFloat(viewBox[3]) - self.inputs_json.size.margins.top * 2;
+    // svg viewbox width, height
+    const mainSvgViewBox = mainSvgNode!.getAttribute("viewBox")!.split(" ");
+    const mainSvgViewBoxWidth = parseFloat(mainSvgViewBox[2]);
+    const mainSvgViewBoxHeight = parseFloat(mainSvgViewBox[3]);
 
-    const svgWidth = rect.width;
-    const svgHeight = rect.height;
-
-    console.log(`svgWidth ${svgWidth}`);
-    console.log(`svgHeight ${svgHeight}`);
-
-    const svgMouseX = (mouseX / svgWidth) * viewBoxWidth + viewBoxX;
-    const svgMouseY = (mouseY / svgHeight) * viewBoxHeight + viewBoxY;
-
+    // px -> viewbox pos
+    const svgMouseX = (mousePosSvgPxX / mainSvgPxDims.width) * (mainSvgViewBoxWidth);
+    const svgMouseY = (mousePosSvgPxY / mainSvgPxDims.height) * (mainSvgViewBoxHeight);
+    
     return { x: svgMouseX, y: svgMouseY };
   }
 
@@ -3057,31 +3052,15 @@ export default class CompanyPricingChart {
     let line = d3.select(node_obj);
     let lineNode = line.node();
 
-    let mouseSvgX = self._getMousePosAtElement(lineNode!, mouseEvent).x;
-    let mouseSvgY = self._getMousePosAtElement(lineNode!, mouseEvent).y;
-
-    // x coordinate of active chart area
-    let xPix =
-      mouseSvgX - //- mouseEvent.offsetX
-      self.inputs_json.size.margins.left -
-      self.inputs_json.size.margins.right;
-
-    // adott path elemeken mousemove, event
-    // adott parenthez képest jobb fent x y coords
-
-    console.log(`mouseSvgX ${mouseSvgX}`); // viewbox coords
-    console.log(`mouseSvgY ${mouseSvgY}`);
-    console.log(`offsetX ${mouseEvent.offsetX}`);
-    console.log(`clientX ${mouseEvent.clientX}`);
-    console.log(`pageX ${mouseEvent.pageX}`);
+    const mouseSvgXY = self._getMousePosAtElement(mouseEvent); 
 
     // search for y line chart area coordinate from x chart koord
-    let pos = self._getYForLine(lineNode!, xPix);
+    let pos = self._getYForLine(lineNode!, mouseSvgXY.x - self.inputs_json.size.margins.left);
 
     //set tooltip axes rulers positions
     self
       .tooltip!.select("#tooltip-line-x")
-      .attr("x2", xPix * -1)
+      .attr("x2", (mouseSvgXY.x * -1.0) + self.inputs_json.size.margins.left)
       .attr("y2", 0);
     self
       .tooltip!.select("#tooltip-line-y")
@@ -3091,20 +3070,20 @@ export default class CompanyPricingChart {
     // set tooltip axes text positions
     self
       .tooltip!.select("#tooltip-axis-x-text")
-      .attr("x", xPix * -1) // itt az aktív y tengely kell pld. barok esetén !!!
+      .attr("x", (mouseSvgXY.x * -1) + self.inputs_json.size.margins.left) // itt az aktív y tengely kell pld. barok esetén !!!
       .text(d3.format("~s")(self.y!.invert(pos.y))); //  y text
 
     self
       .tooltip!.select("#tooltip-axis-y-text")
       .attr("y", self.inputs_json.size.height - pos.y)
-      .text(self.x!.invert(xPix).toISOString().split("T")[0]); // date text
+      .text(self.x!.invert(mouseSvgXY.x - self.inputs_json.size.margins.left).toISOString().split("T")[0]); // date text
 
     self.tooltip!.select("#tooltip-text").text(price_type_text);
 
     // update tooltip position
     self.tooltip!.attr(
       "transform",
-      `translate(${xPix + self.inputs_json.size.margins.left},${
+      `translate(${mouseSvgXY.x},${
         pos.y + self.inputs_json.size.margins.top
       })`
     );
@@ -3120,6 +3099,7 @@ export default class CompanyPricingChart {
       d3.select("#line_hds_helper").style("display", "inline");
       d3.select("#line_fair_p_helper").style("display", "inline");
       self._showElement(d3.select("#line_fair_p"), 1.0);
+      self._showElement(d3.selectAll(".fair_p_circles"), 1.0);
       self._showElement(self.fairp_curr_circle!, 1.0);
       self._showElement(self.label_lastp!);
 
@@ -3300,11 +3280,14 @@ export default class CompanyPricingChart {
     d3.select("#tooltip-bars-text-date").text(date.toISOString().split("T")[0]);
     d3.select("#tooltip-bars-text-value").text(valStr);
 
+    const mouseSvgXY = self_in._getMousePosAtElement(mouseEvent); 
+
+    // set tooltip location
     let tooltip_bars = d3
       .select("#tooltip_bars")
       .attr(
         "transform",
-        `translate(${mouseEvent.offsetX},${mouseEvent.offsetY})`
+        `translate(${mouseSvgXY.x},${mouseSvgXY.y})`
       );
 
     self_in._showElement(tooltip_bars, 1.0, 200);
@@ -3928,11 +3911,16 @@ export default class CompanyPricingChart {
       .attr("pointer-events", () => (self.show_dw ? "none" : "all"))
       .on("mouseover", function (mouseEvent) {
         if (!self.show_dw) {
-          let bar = d3.select(this);
-          let darkerColor = d3.color(bar.attr("fill"))!.darker().formatHex();
-          bar.transition().attr("fill", darkerColor);
-          let d = bar.data()[0] as CompanyPricingChartRecessionDatesElement;
 
+          // get bar obj and data
+          let bar = d3.select(this);
+          let d = bar.data()[0] as CompanyPricingChartRecessionDatesElement;
+          
+          // make bar darker
+          const darkerColor = d3.color(bar.attr("fill"))!.darker().formatHex();
+          bar.transition().attr("fill", darkerColor);
+          
+          // set tooltip texts
           d3.select("#tooltip-rec-text-name").text(d!.desc);
           d3.select("#tooltip-rec-text-dates").text(
             `${d!.from.toISOString().split("T")[0]} - ${
@@ -3940,9 +3928,12 @@ export default class CompanyPricingChart {
             }`
           );
 
+          const mouseSvgXY = self._getMousePosAtElement(mouseEvent); 
+
+          // set tooltip position
           self.tooltip_rec!.attr(
             "transform",
-            `translate(${mouseEvent.offsetX},${mouseEvent.offsetY})`
+            `translate(${mouseSvgXY.x},${mouseSvgXY.y})`
           );
 
           self._showElement(self.tooltip_rec!, 1.0, 200);
@@ -4043,9 +4034,15 @@ export default class CompanyPricingChart {
       })
       .on("mousemove", function (mouseEvent) {
         if (self.show_dw && self.showed_dw) {
+          
+          const mouseSvgXY = self._getMousePosAtElement(mouseEvent);
+
           // get pixel values
           let xPix = mouseEvent.offsetX - self.inputs_json.size.margins.left;
           let yPix = mouseEvent.offsetY - self.inputs_json.size.margins.top;
+
+          xPix = mouseSvgXY.x - self.inputs_json.size.margins.left;
+          yPix = mouseSvgXY.y - self.inputs_json.size.margins.top;
 
           // get dates from pixels
           let date = self.x_rec_bars!.invert(xPix);
@@ -4083,8 +4080,8 @@ export default class CompanyPricingChart {
           // move data window tooltip position
           self.tooltip_dw!.attr(
             "transform",
-            `translate(${xPix + self.inputs_json.size.margins.left},${
-              yPix + self.inputs_json.size.margins.top
+            `translate(${xPix},${
+              yPix
             })`
           );
         }
@@ -4419,8 +4416,8 @@ export default class CompanyPricingChart {
     };
     // initialize brush component
     self.brush = d3
-      .brush()
-      .handleSize(10) //resp
+      .brushX()
+      .handleSize(10)
       .extent([
         [0, 0],
         [self.inputs_json.size.width, self.dateFilterHeight],
@@ -4459,6 +4456,7 @@ export default class CompanyPricingChart {
     self.yAxisCallDateFilter!.scale(self.yDateFilter!);
     self.yAxisDateFilter!.transition().call(self.yAxisCallDateFilter!);
 
+    // set date filter area(hds)
     self
       .areaPath!.transition()
       .attr("d", self.dateFilterarea!(self.hds_filtered!))
@@ -4468,12 +4466,12 @@ export default class CompanyPricingChart {
   private _handleBrushEvent(selection: BrushSelection) {
     let self = this;
 
-    const selXy = selection as [[number, number], [number, number]];
+    const selXy = selection as [number, number];
 
     const sel =
       selection == undefined
         ? self.xDateFilter!.range()
-        : [selXy[0][0], selXy[1][0]];
+        : [selXy[0], selXy[1]];
 
     const newValues = sel.map((d) => self.xDateFilter!.invert(d));
     self.startDate = newValues[0];
@@ -4490,9 +4488,11 @@ export default class CompanyPricingChart {
       (60 * 60 * 24 * 1000) /
       365
     ).toFixed(2);
+
+    // set title with selected date interval
     self.title!.text(`${self.title_text} (${selYears} years)`);
 
-    // show date texts
+    // show date, duration days texts
     d3.select("#tooltip-df-from-text")
       .attr("x", xCoordFrom + self.inputs_json.size.margins.left)
       .text(self.xDateFilter!.invert(xCoordFrom).toISOString().split("T")[0]);

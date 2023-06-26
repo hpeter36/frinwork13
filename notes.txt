@@ -3019,4 +3019,31 @@ https://docs.tss-react.dev/ssr/next.js
 
 Tailwind CSS’s preflight vagy a MUI CSSBaseline használata css resethez
 
-pricing chart control groupok külön compokba
+pricing chart
+    az cookie -> cbx load érékek nem kerülnek be a chart initkor vagy nemtudom
+    control groupok külön compokba
+    a html tooltip a compba ne global body elem
+        global css-t is comp.module.css-be tenni
+        _init_html_tooltip
+        _update_initial_html_tooltip
+    dw
+        initkor ha dw checked nem aktiválódik
+        jobb lenne html tooltip a dw-nek szintén
+            a fp circles-el egyszerre használja
+        dw mindig konkrét adatot vegyen ki ne interpoláljon
+        dw poziján igazítani kicsit
+        itt is lehetne az overlay mint a performance chart esetén
+            vagy az opacity legyen 0.5 minden elemre
+    
+    gyorsabb adatlekérés optim
+    tengely label, értékek összefolynak
+    cbx összehangolások
+        eg. bar chartok esetén mit kapcsoljon ki, stb
+        data window performance kökcsönösen togglezze egymást ellen
+    brush bg nem látszódik
+    a react save & refresh-el legyen kompatibilis ne adja hozzá még1x a chartot
+        begajdul
+    mivel lehetne még interaktívabbá tenni a chartot?
+    betöltéskor "null" illetve valami jobb loading    
+
+d3 chart coding guildline

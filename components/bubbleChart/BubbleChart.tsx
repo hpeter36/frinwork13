@@ -1943,8 +1943,8 @@ const BubbleChart: React.FC<BubbleChartInputProps> = (inputs) => {
 		subDataAct.current = await getData(selected_plan.current);
 		setLegendData(getLegendData(selected_split.current));
   
-		console.log("useffect, subDataAct");
-		console.log(subDataAct.current);
+		//console.log("useffect, subDataAct");
+		//console.log(subDataAct.current);
   
 		//setTest("Second");
   
@@ -2189,6 +2189,8 @@ const BubbleChart: React.FC<BubbleChartInputProps> = (inputs) => {
   
 	return (
 	  <div className="flex flex-col items-center justify-items-center">
+
+		{/* select plan */}
 		<div>
 		  <input
 			id="cbx_free"
@@ -2216,6 +2218,8 @@ const BubbleChart: React.FC<BubbleChartInputProps> = (inputs) => {
 		  />
 		  <label htmlFor="cbx_premium">Premium</label>
 		</div>
+
+		{/* split by */}
 		<div>
 		  <input
 			id="cbx_coll"
@@ -2244,6 +2248,8 @@ const BubbleChart: React.FC<BubbleChartInputProps> = (inputs) => {
 		  />
 		  <label htmlFor="cbx_spl_sector">Split by sector</label>
 		</div>
+		
+		{/* bubble chart  */}
 		<div>
 		  <canvas ref={canvasRef} />
 		</div>

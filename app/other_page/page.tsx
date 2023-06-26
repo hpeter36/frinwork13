@@ -1,8 +1,11 @@
+'use client'
+
 import React from 'react'
+import { Button } from 'flowbite-react'
 
 const OtherPage = () => {
   return (
-	<div className='flex min-h-screen flex-col items-center justify-between p-24'>OtherPage</div>
+	<div className='min-h-screen'><Button>test</Button></div>
   )
 }
 

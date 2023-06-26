@@ -17,7 +17,7 @@ export default function MuiThemeProvider(props: { children: React.ReactNode }) {
 
   return (
     <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
+      {/* <CssBaseline /> */}
       {children}
     </ThemeProvider>
   );

@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef} from "react";
+import { useRef, useEffect} from "react";
 
 import { BubbleChartToolTipInputProps } from "./types"
 
@@ -16,6 +16,7 @@ const BubbleChartToolTip: React.FC<BubbleChartToolTipInputProps> = (inputs) => {
 	  })
 	);
   
+	// set x,y coordinates if we have input data
 	inputs.inputs &&
 	  toolTipRef.current?.style.setProperty(
 		"top",
@@ -27,17 +28,12 @@ const BubbleChartToolTip: React.FC<BubbleChartToolTipInputProps> = (inputs) => {
 		`${inputs.inputs.position.x + 2}px`
 	  );
   
-	toolTipRef.current?.style.setProperty(
-	  "display",
-	  inputs.inputs && inputs.inputs.isCanvasMouseOver ? "block" : "none"
-	);
-  
 	return (
 	  <>
 		<div
 		  ref={toolTipRef}
 		  id="bubble-tooltip"
-		  className={`w-[500px] text-black fixed`}
+		  className={`w-[500px] text-black fixed ${inputs.inputs && inputs.inputs.isCanvasMouseOver ? 'block' : 'hidden'}`}
 		>
 		  <div className="flex">
 			<div className="flex flex-col w-1/3">

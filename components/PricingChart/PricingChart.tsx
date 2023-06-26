@@ -1,5 +1,7 @@
 "use client";
 
+import styles from './PricingChart.module.css'
+
 import React, { useEffect, useRef, useState } from "react";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -35,6 +37,7 @@ import {
   chartTypeMeta,
   initialCommonCpCbxMeta,
 } from "./inputs";
+import { isConstructorDeclaration } from 'typescript';
 
 // refactor
 // comp search hordozható
@@ -47,8 +50,8 @@ const PricingChart: React.FC = () => {
   
   // states
   // const [compMeta, setCompMeta] = useState<CompanyMetaData | null>(null);
-  //const [selectedChartType, setSelectedChartType] =
-  //  useState<ChartTypeMetaElement | null>(null);
+  const [selectedChartType, setSelectedChartType] =
+   useState<ChartTypeMetaElement>(() => setDefaultChartTypeRadioValue());
   const [selectedFairPriceType, setSelectedFairPriceType] = useState("");
   const [selectedCpCbxVals, setSelectedCpCbxVals] =
     useState<ControlPanelCbxVals | null>(null);
@@ -57,8 +60,9 @@ const PricingChart: React.FC = () => {
 
   // refs
   const compMeta = useRef<CompanyMetaData | null>(null);
-  const selectedChartType = useRef<ChartTypeMetaElement | null>(null);
+  //const selectedChartType = useRef<ChartTypeMetaElement | null>(null);
   const pricingChartObj = useRef<CompanyPricingChart | null>(null);
+  const lastCpCbxKey = useRef<string | null>(null);
 
   // functions
   function setInitialOrReadCookieValue(key: string) {
@@ -70,6 +74,12 @@ const PricingChart: React.FC = () => {
     return cookieVal;
   }
 
+  useEffect(() => {
+
+    console.log(selectedChartType);
+
+  }, [selectedChartType])
+
   const handleChartTypeSelectEvent = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -80,16 +90,20 @@ const PricingChart: React.FC = () => {
 
     // set cookie and selected element meta
     setCookie("comp_p_chart_type", chartTypeMeta[i].id);
+
+    // save selection to state
     const ctMeta: ChartTypeMetaElement = {
       idx: chartTypeMeta[i].idx,
       id: chartTypeMeta[i].id,
       label: chartTypeMeta[i].label,
       fpMetricName: chartTypeMeta[i].fpMetricName,
     };
+    setSelectedChartType(ctMeta);
 
-    //console.log(`foundCtMeta eve: ${JSON.stringify(ctMeta)}`);
+    console.log(selectedVal)
+    console.log(i)
+    
 
-    selectedChartType.current = ctMeta;
     //setSelectedChartType(ctMeta);
 
     // selectedChartType.id - chartType
@@ -146,24 +160,19 @@ const PricingChart: React.FC = () => {
     }
   };
 
-  const handleCpCbxChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    key: string
-  ) => {
-    // save new value to cbx data array
-    const cookieVal = event.target.checked ? "1" : "0";
-    setSelectedCpCbxVals((prevVal) => {
-      return { ...prevVal, [key]: cookieVal };
-    });
+  useEffect(() => {
 
-    // update cookie
-    setCookie(initialValsMeta[`selectedCpCbx_${key}`].cookieName, cookieVal);
+    const key = lastCpCbxKey.current;
 
+    // manage chart
+    // rev
     if (key === "rev" || key === "revp") {
       const revCbxState = selectedCpCbxVals!["rev"] === "1" ? true : false;
       const revpCbxState = selectedCpCbxVals!["revp"] === "1" ? true : false;
       pricingChartObj.current?.ManageBars("rev", revCbxState, revpCbxState);
-    } else if (key === "fcf_rollsum" || key === "fcf_rollsum_perc") {
+    } 
+    // fcf
+    else if (key === "fcf_rollsum" || key === "fcf_rollsum_perc") {
       const fcfCbxState =
         selectedCpCbxVals!["fcf_rollsum"] === "1" ? true : false;
       const fcfpCbxState =
@@ -173,7 +182,9 @@ const PricingChart: React.FC = () => {
         fcfCbxState,
         fcfpCbxState
       );
-    } else if (key === "nics_rollsum" || key === "nics_rollsum_perc") {
+    } 
+    // nics
+    else if (key === "nics_rollsum" || key === "nics_rollsum_perc") {
       const nicsCbxState =
         selectedCpCbxVals!["nics_rollsum"] === "1" ? true : false;
       const nicspCbxState =
@@ -183,7 +194,9 @@ const PricingChart: React.FC = () => {
         nicsCbxState,
         nicspCbxState
       );
-    } else if (key === "ebitda_rollsum" || key === "ebitda_rollsum_perc") {
+    } 
+    // ebitda
+    else if (key === "ebitda_rollsum" || key === "ebitda_rollsum_perc") {
       const ebitdaCbxState =
         selectedCpCbxVals!["ebitda_rollsum"] === "1" ? true : false;
       const ebitdapCbxState =
@@ -193,11 +206,38 @@ const PricingChart: React.FC = () => {
         ebitdaCbxState,
         ebitdapCbxState
       );
-    } else if (key === "capex") {
-      pricingChartObj.current?.ShowHideFcfStackedChart(event.target.checked);
-    } else if (key === "bookval") {
-      pricingChartObj.current?.ShowHideBookValSubChart(event.target.checked);
+    } 
+    // capex
+    else if (key === "capex") {
+      const capexChecked = selectedCpCbxVals!["capex"] === "1" ? true : false;
+      pricingChartObj.current?.ShowHideFcfStackedChart(capexChecked);
+    } 
+    // bookval
+    else if (key === "bookval") {
+      const bookvalChecked = selectedCpCbxVals!["bookval"] === "1" ? true : false;      
+      pricingChartObj.current?.ShowHideBookValSubChart(bookvalChecked);
     }
+
+  },[selectedCpCbxVals]);
+
+  const handleCpCbxChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    key: string
+  ) => {
+
+    lastCpCbxKey.current = key;
+
+    // get cbx input
+    const cookieVal = event.target.checked ? "1" : "0";
+
+    // update cookie
+    setCookie(initialValsMeta[`selectedCpCbx_${key}`].cookieName, cookieVal);
+
+    // save new value to cbx data array
+    setSelectedCpCbxVals((prevVal) => {
+      return { ...prevVal, [key]: cookieVal };
+    });
+
   };
 
   function handleResetDateFilterButtonClick() {
@@ -223,21 +263,12 @@ const PricingChart: React.FC = () => {
       (d) => d.id === setInitialOrReadCookieValue("selectedChartType")
     )!;
 
-    //console.log(`foundCtMeta def: ${JSON.stringify(foundCtMeta)}`);
-
-    selectedChartType.current = {
+    return {
       idx: foundCtMeta.idx,
       id: foundCtMeta.id,
       label: foundCtMeta.label,
       fpMetricName: foundCtMeta.fpMetricName,
     };
-
-    // setSelectedChartType({
-    //   idx: foundCtMeta.idx,
-    //   id: foundCtMeta.id,
-    //   label: foundCtMeta.label,
-    //   fpMetricName: foundCtMeta.fpMetricName,
-    // });
   }
 
   async function setDefaultSymbol() {
@@ -304,7 +335,7 @@ const PricingChart: React.FC = () => {
       //console.log(`useffect ${JSON.stringify(selectedChartType)}`);
 
       const inputsVis: InitVisInput = {
-        chartType: selectedChartType.current!.id,
+        chartType: selectedChartType.id,
         symbol: compMeta.current!.ticker,
         compName: compMeta.current!.name,
       };
@@ -337,7 +368,7 @@ const PricingChart: React.FC = () => {
                 control={
                   <Radio
                     onChange={handleChartTypeSelectEvent}
-                    checked={selectedChartType.current?.id === val.id}
+                    checked={selectedChartType.id === val.id}
                   />
                 }
                 label={val.label}
@@ -363,12 +394,12 @@ const PricingChart: React.FC = () => {
             <FormControlLabel
               value="fairp_type_historical"
               control={<Radio />}
-              label={`fairp_type_historical ${selectedChartType.current?.fpMetricName}`}
+              label={`fairp_type_historical ${selectedChartType.fpMetricName}`}
             />
             <FormControlLabel
               value="fairp_type_industrial"
               control={<Radio />}
-              label={`Fair price by ${selectedChartType.current?.fpMetricName} industrial average`}
+              label={`Fair price by ${selectedChartType.fpMetricName} industrial average`}
             />
           </RadioGroup>
         </FormControl>
@@ -397,7 +428,7 @@ const PricingChart: React.FC = () => {
                 label={cpMeta.label}
                 sx={{
                   display:
-                    selectedChartType.current?.id === ctMeta.id
+                    selectedChartType.id === ctMeta.id
                       ? "block"
                       : "none",
                 }}
@@ -452,9 +483,11 @@ const PricingChart: React.FC = () => {
         </Stack>
       </div>
       {/* pricing chart */}
-      <div className="company-pricing-chart-main"></div>
-      <div className="company-pricing-chart-compinfo"></div>
-      <div className="company-pricing-chart-debug"></div>
+      <div className=" p-9">
+        <div className="company-pricing-chart-main"></div>
+        <div className="company-pricing-chart-compinfo"></div>
+        <div className="company-pricing-chart-debug"></div>
+      </div>
     </div>
   );
 };

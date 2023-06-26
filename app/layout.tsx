@@ -21,7 +21,9 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <head></head>
+      <head>
+        <link rel="stylesheet" href="/styles/globalStyles.css" />
+      </head>
       <body className={robotoFont.className}>
         <NextAppDirEmotionCacheProvider options={{ key: "css"}}>
         {/* , prepend: true  */}
@@ -29,7 +31,7 @@ export default async function RootLayout({
             <SessProvider session={session!}>
               <div className="main_wrapper">
                 <Nav />
-                <main className="flex-center">{children}</main>
+                <main>{children}</main>
               </div>
             </SessProvider>
           </MuiThemeProvider>

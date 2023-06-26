@@ -1,3 +1,5 @@
+import fs from 'fs';
+
 import { NextResponse } from "next/server";
 import { ApiResponse, EnumApiResponseStatus } from "../../../types";
 import {
@@ -114,8 +116,13 @@ export async function GET(request: Request) {
       `http://${process.env.DATA_SERVER}:${process.env.DATA_SERVER_PORT}/api/v1/resources/calc_fair_price_${fairp_type}?ticker=${ticker}&start_date=${start_date}&end_date=${end_date}`
     );
     let data: RequestCalcFairPriceCommon | RequestCalcFairPriceError =
-      await resp.json();
+    await resp.json();
     data = await data;
+
+    // !!! TEST ONLY
+    // const fsResp = fs.readFileSync('public/assets/pricingChart/test.json', 'utf8');
+    // const data: RequestCalcFairPriceCommon | RequestCalcFairPriceError = JSON.parse(fsResp);
+    // return NextResponse.json(data, { status: 200 });
 
     // return data
     return NextResponse.json(
