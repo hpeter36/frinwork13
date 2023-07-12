@@ -10,6 +10,7 @@ async function LoginPage() {
 	const router = useRouter();
 	const { data: session, status } = useSession();
 
+	// go to home page if logged in
 	if(session)
         router.push('/')
 

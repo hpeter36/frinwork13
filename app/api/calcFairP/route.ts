@@ -2,10 +2,7 @@ import fs from 'fs';
 
 import { NextResponse } from "next/server";
 import { ApiResponse, EnumApiResponseStatus } from "../../../types";
-import {
-  RequestCalcFairPriceCommon,
-  RequestCalcFairPriceError,
-} from "../../utils/pricingChart";
+import { RequestCalcFairPriceCommon, RequestCalcFairPriceError } from '@/components/PricingChart/pricingChartObj';
 
 export async function GET(request: Request) {
   try {

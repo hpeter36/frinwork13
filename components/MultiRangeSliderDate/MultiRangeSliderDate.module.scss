@@ -1,0 +1,99 @@
+.container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slider {
+  position: relative;
+  width: 200px;
+
+  &__track {
+    position: absolute;
+    border-radius: 3px;
+    height: 5px;
+    background-color: #ced4da;
+    width: 100%;
+    z-index: 1;
+  }
+
+  &__range {
+    position: absolute;
+    border-radius: 3px;
+    height: 5px;
+    background-color: #9fe5e1;
+    z-index: 2;
+  }
+
+  &__left_value {
+    position: absolute;
+    color: #dee2e6;
+    font-size: 12px;
+    margin-top: 20px;
+    left: 6px;
+  }
+
+  &__right_value {
+    position: absolute;
+    color: #dee2e6;
+    font-size: 12px;
+    margin-top: 20px;
+    right: -4px;
+  }
+}
+
+.thumb {
+  pointer-events: none;
+  position: absolute;
+  height: 0;
+  width: 200px;
+  outline: none;
+
+  /* Removing the default appearance */
+  appearance: none;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+
+  /* For Chrome browsers */
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    background-color: #ff0505;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 0 1px 1px #cdd3d9;
+    cursor: pointer;
+    height: 18px;
+    width: 18px;
+    margin-top: 4px;
+    pointer-events: all;
+    position: relative;
+  }
+
+  /* For Firefox browsers */
+  &::-moz-range-thumb {
+    background-color: #f1f5f7;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 0 1px 1px #ced4da;
+    cursor: pointer;
+    height: 18px;
+    width: 18px;
+    margin-top: 4px;
+    pointer-events: all;
+    position: relative;
+  }
+
+  &__zindex_3 {
+    z-index: 3;
+  }
+
+  &__zindex_4 {
+    z-index: 4;
+  }
+
+  &__zindex_5 {
+    z-index: 5;
+  }
+}

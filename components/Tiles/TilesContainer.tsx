@@ -4,10 +4,6 @@ import React, { useRef } from "react";
 import { useState } from "react";
 import { gsap } from "gsap";
 import { Flip } from "gsap/dist/Flip";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Slider from "@mui/material/Slider";
-import Autocomplete from "@mui/material/Autocomplete";
 import { useDebounce } from "react-use";
 
 gsap.registerPlugin(Flip);
@@ -17,6 +13,7 @@ import { ApiResponse_GetTilesData } from "@/app/api/getTilesData/route";
 import BarChart from "./BarChart";
 import { BarChartInput, BarChartSettingBehaviour } from "./BarChart";
 import SearchCompany from "../SearchCompany";
+import MultiRangeSlider from "../MultiRangeSlider/MultiRangeSlider";
 
 import styles from "./TilesContainer.module.css";
 
@@ -25,9 +22,12 @@ const TilesContainer: React.FC = () => {
     null
   );
   const barChartNodes = useRef<(HTMLDivElement | null)[]>([]);
-  const [sliderValue, setSliderValue] = useState<number[]>([1, 100]);
-  const [sliderValueFinal, setSliderValueFinal] = useState<number[]>([1, 100]);
-  const [fullPeriod, setFullPeriod] = useState<Date[]>([]);
+
+  const sliderValue = useRef<number[]>([1, 100]);
+  const sliderValueFinal = useRef<number[]>([1, 100]);
+  const fullPeriod = useRef<Date[]>([]);
+
+
   const [selectedCompMetaData, setSelectedCompMetaData] =
     useState<CompanyMetaData>({
       ticker: "MSFT",
@@ -53,23 +53,23 @@ const TilesContainer: React.FC = () => {
 
   React.useEffect(() => {
     const handleUseEffect = async () => {
-      console.log(sliderValueFinal);
+      console.log(sliderValueFinal.current);
 
       // construct api query
       let qry = `/api/getTilesData?symbol=${selectedCompMetaData.ticker}`;
 
       // not first run,
-      if (fullPeriod.length > 0) {
+      if (fullPeriod.current.length > 0) {
         // get number -> dates
         const startDateStr = convertPercToDateStr(
-          fullPeriod[0],
-          fullPeriod[1],
-          sliderValueFinal[0]
+          fullPeriod.current[0],
+          fullPeriod.current[1],
+          sliderValueFinal.current[0]
         );
         const endDateStr = convertPercToDateStr(
-          fullPeriod[0],
-          fullPeriod[1],
-          sliderValueFinal[1]
+          fullPeriod.current[0],
+          fullPeriod.current[1],
+          sliderValueFinal.current[1]
         );
 
         console.log(`sd ${startDateStr} ed ${endDateStr}`);
@@ -84,11 +84,11 @@ const TilesContainer: React.FC = () => {
       const tilesData = respDataJson.data as ApiResponse_GetTilesData;
 
       // set full data periods
-      if (fullPeriod.length == 0) {
-        setFullPeriod([
+      if (fullPeriod.current.length == 0) {
+        fullPeriod.current =[
           new Date(tilesData.dates[0]),
           new Date(tilesData.dates[tilesData.dates.length - 1]),
-        ]);
+        ];
       }
 
       // cre4ate data struct
@@ -117,7 +117,7 @@ const TilesContainer: React.FC = () => {
       setBarChartDatas(barChartsDatasTmp);
     };
     handleUseEffect();
-  }, [sliderValueFinal, selectedCompMetaData.ticker]);
+  }, [sliderValueFinal.current, selectedCompMetaData.ticker]);
 
   // ez majd serverről jön kalkulálva !!!
   const chartBehaviourSettings: BarChartSettingBehaviour = { bgColor: "green" };
@@ -186,28 +186,33 @@ const TilesContainer: React.FC = () => {
     }
   }
 
-  const handleSliderChange = (event: Event, newValue: number | number[]) => {
-    setSliderValue(newValue as number[]);
+  const handleSliderChange = (actMinValue: number, actMaxValue: number) => {
+    sliderValue.current = [actMinValue, actMaxValue];
+    console.log(sliderValue.current)
   };
 
-  function valuetext(value: number) {
-    if (fullPeriod.length == 0) return "";
+  function labelFormat(value: number) {
+    if (fullPeriod.current.length == 0) return "";
 
-    return convertPercToDateStr(fullPeriod[0], fullPeriod[1], value);
+    return convertPercToDateStr(fullPeriod.current[0], fullPeriod.current[1], value);
   }
 
   // if we stop dragging date slider
   useDebounce(
     () => {
-      setSliderValueFinal(sliderValue);
+      sliderValueFinal.current = sliderValue.current;
+      console.log(`final ${sliderValueFinal.current}`)
     },
     500,
-    [sliderValue]
+    [sliderValue.current]
   );
 
   function handleSetCompanySymbolCallback(compMeta: CompanyMetaData) {
     setSelectedCompMetaData(compMeta);
   }
+
+  //  sliderValue adott slider min max 1...100 onchange-nél set
+  // value-> date label format 
 
   return (
     <div>
@@ -218,16 +223,7 @@ const TilesContainer: React.FC = () => {
         <SearchCompany callbackSetCompMeta={handleSetCompanySymbolCallback} />
       </div>
       <div className="flex justify-center">
-        <Box sx={{ width: 300 }}>
-          <Slider
-            getAriaLabel={() => "Temperature range"}
-            value={sliderValue}
-            onChange={handleSliderChange}
-            valueLabelDisplay="on"
-            valueLabelFormat={valuetext}
-            getAriaValueText={valuetext}
-          />
-        </Box>
+        <MultiRangeSlider min={1} max={100} onChange={handleSliderChange} labelFormat={labelFormat} />
       </div>
       <div className="grid grid-cols-6 gap-12 tiles_container">
         {barChartDatas?.map((d, i) => {

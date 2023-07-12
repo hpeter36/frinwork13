@@ -3044,6 +3044,55 @@ pricing chart
     a react save & refresh-el legyen kompatibilis ne adja hozzá még1x a chartot
         begajdul
     mivel lehetne még interaktívabbá tenni a chartot?
-    betöltéskor "null" illetve valami jobb loading    
+    betöltéskor "null" illetve valami jobb loading
+    fcf chart / capex kapcsolónál valami nem okés    
 
 d3 chart coding guildline
+
+új ui beépítése
+pricing chart fix
+backend tökéletes
+frontend nyitólap + chartok tökéletesen harmonizáljanak
+    lapok összekötése értelmesen
+fizetési lehetőség
+admin dashboard
+
+Tailwind UI
+Tailwind elements
+Flowbite
+
+Build and Deploy a Modern Next.js 13 Application | React, Next JS 13, TypeScript, Tailwind CSS (Car proj)
+    complex filtering, pagination, and searching using server-side rendering (SSR) 
+    https://www.youtube.com/watch?v=pUNSHPyVryU
+másik 3d website(React 3D Portfolio Website with Three.js | Build and Deploy Responsive React Portfolio)
+    https://www.youtube.com/watch?v=qALsVa-V9qo
+https://www.youtube.com/watch?v=pspsSn_nGzo - 10X Your Code with ChatGPT: How to Use it Effectively
+https://www.youtube.com/watch?v=sTeoEFzVNSc - ChatGPT Tutorial for Developers - 38 Ways to 10x Your Productivity
+https://www.youtube.com/watch?v=ifTF3ags0XI&t=17s - 25 VS Code Productivity Tips and Speed Hacks
+https://www.youtube.com/watch?v=LMagNcngvcU - (Figma -> React Js)Build and Deploy a Fully Responsive Modern UI/UX Website in React JS
+
+
+Next js, React radio button bug
+    https://github.com/vercel/next.js/issues/49499
+    https://github.com/facebook/react/issues/26876
+    https://github.com/facebook/react/pull/27024
+    workarounds
+        "name" levétele az inputokról
+        useeffect használata checked-re
+
+--------------
+compok, pagek server-client side decision
+data fetch location, type decide
+mi legyen usestate, prop, ref, refactor
+    fölös userefek, usestatek
+csak saját comp inputok legyenek
+
+loading screen, tökéletes kontrollált átmenet legyen betöltéskor a UI-on
+    streaming megval
+error screen
+Seo metadata pagekhez adása initial
+
+react strict mode, fast refresh megértés egyszerű dolgokon
+
+Bubblechart refactor, mind2 módszer legyen működőképes, szedjük ketté 2 komponensbe
+    Bubblechartnál ne renderelje már folyamatosan csak a chartot, illetve a tooltip-et az inputokat ne

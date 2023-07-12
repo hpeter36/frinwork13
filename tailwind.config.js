@@ -4,6 +4,7 @@ module.exports = {
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './node_modules/flowbite/**/*.js',
     './node_modules/flowbite-react/**/*.js',
   ],
   theme: {
@@ -23,10 +24,10 @@ module.exports = {
     },
   },
   //prefix: 'tw-',
-  important: true,
-  corePlugins: {
-    preflight: true, // css base, MUI CSSBaseLine használata e-helyett
-  },
+  //important: true,
+  // corePlugins: {
+  //   preflight: true,
+  // },
   plugins: [
     require("flowbite/plugin")
   ],
