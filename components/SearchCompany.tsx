@@ -23,13 +23,11 @@ const SearchCompany = ({ callbackSetCompMeta }: SearchCompanyProps) => {
     async () => {
       // time elapsed since last keystroke
       if (searchTerm && !isCompSelected.current) {
-        
-        
         setIsOpen(true);
 
         // get search res
         const respData: ApiResponse = await fetch(
-          `/api/getSearchComp?term=${searchTerm}`
+          `/api/getSearchComp?term=${searchTerm}&only_with_data=False`
         ).then((resp) => resp.json());
 
         // set state to show search res companies
@@ -38,9 +36,7 @@ const SearchCompany = ({ callbackSetCompMeta }: SearchCompanyProps) => {
       // empty search
       else setSearchedComps([]);
 
-      if (isCompSelected.current)
-      isCompSelected.current = false;
-
+      if (isCompSelected.current) isCompSelected.current = false;
     },
     500,
     [searchTerm]
@@ -52,19 +48,16 @@ const SearchCompany = ({ callbackSetCompMeta }: SearchCompanyProps) => {
   }
 
   // search itesm selected event
-  async function onClickListElement(e: React.MouseEvent<HTMLLIElement>)
-  {
+  async function onClickListElement(e: React.MouseEvent<HTMLLIElement>) {
+    const selectedVal = e.currentTarget.children[0].textContent;
 
-    const selectedVal = e.currentTarget.children[0].textContent
-    
     isCompSelected.current = true;
-    setIsOpen(false)
+    setIsOpen(false);
 
     // valid selection
     if (selectedVal && selectedVal?.indexOf(":") != -1) {
-
-      setSelectedComp(selectedVal)
-      setSearchTerm(selectedVal)
+      setSelectedComp(selectedVal);
+      setSearchTerm(selectedVal);
 
       const symbol = selectedVal?.split(":")[0];
 
@@ -77,8 +70,16 @@ const SearchCompany = ({ callbackSetCompMeta }: SearchCompanyProps) => {
 
       const compMeta = respData.data as CompanyMetaData;
 
-    callbackSetCompMeta(compMeta);
-    } 
+      //execute custom search callback
+      callbackSetCompMeta(compMeta);
+    }
+  }
+
+  function clearSearch(e: React.MouseEvent<HTMLElement>) {
+    setSearchTerm("");
+    setIsOpen(false);
+    setSearchedComps([]);
+    isCompSelected.current = false;
   }
 
   // options={searchedComps} - találat lista
@@ -86,9 +87,9 @@ const SearchCompany = ({ callbackSetCompMeta }: SearchCompanyProps) => {
   // onInputChange -> setSearchTerm
   // onChange= search res kiválasztási event -> get comp meta -> set comp meta callback
   return (
-    <>
+    <div className="relative">
       {/* search form */}
-      <form>
+      <form className="w-[300px] sm:w-[500px]">
         <label
           htmlFor="default-search"
           className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -119,31 +120,51 @@ const SearchCompany = ({ callbackSetCompMeta }: SearchCompanyProps) => {
             value={searchTerm}
             onChange={onSearchInputChanged}
             className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Search Mockups, Logos..."
-            required
+            placeholder="Search for companies"
           />
-          <button
-            type="submit"
-            className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            Search
-          </button>
+          {searchTerm !== "" && (
+            <button
+              type="submit"
+              className="absolute right-2.5 bottom-2.5 bg-gray-50 focus:outline-none px-4 py-2 cursor-pointer"
+              onClick={clearSearch}
+            >
+              <svg
+                className="w-6 h-6 text-gray-800 dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 14 14"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                />
+              </svg>
+            </button>
+          )}
         </div>
       </form>
 
       {/* search results */}
       {searchedComps.length > 0 && isOpen && (
         <div className="absolute">
-          <ul className="mb-8 space-y-4 text-left text-gray-500 dark:text-gray-400 bg-slate-200">
+          <ul className="min-w-[500px] mb-8 space-y-4 text-left text-gray-500 dark:text-gray-400 bg-slate-200">
             {searchedComps.map((companyTickerName, index) => (
-              <li key={index} className="hover:bg-slate-500 hover:text-white" onClick={onClickListElement}>
+              <li
+                key={index}
+                className="hover:bg-slate-500 hover:text-white"
+                onClick={onClickListElement}
+              >
                 <span>{companyTickerName}</span>
               </li>
             ))}
           </ul>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

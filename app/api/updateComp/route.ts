@@ -5,14 +5,13 @@ export async function GET(request: Request) {
   try {
     // get input
     const { searchParams } = new URL(request.url);
-    const term = searchParams.get("term");
+    const symbol = searchParams.get("symbol");
 
-    // input validation
-    // term
-    if (!term) {
+    // symbol
+    if (!symbol) {
       return NextResponse.json(
         {
-          data: "No 'term' is specified!",
+          data: "No 'symbol' is specified!",
           status:
             EnumApiResponseStatus[
               EnumApiResponseStatus.STATUS_ERROR_MISSING_PARAM
@@ -22,20 +21,14 @@ export async function GET(request: Request) {
       );
     }
 
-    // only_with_data
-    let onlyWithData = searchParams.get("only_with_data");
-    if (!onlyWithData) {
-      onlyWithData = "True";
-    }
-
     // construct uri
-    let uriStr = `http://${process.env.DATA_SERVER}:${process.env.DATA_SERVER_PORT}/api/v1/resources/search_for_company?term=${term}&only_with_data=${onlyWithData}`;
+    let uriStr = `http://${process.env.DATA_SERVER}:${process.env.DATA_SERVER_PORT}/api/v1/resources/get_company?ticker=${symbol}`;
     const respData = await fetch(uriStr).then((res) => res.json());
 
     // return data
     return NextResponse.json(
       {
-        data: respData,
+        data: `${symbol} updated and calculated`,
         status: EnumApiResponseStatus[EnumApiResponseStatus.STATUS_OK],
       },
       { status: 200 }

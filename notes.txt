@@ -3047,15 +3047,14 @@ pricing chart
     betöltéskor "null" illetve valami jobb loading
     fcf chart / capex kapcsolónál valami nem okés    
 
-d3 chart coding guildline
-
-új ui beépítése
-pricing chart fix
-backend tökéletes
-frontend nyitólap + chartok tökéletesen harmonizáljanak
-    lapok összekötése értelmesen
-fizetési lehetőség
-admin dashboard
+milestones
+    új ui beépítése
+    pricing chart fix
+    backend tökéletes
+    frontend nyitólap + chartok tökéletesen harmonizáljanak
+        lapok összekötése értelmesen
+    fizetési lehetőség
+    admin dashboard
 
 Tailwind UI
 Tailwind elements
@@ -3070,7 +3069,8 @@ https://www.youtube.com/watch?v=pspsSn_nGzo - 10X Your Code with ChatGPT: How to
 https://www.youtube.com/watch?v=sTeoEFzVNSc - ChatGPT Tutorial for Developers - 38 Ways to 10x Your Productivity
 https://www.youtube.com/watch?v=ifTF3ags0XI&t=17s - 25 VS Code Productivity Tips and Speed Hacks
 https://www.youtube.com/watch?v=LMagNcngvcU - (Figma -> React Js)Build and Deploy a Fully Responsive Modern UI/UX Website in React JS
-
+https://www.youtube.com/watch?v=AHtSIP-pRL4 - Build and Deploy a Fully Responsive Next.js 13 App 10x Faster with an AI Tool
+https://www.youtube.com/watch?v=ugCN_gynFYw - Build and Deploy a Modern Next 13 Website With Framer Motion & Tailwind CSS
 
 Next js, React radio button bug
     https://github.com/vercel/next.js/issues/49499
@@ -3081,18 +3081,341 @@ Next js, React radio button bug
         useeffect használata checked-re
 
 --------------
-compok, pagek server-client side decision
-data fetch location, type decide
-mi legyen usestate, prop, ref, refactor
-    fölös userefek, usestatek
-csak saját comp inputok legyenek
+next js feladatok
+    compok, pagek server-client side decision
+    data fetch location, type decide
+    mi legyen usestate, prop, ref, refactor
+        fölös userefek, usestatek
+    csak saját comp inputok legyenek
 
-loading screen, tökéletes kontrollált átmenet legyen betöltéskor a UI-on
-    streaming megval
-error screen
-Seo metadata pagekhez adása initial
+    loading screen, tökéletes kontrollált átmenet legyen betöltéskor a UI-on
+        streaming megval
+    error screen
+    Seo metadata pagekhez adása initial
 
-react strict mode, fast refresh megértés egyszerű dolgokon
+    react strict mode, fast refresh megértés egyszerű dolgokon
 
 Bubblechart refactor, mind2 módszer legyen működőképes, szedjük ketté 2 komponensbe
     Bubblechartnál ne renderelje már folyamatosan csak a chartot, illetve a tooltip-et az inputokat ne
+
+!!! ne legyen állandó render se pricing charton, se máshol(végtelen loop)
+    bubble, pricing chart, tiles check
+
+pricing chart javítandók
+    fcf/ capex-nél valami nem stimmel a charton
+    y label, értékek néhol össszefolyik, formázni az érékeket
+
+pricing chart ötletek, optim
+    fölösleges törölni bizonyos vonalakat visualize if is_init alatt, elég lenne hideolni, updatelni ezeket
+    amikor mousehoverezek egy kategóriára, bar vagy price kerüljön előtérbe a többi meg a háttérbe animáltan
+        opacity 0.5 ami nem aktív, z-order is változzon + esetleg valami scale effekt a hoverelt kategóriára
+
+pricing chart struct
+    company-pricing-chart-gradient-chart(div)
+        pricing-chart-gradient-chart-svg(svg)
+            (g)
+                pricing-chart-gradient-chart-bg(rect)
+                pricing-chart-gradient-chart-avg-line(line)
+                pricing-chart-gradient-chart-line(path)
+                x_axis_gradient_chart(g)
+                y_axis_gradient_chart(g)
+                    pricing-chart-gradient_chart-y-label(text)
+    company-pricing-chart-date-filter(div)
+        pricing-chart-date-filter-svg(svg)
+            (g)
+                pricing-chart-date-filter-bg(rect)
+                pricing-chart-x_axis_date_filter(g)
+                pricing-chart-y_axis_date_filter(g)
+                    pricing-chart-date-filter-y-label(text)
+                date_filter_area(path)
+                brush(g)
+            tooltip-df(g)
+                tooltip-df-from-text(text)
+                tooltip-df-to-text(text)
+                tooltip-df-dur-text(text)
+
+
+
+d3 chart coding guildlines
+    ctor
+    init - axes, svg obj init
+    update - axes, svg obj update
+    clear, hide - subchart clear, loading state
+    var naming
+        [obj_sub_loc][]
+    id attr
+        [chart_name]-[chart_id]-[obj_sub_loc]-[obj-name]-[obj-type]
+
+Mariadb speed up
+    ANALYZE TABLE tbl PERSISTENT FOR ALL; - minden táblára
+    etc/my.cnf etc/mysql/my.cnf
+        a gépen illetve dockeren milyen eltérő beáll. vannak?
+    milyen egyéb korábbi sql performance jegyzeteim vannak?
+    innodb_buffer_pool_size
+        Default 128M is very low. Expert opinion is that it should be 70-80% of total memory 
+    Docker image leterhelés milyen get_company esetén?
+    kapcsolat ssl? lassítja?
+    Enable slow query log to start logging queries that take a long time
+    enter the mariadb console and run SHOW PROCESSLIST
+    EXPLAIN 'query'
+    Gunicorn Workers 2 * num_cores + 1
+    profiling áttanulm.
+
+packages.json tagek amik kellhetnek
+    homepage
+    bugs
+    license
+    repository
+        type
+        url
+    scripts 
+        "format": "prettier --check --ignore-path .gitignore --write ."
+
+https://github.com/tulupinc/flowbite-next-starter/blob/main/package.json
+ezek kellenek?
+    @typescript-eslint/eslint-plugin
+    @typescript-eslint/parser
+    eslint
+    "eslint-config-next": "^13.0.6",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.31.11",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-tailwindcss": "^3.7.1",
+    prettier
+    prettier-plugin-organize-imports
+
+Flowbite Pro - paid website blocks
+Tailwind UI -  offers sections of pages
+Tailwind Elements - free website blocks
+react-icons
+flowbite-react
+
+Flowbite & TW
+    https://tailwindcss.com/docs/theme
+    https://flowbite.com/docs/customize/theming/
+    Flowbite as a plugin inside your Tailwind CSS
+        tw config
+            presets
+                to require another default set of configuration
+                require('@acmecorp/base-tailwind-config')
+            prefix
+                to set a prefix for all of the classes generated by FlowBite and Tailwind CSS
+                prefix: 'fb-'
+            theme
+                Project-specific customizations
+                screens
+                    sm, md, lg, xl
+            colors
+                árnyalatok is megadhatóak 100,200,...
+                gray: colors.coolGray,....
+            fontFamily
+                több is megadható fallback értékként
+                sans: ['Graphik', 'sans-serif'],,...
+            extend
+                if you want to keep the values from the default settings but you want to extend them with your own
+                For example, you can keep all of the default breakpoints, but you may want to add another larger one for the screens key
+                spacing
+                    padding, marginok értékeinek felüldef. eg. mt-4
+                    '128': '32rem',...
+                borderRadius
+                    '4xl': '2rem',...
+            plugins
+        Overriding - you can also completely override certain settings
+            eg. override all of the opacity settings with your own
+    más színek megadása a Flowbitehoz képest
+        https://tailwindcss.com/docs/customizing-colors
+    Dark mode
+        https://tailwindcss.com/docs/dark-mode
+        class
+            darkMode: 'class',
+            add the dark class on your html element
+        system settings
+            browser’s color scheme preference
+            darkMode: 'media'
+        js kód
+            https://flowbite.com/docs/customize/dark-mode/
+        if you would like to customize the appearance of these components when in dark mode all you need to do is change the styles for these class variants
+    https://flowbite.com/icons/
+        raw SVG or JSX for React
+        The icons use the utility classes from Tailwind CSS for sizing and colors which means that it is perfectly compatible with your Tailwind CSS and Flowbite project
+    Tailwind CSS Optimization - Flowbite
+        https://tailwindcss.com/docs/optimizing-for-production
+        by using Purge CSS and remove unused CSS using the Tailwind configuration file
+        Tailwind CSS is roughly 3566.2kB uncompressed, 289.2kB when minified and compressed with Gzip, and 71.3kB when compressed with Brotli
+        use Purge CSS to remove the unused CSS
+        NODE_ENV=production npx tailwindcss -o flowbite.css
+    Typescript supportja is van
+    Next js integ
+        flowbite-react használata next js-en belül
+    Data attributes - add functionality via the HTML element attributes
+        eg. data-modal-{toggle|show|hide} to toggle, show, or hide the component by clicking on any trigger element
+
+flowbite-react - komponens design best practises
+    PropsWithChildren, children - benne levő
+        React components that accept additional props in addition to the children prop
+        The children prop represents the content passed between the opening and closing tags of a React component
+        components can receive children and any other custom props you define
+        to include the children prop
+    ComponentProps<'a'> - gondolom a specifikus html attr-ok
+        to access the props type of a given React component, enabling you to type-check and pass props to the component correctly
+        to inherit the props of an 'a' element
+    Record<string, unknown> - sima object type {x: yy,...}
+    higher-order component (HOC)
+    ElementType<P> - it represents the type of a React component with props of type P
+    tailwind-merge
+        Utility function to efficiently merge Tailwind CSS classes in JS without style conflicts
+        pld. ha 2 padding van megadva akkor csak a 2. input lesz aktív, legyen az elsőnél bárhogy is megadva
+    DeepPartial - rész object type def, csak egy része egy adott typenak
+    func comp ({...}) {} -> input destructureing
+    export const NavbarBrand: FC<NavbarBrandProps> = ({ as: Component = 'a',...
+        the as prop is destructured as Component and assigned a default value of 'a'. This means that if the as prop is not provided, the component will default to rendering an 'a' element
+        as?: ElementType;
+    ...props, which represents any additional props not explicitly defined
+     barIcon?: FC<ComponentProps<'svg'>>; - adott komponens input
+     context beáll bármely komponensben, használata máshol, global variable
+
+hasznos toolok
+    framer-motion - react animok, 3d portfolio
+    react-tilt - 3d-s kártyák
+
+oldal struktúra, munkálatok
+     hero + cta + alá megjelenések
+        szöveg több szín, gradient esetleg
+        esetleg subheader
+        legalább + 1 cta button piros
+        hol jelentünk meg pressben 1 sorban 3-4 elem a header alján
+     *counters, számok
+     *   animált számok
+     bubble + pricing
+        külön pricing table?
+     features list
+     feature cards
+     testi
+     team
+     cta + register
+     newsletter
+     footer
+
+megcsinélni
+    
+    theme switcher
+        tw oldalán példa
+        flowbite-react theme switcher jó alap
+        csak a háttér + azok a szövegek amik nem látszanának light módeban
+        sunlight auto setting
+    navi login include, kohézió, legyen logikus 1 egész az oldal login, out kidolgozott redirectionok
+        egyéb kieg funkciók esetleg kellenek
+    optim
+        duplikációk megszüntetése -> comp create
+    színek, sectionok testre szabása, kidolgozása
+        dark, light theme kidolg   
+    minden nézzen ki tálalhatóan, vállalhatóan
+    kitakarítani a szemetet
+        rendezni a file struktúrát, nem a megfelelő helyen lévő elemek, inputok kiszervezése stb, könnyen megtalálható legyen minden
+
+    idézetek
+        db-be tenni, componens olvassa időnként szépen váltogassa egy blur + opacity effektel(framer motion)
+    szépítés
+        section beúsztatás
+        képekre egy enyhe scale + megemelkedő effekt
+            f.m. linkek whilehovering scale 1.1
+        gradient szövegek, hátterek - hoobank proj
+    bubi projekt kettévétele
+        megfelelő kliensoldali loading screen, Suspense?
+    egyéb compok pld. idézetek, section címek, stb
+    tw elements + egyéb hibák
+
+    bg-primary, text-primary elim
+        secondary
+    img -> Image
+    honnan jön a background, primary, secondary color tw?
+        tw nem jó színt állít be néha, nem a megfelelő árnyalat
+        globals.css!!! style.ts, tailwind.json
+        styles/globalstyles.css fölös
+        lehet flowbite plugin miatt
+    nem tükéletes input, a label focusnál nem takarja az inputot
+
+szükséges mérföldkövek
+    user profile
+        hagyományos register form
+    subscription system
+    pay system
+
+később esetleg
+    middleware munkálatok, minden-t valamilyen forában használni amit kijegyzeteltem a fileban
+        ha protected page -> redir login -> dashboard, a pricing chartra irányítson ne a dashboardra
+            de ez nem is igen kell, alapból nem mutatok proteced pageket
+            middleware not logged in, prot. page if -> hozzácsapni a next page linket a sign in-hez ha lehet és next auth-al redirelni a megfelelő page-re
+
+egyéb content 5letek
+    később into, tutorial video sectionok
+    kicsi divider CTA-k
+    idézet elválasztó blokkok
+    töltéskor idézetek mutatása, pld. chartoknál
+    valami enyhe opacity + blur effekt turbózás az ablakokra elmenne (Tailwind UI)
+    featuring, megjelenések comp hoobank
+    jó footer hoobank
+    feat. képek keresése, készítése egyszerűen yt
+    feltűnő, animált cta gomb
+
+
+Optistock color scheme
+    https://optistock.hu/login
+    primary #5be7c4 (zöld)
+    secondary #17a2b8, #21a6bb, #138496(darker) (kék)
+                #212529, #333, #555 (szöveg, fekete, szürke)
+                #fff (szöveg, fehér)
+                #EEFDF9, #fafafa(bg) - szürke
+                #ffc107 - sárga
+    
+
+saját
+    bg-, text-,dark:, adott color replace
+    bg 
+        bg-secondary_c-300 dark:bg-secondary_c-700
+    hx
+        text-secondary_c-900 dark:text-secondary_c-100
+    p
+        text-secondary_c-700 dark:text-secondary_c-300
+    icons
+        bg-terniary_c-100 text-terniary_c-700
+    containers
+        bg-white dark:bg-secondary_c-700
+
+
+egyéb top tech
+    low code tools
+    serverless database for Redis
+    Top JS ORMs
+        Sequelize, TypeOrm, Prisma
+
+"In the short run, the market is a voting machine. In the long run, it is a weighing machine."
+Benjamin Graham
+"The individial investor should act consistently as an investor and not as a speculator."
+Benjamin Graham
+"Invest for the long-term."
+Lou Simpson
+"The entrance strategy is actually more important than the exit strategy."
+Edward Lampert
+"Far more money has been lost by investors trying to anticipate corrections, than lost in the corrections themselves."
+Peter Lynch
+"You make most of your money in a bear market, you just don’t realize it at the time."
+Shelby Cullom Davis
+"The stock market is a device to transfer money from the impatient to the patient."
+Warren Buffett
+"Behind every stock is a company. Find out what it’s doing."
+Peter Lynch
+"Invest for the long haul. Don’t get too greedy and don’t get too scared."
+Shelby M.C. Davis
+"I will tell you how to become rich. Close the doors. Be fearful when others are greedy. Be greedy when others are fearful."
+Warren Buffett
+"The intelligent investor is a realist who sells to optimists and buys from pessimists."
+Benjamin Graham
+"The stock market is filled with individuals who know the price of everything, but the value of nothing."
+Phillip Fisher
+"Time in the market beats timing the market."
+Ken Fisher
+"In investing, what is comfortable is rarely profitable."
+Robert Arnott

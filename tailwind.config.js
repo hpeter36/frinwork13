@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors')
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -6,17 +8,14 @@ module.exports = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './node_modules/flowbite/**/*.js',
     './node_modules/flowbite-react/**/*.js',
+    "./node_modules/tw-elements/dist/js/**/*.js",
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-      },
       colors:{
-        primary: '#000fff',
-        secondary: '#000000',
+        primary_c: colors.green,
+        secondary_c: colors.slate,
+        terniary_c: colors.blue,
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
@@ -28,7 +27,9 @@ module.exports = {
   // corePlugins: {
   //   preflight: true,
   // },
+  darkMode: "class",
   plugins: [
-    require("flowbite/plugin")
+    require("flowbite/plugin"),
+    require("tw-elements/dist/plugin.cjs")
   ],
 }

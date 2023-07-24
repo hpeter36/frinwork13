@@ -13,6 +13,7 @@ export type InitVisInput = {
   chartType: ChartType;
   symbol: string;
   compName: string;
+  updateComp: boolean;
 };
 
 type BarChartId =
@@ -488,6 +489,8 @@ export default class CompanyPricingChart {
   private g: d3.Selection<SVGGElement, unknown, HTMLElement, any>;
   private g_loading: d3.Selection<SVGGElement, unknown, HTMLElement, any>;
 
+  private loading_info_text: d3.Selection<SVGTextElement, unknown, HTMLElement, any> | null = null;
+
   private tooltip_dw: d3.Selection<
     SVGGElement,
     unknown,
@@ -550,6 +553,13 @@ export default class CompanyPricingChart {
     HTMLElement,
     any
   > | null = null;
+
+  private svgGradientChart: d3.Selection<
+    SVGSVGElement,
+    unknown,
+    HTMLElement,
+    any
+  > | null = null;
   private gradientChartBg: d3.Selection<
     SVGLinearGradientElement,
     unknown,
@@ -604,6 +614,12 @@ export default class CompanyPricingChart {
     HTMLElement,
     any
   > | null = null;
+  private svgDateFilter: d3.Selection<
+  SVGSVGElement,
+  unknown,
+  HTMLElement,
+  any
+> | null = null;
   private xAxisDateFilter: d3.Selection<
     SVGGElement,
     unknown,
@@ -684,6 +700,7 @@ export default class CompanyPricingChart {
 
   private path_chart_loader = 'assets/pricingChart/chart_loader.svg';
 
+  // ctor
   constructor(inputs_json: CompanyPricingChartInputs) {
     this.inputs_json = inputs_json;
 
@@ -929,24 +946,30 @@ export default class CompanyPricingChart {
   public InitVis(inputs: InitVisInput) {
     let self = this;
     self.chartType = inputs.chartType;
-    self.is_init = false;
 
     self.startDate = new Date("1970-01-01");
     self.endDate = new Date();
 
-    //self._clearChart(); !!!
-
-    self._visualize(true, self.chartType, inputs);
+    self._visualize(true, self.chartType, inputs.updateComp, inputs);
   }
 
-  private _visualize(
+  private async _visualize(
     is_init: boolean,
     chart_type: ChartType,
+    updateComp: boolean,
     init_inputs: InitVisInput | null = null
   ) {
     let self = this;
 
     if (is_init) {
+
+      // clear the whole chart
+      self._clearChart();
+      self._clearGradientChart();
+      self._hideElement(self.svgGradientChart!);
+      self._clearDateFilter();
+      self._hideElement(self.svgDateFilter!);
+
       // init loading screen
       self._init_loading_screen();
 
@@ -995,16 +1018,25 @@ export default class CompanyPricingChart {
     let endDate = new Date(self.endDate);
     endDate.setDate(endDate.getDate() + 1);
 
+    //  update company 
+    let url = `/api/updateComp?symbol=${self.ticker_name}`
+    if(updateComp)
+    {
+      self.loading_info_text!.text("Update company data...");
+      await fetch(url);
+    }
+
     // data request url
     let ct_arr = chart_type.split("_");
     let ct = ct_arr[ct_arr.length - 1];
-    let url = `/api/calcFairP?fairp_type=${ct}&ticker=${
+    url = `/api/calcFairP?fairp_type=${ct}&ticker=${
       self.ticker_name
     }&start_date=${self.startDate.toISOString().split("T")[0]}&end_date=${
       endDate.toISOString().split("T")[0]
     }`;
 
     // get data
+    self.loading_info_text!.text("Getting company data...");
     fetch(url)
       .then((resp) => resp.json())
       .then(
@@ -1306,6 +1338,8 @@ export default class CompanyPricingChart {
                 data_act_fcf.fq_fair_p[0].capex[i],
             };
           });
+
+
 
         // data for gradient chart
         self.gauge_metric_filtered = data_act_fcf.daily_ptfcf.date.map(
@@ -1742,13 +1776,16 @@ export default class CompanyPricingChart {
     let self = this;
 
     // add the overlay rect
+    if (d3.select("#pricing-chart-loading-overlay-rect").size() == 0) {
     self.g_loading
       .append("rect")
+      .attr("id", "pricing-chart-loading-overlay-rect")
       .attr("width", self.inputs_json.size.width)
       .attr("height", self.inputs_json.size.height)
       .attr("fill", self.inputs_json.apperance.mainChart.loadingScreen.colorBg)
       .attr("opacity", 0.8)
       .attr("pointer-events", "none");
+    }
 
     // load and add icon svg(if not present)
     if (d3.select("#chart_loader_pc").size() == 0) {
@@ -1765,6 +1802,22 @@ export default class CompanyPricingChart {
             }), rotate(180)`
           );
       });
+    }
+
+    // add info text
+    if (d3.select("#pricing-chart-loading-info-text").size() == 0) {
+      
+      self.loading_info_text = self.g_loading
+      .append("text")
+      .attr("id", "pricing-chart-loading-info-text")
+      .attr("fill", "black")
+      .attr("text-anchor", "middle")
+      .attr("font-size", self.inputs_json.size.width * 0.02)
+      .attr("transform",
+      `translate(${self.inputs_json.size.width / 2},${
+      (self.inputs_json.size.height / 1.5) + 20
+      })`)
+      .text("");
     }
   }
 
@@ -1812,6 +1865,7 @@ export default class CompanyPricingChart {
 
     // clear prices
     d3.select("#line_hds_helper").remove();
+    d3.select("#line_hds").remove();
     d3.selectAll(".hds_area").remove();
     d3.select("#line_fair_p_helper").remove();
     d3.select("#line_fair_p").remove();
@@ -1827,12 +1881,6 @@ export default class CompanyPricingChart {
     // clear y axes
     d3.selectAll(".y_axis").remove();
     d3.selectAll(".y_axis_label").remove();
-
-    // clear date filter too
-    d3.select("#x_axis_date_filter").remove();
-    d3.select("#date_filter_area").remove();
-    d3.select(".brush").remove();
-    d3.select("#pricing-chart-date-filter-svg").remove();
   }
 
   private _hideErrorMessage() {
@@ -3421,7 +3469,7 @@ export default class CompanyPricingChart {
       .scaleBand<Date>()
       .range([0, self.inputs_json.size.width])
       .paddingInner(0.3) //resp
-      .paddingOuter(0.5);
+      .paddingOuter(0.2);
 
     self.y_axis_def_fcf_stacked = d3
       .scaleLinear()
@@ -3452,7 +3500,7 @@ export default class CompanyPricingChart {
 
     self.line_def_fcf_stacked = d3
       .line<StandardDataStructDateElement>()
-      .x((d) => self.x!(d.date))
+      .x((d) => {return (self.x_axis_def_fcf_stacked_ncfo!(d.date)! + (self.x_axis_def_fcf_stacked_ncfo!.bandwidth()/2))}) 
       .y((d) => self.y_axis_def_fcf_stacked!(d.value));
 
     //self.y_axis_svg_obj_fcf_stacked.call(self.y_axis_svg_def_fcf_stacked);
@@ -3461,6 +3509,7 @@ export default class CompanyPricingChart {
   private _update_fcf_stacked_chart() {
     let self = this;
 
+    // x axis
     self.x_axis_def_fcf_stacked_ncfo!.domain(
       self.fcf_stacked_data_ncfo_data!.map((d) => d.date)!
     );
@@ -3468,6 +3517,7 @@ export default class CompanyPricingChart {
       self.fcf_stacked_data_capex_data!.map((d) => d.date)!
     );
 
+    // y axis
     self.y_axis_def_fcf_stacked!.domain(
       self._getScaleCorrRange([
         d3.min(self.fcf_stacked_data_capex_data!, (d) => d.value)!,
@@ -3574,7 +3624,7 @@ export default class CompanyPricingChart {
           ? self.y_axis_def_fcf_stacked!(d.value)
           : self.y_axis_def_fcf_stacked!(0)
       )
-      //.attr("x", (d) => self.x_axis_def_fcf_stacked_ncfo!(d.date))
+      .attr("x", (d) => self.x_axis_def_fcf_stacked_ncfo!(d.date)!)
       .attr("width", self.x_axis_def_fcf_stacked_ncfo!.bandwidth)
       .attr("height", (d) =>
         Math.abs(
@@ -3759,9 +3809,11 @@ export default class CompanyPricingChart {
         self._mousemove_fp_circles(d3.select(this).node(), self, mouseEvent);
       });
 
+    const bandwidth = self.x_axis_def_fcf_stacked_ncfo!.bandwidth();
+
     self.circles_svg_obj_fcf_stacked
       .transition()
-      .attr("cx", (d) => self.x!(d.date))
+      .attr("cx", (d) => (self.x_axis_def_fcf_stacked_ncfo!(d.date)!) + bandwidth/2)
       .attr("cy", (d) => self.y_axis_def_fcf_stacked!(d.value))
       .attr("r", cr);
 
@@ -4279,7 +4331,7 @@ export default class CompanyPricingChart {
 
   // -------------- date filter -------------------
   private _init_date_filter() {
-    let self = this;
+    const self = this;
 
     self.dateFilterHeight = self.inputs_json.size.height / 3;
 
@@ -4294,7 +4346,7 @@ export default class CompanyPricingChart {
       self.inputs_json.size.margins.bottom;
 
     // svg
-    const svgDateFilter = //d3.select(".company-pricing-chart-date-filter")
+    self.svgDateFilter = //d3.select(".company-pricing-chart-date-filter")
       //self.dateFilterChartNode!
       d3
         .select(".company-pricing-chart-date-filter")
@@ -4303,7 +4355,7 @@ export default class CompanyPricingChart {
         .attr("viewBox", `0 0 ${svgWidth} ${svgHeight}`);
 
     // svg -> g
-    const gDateFilter = svgDateFilter
+    const gDateFilter = self.svgDateFilter!
       .append("g")
       .attr(
         "transform",
@@ -4320,7 +4372,7 @@ export default class CompanyPricingChart {
       .attr("pointer-events", "none");
 
     // tooltip - from, to , duration texts
-    self.tooltip_df = svgDateFilter
+    self.tooltip_df = self.svgDateFilter
       .append("g")
       .attr("id", "tooltip-df")
       .attr("opacity", 0);
@@ -4372,7 +4424,7 @@ export default class CompanyPricingChart {
 
     self.xAxisDateFilter = gDateFilter
       .append("g")
-      .attr("id", "x_axis_date_filter")
+      .attr("id", "pricing-chart-x_axis_date_filter")
       .attr("transform", `translate(0, ${self.dateFilterHeight})`);
     self._hideElement(self.xAxisDateFilter);
 
@@ -4380,13 +4432,11 @@ export default class CompanyPricingChart {
     self.yAxisCallDateFilter = d3.axisLeft(self.yDateFilter).ticks(4);
     //.tickFormat((d) => `${parseInt(d / 1000)}k`)
 
-    d3.select("#pricing-chart-y_axis_date_filter").remove();
-
     self.yAxisDateFilter = gDateFilter
       .append("g")
-      .attr("class", "y_axis_date_filter")
       .attr("id", "pricing-chart-y_axis_date_filter")
       .attr("opacity", 1.0);
+    self._hideElement(self.yAxisDateFilter);
 
     // y label
     self.yAxisDateFilter
@@ -4428,7 +4478,7 @@ export default class CompanyPricingChart {
       .on("end", () => {
         // get brush values at the end of the event
         self._handleBrushEvent(_selection!);
-        self._visualize(false, self.chartType!);
+        self._visualize(false, self.chartType!, false);
       });
 
     // append brush component
@@ -4439,6 +4489,8 @@ export default class CompanyPricingChart {
 
   private _update_date_filter() {
     let self = this;
+
+    self._showElement(self.svgDateFilter!);
 
     // set current selection x axis domain
     self.xDateFilter!.domain(self.x!.domain());
@@ -4455,12 +4507,11 @@ export default class CompanyPricingChart {
     );
     self.yAxisCallDateFilter!.scale(self.yDateFilter!);
     self.yAxisDateFilter!.transition().call(self.yAxisCallDateFilter!);
+    self._showElement(self.yAxisDateFilter!);
 
     // set date filter area(hds)
-    self
-      .areaPath!.transition()
-      .attr("d", self.dateFilterarea!(self.hds_filtered!))
-      .attr("opacity", 1.0);
+    self.areaPath!.attr("d", self.dateFilterarea!(self.hds_filtered!));
+    self._showElement(self.areaPath!);
   }
 
   private _handleBrushEvent(selection: BrushSelection) {
@@ -4511,19 +4562,23 @@ export default class CompanyPricingChart {
     self.tooltip_df!.attr("opacity", 1.0);
   }
 
-  public ClearDateFilter() {
+  public _clearDateFilter()
+  {
     let self = this;
-    let sel = self.xDateFilter!.range();
-    let newValues = sel.map((d) => self.xDateFilter!.invert(d));
-    self.startDate = newValues[0];
-    self.endDate = newValues[1];
 
-    self.title!.text(`${self.title_text}`);
+    //self._hideElement(self.xAxisDateFilter!);
+    //self._hideElement(self.yAxisDateFilter!);
+    self._hideElement(self.areaPath!)
 
+    // set the original start and end date for chart
+    // let sel = self.xDateFilter!.range();
+    // let newValues = sel.map((d) => self.xDateFilter!.invert(d));
+    // self.startDate = newValues[0];
+    // self.endDate = newValues[1];
+
+    // clear selection
     self._clearDateFilterFilterGui();
 
-    //d3.select("#pricing-chart-date-filter-svg .brush").call(self.brush.move, null);
-    self._visualize(false, self.chartType!);
   }
 
   private _clearDateFilterFilterGui() {
@@ -4542,6 +4597,23 @@ export default class CompanyPricingChart {
     );
 
     d3.select("#tooltip-df").attr("opacity", 0);
+
+    //d3.select("#pricing-chart-date-filter-svg .brush").call(self.brush.move, null);
+  }
+
+  public ClearDateFilter() {
+    let self = this;
+    let sel = self.xDateFilter!.range();
+    let newValues = sel.map((d) => self.xDateFilter!.invert(d));
+    self.startDate = newValues[0];
+    self.endDate = newValues[1];
+
+    self.title!.text(`${self.title_text}`);
+
+    self._clearDateFilterFilterGui();
+
+    //d3.select("#pricing-chart-date-filter-svg .brush").call(self.brush.move, null);
+    self._visualize(false, self.chartType!, false);
   }
 
   //-------------------------gradient chart---------------------------
@@ -4561,14 +4633,14 @@ export default class CompanyPricingChart {
       self.inputs_json.size.margins.bottom;
 
     // svg
-    const svgGradientChart = d3
+    self.svgGradientChart = d3
       .select(".company-pricing-chart-gradient-chart")
       .append("svg")
       .attr("id", "pricing-chart-gradient-chart-svg")
       .attr("viewBox", `0 0 ${svgWidth} ${svgHeight}`);
 
     // svg -> g
-    const gGradientChart = svgGradientChart
+    const gGradientChart = self.svgGradientChart
       .append("g")
       .attr(
         "transform",
@@ -4667,6 +4739,8 @@ export default class CompanyPricingChart {
   private _update_gradient_chart() {
     let self = this;
 
+    self._showElement(self.svgGradientChart!);
+
     // bg gradient setup
     let val_min = d3.min(self.gauge_metric_filtered!, (d) => d.value)!;
     let val_max = d3.max(self.gauge_metric_filtered!, (d) => d.value)!;
@@ -4748,6 +4822,17 @@ export default class CompanyPricingChart {
       )
       .attr("y2", self.yGradientChart!(self.stats.data_sel_avg));
     self._showElement(self.gradientChartAvgLineSvg!);
+  }
+
+  private _clearGradientChart()
+  {
+    const self = this;
+
+    self._hideElement(d3
+      .select("#pricing-chart-gradient-chart-bg"));
+    self._hideElement(self.gradientChartLineSvg!);
+    self._hideElement(self.gradientChartAvgLineSvg!);
+    
   }
 
   //---------------------------Performance---------------------
