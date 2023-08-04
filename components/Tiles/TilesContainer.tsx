@@ -1,10 +1,12 @@
-'use client'
+"use client";
 
 import React, { useRef } from "react";
 import { useState } from "react";
 import { gsap } from "gsap";
 import { Flip } from "gsap/dist/Flip";
 import { useDebounce } from "react-use";
+
+import Loading from "../bubbleChart/Loading";
 
 gsap.registerPlugin(Flip);
 
@@ -21,12 +23,12 @@ const TilesContainer: React.FC = () => {
   const [barChartDatas, setBarChartDatas] = useState<BarChartInput[] | null>(
     null
   );
+  const [isLoading, setIsLoading] = useState(true);
   const barChartNodes = useRef<(HTMLDivElement | null)[]>([]);
 
   const sliderValue = useRef<number[]>([1, 100]);
   const sliderValueFinal = useRef<number[]>([1, 100]);
   const fullPeriod = useRef<Date[]>([]);
-
 
   const [selectedCompMetaData, setSelectedCompMetaData] =
     useState<CompanyMetaData>({
@@ -85,7 +87,7 @@ const TilesContainer: React.FC = () => {
 
       // set full data periods
       if (fullPeriod.current.length == 0) {
-        fullPeriod.current =[
+        fullPeriod.current = [
           new Date(tilesData.dates[0]),
           new Date(tilesData.dates[tilesData.dates.length - 1]),
         ];
@@ -115,6 +117,8 @@ const TilesContainer: React.FC = () => {
         barChartsDatasTmp.push(barChartinput);
       });
       setBarChartDatas(barChartsDatasTmp);
+
+      if (isLoading) setIsLoading(false);
     };
     handleUseEffect();
   }, [sliderValueFinal.current, selectedCompMetaData.ticker]);
@@ -188,20 +192,25 @@ const TilesContainer: React.FC = () => {
 
   const handleSliderChange = (actMinValue: number, actMaxValue: number) => {
     sliderValue.current = [actMinValue, actMaxValue];
-    console.log(sliderValue.current)
+    console.log(sliderValue.current);
   };
 
   function labelFormat(value: number) {
     if (fullPeriod.current.length == 0) return "";
 
-    return convertPercToDateStr(fullPeriod.current[0], fullPeriod.current[1], value);
+    return convertPercToDateStr(
+      fullPeriod.current[0],
+      fullPeriod.current[1],
+      value
+    );
   }
 
   // if we stop dragging date slider
   useDebounce(
     () => {
       sliderValueFinal.current = sliderValue.current;
-      console.log(`final ${sliderValueFinal.current}`)
+      console.log(`final ${sliderValueFinal.current}`);
+
     },
     500,
     [sliderValue.current]
@@ -209,24 +218,37 @@ const TilesContainer: React.FC = () => {
 
   function handleSetCompanySymbolCallback(compMeta: CompanyMetaData) {
     setSelectedCompMetaData(compMeta);
+    if (!isLoading) setIsLoading(true);
+   
   }
 
   //  sliderValue adott slider min max 1...100 onchange-nél set
-  // value-> date label format 
+  // value-> date label format
 
   return (
     <div>
-      <div className="flex justify-center items-center h-[100px]">
+      <div className="flex items-center justify-center">
         <h1>{`${selectedCompMetaData.ticker} data`}</h1>
       </div>
-      <div className="flex justify-center items-center h-[200px]">
+      <div className="flex items-center justify-center">
         <SearchCompany callbackSetCompMeta={handleSetCompanySymbolCallback} />
       </div>
-      <div className="flex justify-center">
-        <MultiRangeSlider min={1} max={100} onChange={handleSliderChange} labelFormat={labelFormat} />
+      <div className="flex justify-center h-[200px]">
+        <MultiRangeSlider
+          min={1}
+          max={100}
+          onChange={handleSliderChange}
+          labelFormat={labelFormat}
+        />
       </div>
       <div className="grid grid-cols-6 gap-12 tiles_container">
-        {barChartDatas?.map((d, i) => {
+        {/* loading screen */}
+        {isLoading && (
+          <div className="absolute w-full h-[900px] z-10">
+            <Loading />
+          </div>
+        )}
+        {!isLoading && barChartDatas?.map((d, i) => {
           //barChartNodes.current[i] = useRef<HTMLDivElement | null>(null);
           return (
             <div

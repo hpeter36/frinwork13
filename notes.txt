@@ -2979,10 +2979,6 @@ next.js.config -  reactStrictMode: true - dev módban 2x renderelődik
 
 skeleton míg betöltenek bizonyos oldalak(https://www.youtube.com/watch?v=7MKEOfSP2s4)
 
-https://ui.shadcn.com/
-    UI component lib
-    nincs npm install csak copy paste, amit testre lehet szabni tetszőlegesen
-
 először kitakarítani material UI-t, helyrerakni a projektet
     style.ts - Tailwindes tutor projectből
 alapvető struktúra, svg hierarchia rendbetétele, dimenzió, stb
@@ -2995,12 +2991,6 @@ date filter baron svg-n hiba
 date filteren mousemove-ra az mouse pozi label látszódjon, hogy mit választok ki drag előtt
 css káosz clearing
 töltéskor átvezető kép elhalványult chartal(overlay)
-
-milestone
-    tökéletes looking charts
-    tökéletes html tailwindel
-    opció dockerrel és anélkül
-    struktúra mindenhol 100%, maximálisan átlátható projekt, mindenhol a megfelelő best practise
 
 react emails
     https://react.email/
@@ -3047,30 +3037,18 @@ pricing chart
     betöltéskor "null" illetve valami jobb loading
     fcf chart / capex kapcsolónál valami nem okés    
 
-milestones
-    új ui beépítése
-    pricing chart fix
-    backend tökéletes
-    frontend nyitólap + chartok tökéletesen harmonizáljanak
-        lapok összekötése értelmesen
-    fizetési lehetőség
-    admin dashboard
-
-Tailwind UI
-Tailwind elements
-Flowbite
-
-Build and Deploy a Modern Next.js 13 Application | React, Next JS 13, TypeScript, Tailwind CSS (Car proj)
-    complex filtering, pagination, and searching using server-side rendering (SSR) 
-    https://www.youtube.com/watch?v=pUNSHPyVryU
-másik 3d website(React 3D Portfolio Website with Three.js | Build and Deploy Responsive React Portfolio)
-    https://www.youtube.com/watch?v=qALsVa-V9qo
-https://www.youtube.com/watch?v=pspsSn_nGzo - 10X Your Code with ChatGPT: How to Use it Effectively
-https://www.youtube.com/watch?v=sTeoEFzVNSc - ChatGPT Tutorial for Developers - 38 Ways to 10x Your Productivity
-https://www.youtube.com/watch?v=ifTF3ags0XI&t=17s - 25 VS Code Productivity Tips and Speed Hacks
-https://www.youtube.com/watch?v=LMagNcngvcU - (Figma -> React Js)Build and Deploy a Fully Responsive Modern UI/UX Website in React JS
-https://www.youtube.com/watch?v=AHtSIP-pRL4 - Build and Deploy a Fully Responsive Next.js 13 App 10x Faster with an AI Tool
-https://www.youtube.com/watch?v=ugCN_gynFYw - Build and Deploy a Modern Next 13 Website With Framer Motion & Tailwind CSS
+megnézni, tanulni
+    Build and Deploy a Modern Next.js 13 Application | React, Next JS 13, TypeScript, Tailwind CSS (Car proj)
+        complex filtering, pagination, and searching using server-side rendering (SSR) 
+        https://www.youtube.com/watch?v=pUNSHPyVryU
+    másik 3d website(React 3D Portfolio Website with Three.js | Build and Deploy Responsive React Portfolio)
+        https://www.youtube.com/watch?v=qALsVa-V9qo
+    https://www.youtube.com/watch?v=pspsSn_nGzo - 10X Your Code with ChatGPT: How to Use it Effectively
+    https://www.youtube.com/watch?v=sTeoEFzVNSc - ChatGPT Tutorial for Developers - 38 Ways to 10x Your Productivity
+    https://www.youtube.com/watch?v=ifTF3ags0XI&t=17s - 25 VS Code Productivity Tips and Speed Hacks
+    https://www.youtube.com/watch?v=LMagNcngvcU - (Figma -> React Js)Build and Deploy a Fully Responsive Modern UI/UX Website in React JS
+    https://www.youtube.com/watch?v=AHtSIP-pRL4 - Build and Deploy a Fully Responsive Next.js 13 App 10x Faster with an AI Tool
+    https://www.youtube.com/watch?v=ugCN_gynFYw - Build and Deploy a Modern Next 13 Website With Framer Motion & Tailwind CSS
 
 Next js, React radio button bug
     https://github.com/vercel/next.js/issues/49499
@@ -3094,9 +3072,6 @@ next js feladatok
     Seo metadata pagekhez adása initial
 
     react strict mode, fast refresh megértés egyszerű dolgokon
-
-Bubblechart refactor, mind2 módszer legyen működőképes, szedjük ketté 2 komponensbe
-    Bubblechartnál ne renderelje már folyamatosan csak a chartot, illetve a tooltip-et az inputokat ne
 
 !!! ne legyen állandó render se pricing charton, se máshol(végtelen loop)
     bubble, pricing chart, tiles check
@@ -3171,26 +3146,22 @@ packages.json tagek amik kellhetnek
     scripts 
         "format": "prettier --check --ignore-path .gitignore --write ."
 
-https://github.com/tulupinc/flowbite-next-starter/blob/main/package.json
-ezek kellenek?
-    @typescript-eslint/eslint-plugin
-    @typescript-eslint/parser
-    eslint
-    "eslint-config-next": "^13.0.6",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-jsx-a11y": "^6.6.1",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react": "^7.31.11",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-tailwindcss": "^3.7.1",
-    prettier
-    prettier-plugin-organize-imports
-
-Flowbite Pro - paid website blocks
-Tailwind UI -  offers sections of pages
-Tailwind Elements - free website blocks
-react-icons
-flowbite-react
+comp libek
+    Material UI,
+    Ant Design
+    https://ui.shadcn.com/
+        UI component lib
+        nincs npm install csak copy paste, amit testre lehet szabni tetszőlegesen
+    Flowbite
+    Flowbite Pro - paid website blocks
+    flowbite-react - nagyon jó comp design(best practise code)
+        https://github.com/tulupinc/flowbite-next-starter/blob/main/package.json
+    Tailwind UI -  offers sections of pages
+    Tailwind Elements - free website blocks + comps
+    Daisy UI
+    Semantic UI - sok style theme eg. google material,amazon, stb
+    https://github.com/pacocoursey/next-themes - dark light mode support
+    react-icons
 
 Flowbite & TW
     https://tailwindcss.com/docs/theme
@@ -3298,15 +3269,8 @@ oldal struktúra, munkálatok
      newsletter
      footer
 
-megcsinélni
-    
-    theme switcher
-        tw oldalán példa
-        flowbite-react theme switcher jó alap
-        csak a háttér + azok a szövegek amik nem látszanának light módeban
-        sunlight auto setting
-    navi login include, kohézió, legyen logikus 1 egész az oldal login, out kidolgozott redirectionok
-        egyéb kieg funkciók esetleg kellenek
+megcsinálni
+     
     optim
         duplikációk megszüntetése -> comp create
     színek, sectionok testre szabása, kidolgozása
@@ -3315,33 +3279,96 @@ megcsinélni
     kitakarítani a szemetet
         rendezni a file struktúrát, nem a megfelelő helyen lévő elemek, inputok kiszervezése stb, könnyen megtalálható legyen minden
 
-    idézetek
-        db-be tenni, componens olvassa időnként szépen váltogassa egy blur + opacity effektel(framer motion)
     szépítés
+        egy normális logó
         section beúsztatás
         képekre egy enyhe scale + megemelkedő effekt
             f.m. linkek whilehovering scale 1.1
-        gradient szövegek, hátterek - hoobank proj
+        gradient szövegek, hátterek - hoobank proj 
+        idézetek
+            blur + opacity effektel(framer motion)
     bubi projekt kettévétele
+        rendezett jól átgondolt komponensek
         megfelelő kliensoldali loading screen, Suspense?
-    egyéb compok pld. idézetek, section címek, stb
+    valami kezdő contentel kitölteni
     tw elements + egyéb hibák
 
     bg-primary, text-primary elim
         secondary
     img -> Image
+    
     honnan jön a background, primary, secondary color tw?
-        tw nem jó színt állít be néha, nem a megfelelő árnyalat
-        globals.css!!! style.ts, tailwind.json
-        styles/globalstyles.css fölös
         lehet flowbite plugin miatt
     nem tükéletes input, a label focusnál nem takarja az inputot
+
+    egy normális logó html
+    bubi loading + kettévesz, refactor
+        dark, light mode
+            dark moda-ra kell változtatni a bg-t
+            kellene külön dark light mode a színekre és egy set-re change
+        lehet egy látható lekerekített kerete is egy semleges színnel
+        optim
+            sok helyre nem kell ref csak sima input a func tetejére, amik nem változnak stateként
+            input lehet egyben nem kell külön kivenni az értékeket
+            jobb változónevek
+            mi elég sima varnak nem userefnek
+            commonba kivenni a közös részeket
+            console.log-ok kivétele
+            régi sim egyéb kommenteket kivenni
+            selected_plan.current nem kell, useState kell a cbx miatt, eventbe levenni a checked-et
+            mi az ami még nem közös?
+                subDataAct.current metadata csak a sim-eshez kell
+                getBubbleGroupsMetaData setSplittedPackLayoutData szerintem csak sim-hez
+                az adatstruktúrában melyik prop, func melyik animhoz van használva szétszedni
+        !!! csak a webgl rerenderelődjön a többi kompi ne
+        interp createAnimPropValue - interp prop mapping, használt propok
+        sim bubi hiba
+            valami setSplittedPackLayoutData-nál nem jó nem adja vissza az eredményt
+                0 az x,y
+            data függvényeket, folyamatot leegyszerűsíteni, túl bonyolult ott van a hiba
+        változó méret resp alapján
+    tailwind mycolorsal összeintegrálni a kül lapokat pricing chart, dashboard, bubi
+        flowbite inputs
+    minden mobilresp
+    kezdő content
+        egyes subscriptionokhoz valami info hány cég milyen lehetőségek, a bubis charthoz lehetne csatolni
+        képekkel magyarázni a featureoket, rövid szöveg
+    tw, mui breakpoints, mobil mód, dark mód minden legyen patent
+    nyitólap + pricing chart legyen tökéletes látványra, működésre
+
+    csak a szükséges importok * helyett
+    unused változónevek, importok kivétele
+
+    pricing chart cookie -> cbx state-k, legyen szinkronban minden
+    json parse hiba
+       http://localhost:4004//api/v1/resources/get_company?ticker=MSFT
+       debtEquity Nan értékek
+    bubble isloading bg behardkódolva
+
+deploy next js
+    Optim, SEO
+        https://nextjs.org/learn/seo/introduction-to-seo - egy halom optimalizáció
+        ESLint -> npm run lint
+    production, CI/CD,...
+
+    jogsi személy, paca engedély
+
+milestones
+    új ui beépítése
+    pricing chart fix
+    backend tökéletes
+    frontend nyitólap + chartok tökéletesen harmonizáljanak
+        lapok összekötése értelmesen
+    fizetési lehetőség
+    admin dashboard
 
 szükséges mérföldkövek
     user profile
         hagyományos register form
     subscription system
     pay system
+    alert system, screener
+    sched update
 
 később esetleg
     middleware munkálatok, minden-t valamilyen forában használni amit kijegyzeteltem a fileban
@@ -3377,6 +3404,8 @@ saját
         bg-secondary_c-300 dark:bg-secondary_c-700
     hx
         text-secondary_c-900 dark:text-secondary_c-100
+    hx kiemelt
+        text-primary_c-500
     p
         text-secondary_c-700 dark:text-secondary_c-300
     icons
@@ -3385,37 +3414,58 @@ saját
         bg-white dark:bg-secondary_c-700
 
 
+styles in frinwork
+    tw styles, comp css, scss, js css, inline styles
+    app\globals.css
+    app\context\FlowbiteContext.tsx
+    postcss.config.js
+    tailwind.config.js
+    components\MuiThemeRegistry\theme.ts
+
+
 egyéb top tech
     low code tools
     serverless database for Redis
     Top JS ORMs
         Sequelize, TypeOrm, Prisma
 
-"In the short run, the market is a voting machine. In the long run, it is a weighing machine."
-Benjamin Graham
-"The individial investor should act consistently as an investor and not as a speculator."
-Benjamin Graham
-"Invest for the long-term."
-Lou Simpson
-"The entrance strategy is actually more important than the exit strategy."
-Edward Lampert
-"Far more money has been lost by investors trying to anticipate corrections, than lost in the corrections themselves."
-Peter Lynch
-"You make most of your money in a bear market, you just don’t realize it at the time."
-Shelby Cullom Davis
-"The stock market is a device to transfer money from the impatient to the patient."
-Warren Buffett
-"Behind every stock is a company. Find out what it’s doing."
-Peter Lynch
-"Invest for the long haul. Don’t get too greedy and don’t get too scared."
-Shelby M.C. Davis
-"I will tell you how to become rich. Close the doors. Be fearful when others are greedy. Be greedy when others are fearful."
-Warren Buffett
-"The intelligent investor is a realist who sells to optimists and buys from pessimists."
-Benjamin Graham
-"The stock market is filled with individuals who know the price of everything, but the value of nothing."
-Phillip Fisher
-"Time in the market beats timing the market."
-Ken Fisher
-"In investing, what is comfortable is rarely profitable."
-Robert Arnott
+Framer-motion
+    motion
+    <motion.xxx animate={{x:100}}
+    kezdeti véggállapotok objként def.
+        initial="hidden"
+        animate="show"
+    transition
+        how values animate from one state to another, the type of animation used when animating between two values
+        delay,duration, 
+        delayChildren, staggerChildren, staggerDirection - variantok esetén
+        ease "linear",...
+        type = Tween | Spring | Inertia
+        minden anim prophoz külöb megadható
+            ... x: { duration: 1 },...
+    gestures
+        hover, tap, drag
+        <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 1.1 }} drag="x" dragConstraints={{ left: -100, right: 100 }} />
+    variants
+        animate entire sub-trees of components with a single animate prop
+        when, staggerChildren 
+
+release docker nélkül
+    db
+        local Dbeaver db dump
+        server dbeaver sql import
+    data api
+        update requirements.txt
+        local git checkin
+        server git pull
+        db conn str set 
+        pip install virtualenv
+        cd proj_mappa
+        virtualenv env
+        cd proj_mappa/env/scripts -> activate
+        cd proj_mappa -> pip install -r requirements.txt
+        indító bat
+            call "C:\Sites\Frinwork\frinwork_python\env\Scripts\activate.bat"
+            set FLASK_ENV=development
+            cd C:\Sites\Frinwork\frinwork_python
+            python runserver_data_api.py

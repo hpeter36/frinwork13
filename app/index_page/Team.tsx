@@ -1,5 +1,8 @@
+'use client'
+
 import React from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 import {
   FaGithub,
@@ -13,8 +16,8 @@ const Team = () => {
   const teamData = [
     {
       id: "team_section_1",
-      name: "Marta Smith",
-      resp: "Frontend Developer",
+      name: "Marika Olasz",
+      resp: "Social Media Manager",
       img: {
         imgPath: "https://mdbcdn.b-cdn.net/img/new/avatars/6.jpg",
         imgAlt: "Avatar alt 1",
@@ -29,10 +32,10 @@ const Team = () => {
     },
     {
       id: "team_section_2",
-      name: "Darren Randolph",
-      resp: "Marketing expert",
+      name: "Gábor Hajdu",
+      resp: "Senior Analyst",
       img: {
-        imgPath: "https://mdbcdn.b-cdn.net/img/new/avatars/8.jpg",
+        imgPath: "https://mdbcdn.b-cdn.net/img/new/avatars/22.jpg",
         imgAlt: "Avatar alt 2",
       },
       social: {
@@ -45,10 +48,10 @@ const Team = () => {
     },
     {
       id: "team_section_3",
-      name: "Ayat Black",
-      resp: "Web designer",
+      name: "Péter Hajdu",
+      resp: "Web Developer",
       img: {
-        imgPath: "https://mdbcdn.b-cdn.net/img/new/avatars/15.jpg",
+        imgPath: "https://mdbcdn.b-cdn.net/img/new/avatars/23.jpg",
         imgAlt: "Avatar alt 3",
       },
       social: {
@@ -61,8 +64,27 @@ const Team = () => {
     },
   ];
 
+  const fm_container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.5, delayChildren: 0.5 },
+    },
+  };
+
+  const fm_item = {
+    hidden: { opacity: 0, x: -100 },
+    show: {
+      opacity: 1,
+      x: 0,
+    },
+  };
+
   return (
-    <div id="home_team" className="container my-24 mx-auto md:px-6">
+    <motion.div id="home_team" className="container my-24 mx-auto md:px-6" initial="hidden"
+    whileInView="show"
+    viewport={{ once: true }}
+    variants={fm_container}>
       {/* Section: Design Block */}
       <section className="mb-32 text-center">
         <h2 className="mb-32 text-3xl font-bold">
@@ -71,7 +93,7 @@ const Team = () => {
 
         <div className="grid gap-x-6 md:grid-cols-3 lg:gap-x-12">
           {teamData.map((d) => (
-            <div className="mb-24 md:mb-0">
+            <motion.div className="mb-24 md:mb-0" variants={fm_item} key={d.id}>
               <div className="block h-full rounded-lg bg-white dark:bg-secondary_c-700 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)]">
                 <div className="flex justify-center">
                   <div className="flex justify-center -mt-[75px]">
@@ -121,12 +143,12 @@ const Team = () => {
                   </ul>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
 
         </div>
       </section>
-    </div>
+    </motion.div>
   );
 };
 

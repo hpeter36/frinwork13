@@ -4,7 +4,10 @@ import styles from "./PricingChart.module.css";
 
 import React, { useEffect, useRef, useState } from "react";
 
-import { RadioButtonGroup, RadioButton, CheckBox, Button } from "../_elements";
+import { RadioButtonGroup, RadioButton, CheckBox } from "../_elements";
+import Button from "@mui/material/Button";
+import { ButtonGroup } from "@mui/material";
+
 import SearchCompany from "../SearchCompany";
 import { ApiResponse, CompanyMetaData } from "../../types";
 
@@ -30,7 +33,6 @@ import {
   chartTypeMeta,
   initialCommonCpCbxMeta,
 } from "./inputs";
-import { isConstructorDeclaration } from "typescript";
 
 // refactor
 // comp search hordozható
@@ -44,7 +46,9 @@ const PricingChart: React.FC = () => {
   // const [compMeta, setCompMeta] = useState<CompanyMetaData | null>(null);
   const [selectedChartType, setSelectedChartType] =
     useState<ChartTypeMetaElement>(() => setDefaultChartTypeRadioValue());
-  const [selectedFairPriceType, setSelectedFairPriceType] = useState("fairp_type_historical");
+  const [selectedFairPriceType, setSelectedFairPriceType] = useState(
+    "fairp_type_historical"
+  );
   const [selectedCpCbxVals, setSelectedCpCbxVals] =
     useState<ControlPanelCbxVals | null>(null);
   const [commonCpCbxMeta, setCommonCpCbxMeta] =
@@ -96,7 +100,7 @@ const PricingChart: React.FC = () => {
       chartType: ctMeta.id,
       symbol: compMeta.current!.ticker,
       compName: compMeta.current!.name,
-      updateComp: false
+      updateComp: false,
     };
     pricingChartObj.current!.InitVis(inputsVis);
   };
@@ -236,7 +240,6 @@ const PricingChart: React.FC = () => {
   }
 
   function handleSetCompanySymbolCallback(compMetaIn: CompanyMetaData) {
-
     compMeta.current = compMetaIn;
 
     // reinit chart
@@ -244,10 +247,9 @@ const PricingChart: React.FC = () => {
       chartType: selectedChartType.id,
       symbol: compMeta.current!.ticker,
       compName: compMeta.current!.name,
-      updateComp: true
+      updateComp: true,
     };
     pricingChartObj.current!.InitVis(inputsVis);
-
   }
 
   function setDefaultChartTypeRadioValue() {
@@ -330,7 +332,7 @@ const PricingChart: React.FC = () => {
         chartType: selectedChartType.id,
         symbol: compMeta.current!.ticker,
         compName: compMeta.current!.name,
-        updateComp: true
+        updateComp: true,
       };
       pricingChartObj.current.InitVis(inputsVis);
     };
@@ -340,15 +342,15 @@ const PricingChart: React.FC = () => {
   return (
     <div className="flex flex-col">
       {/* --------- search bar --------- */}
-      <div className="flex justify-center items-center mb-10">
+      <div className="flex items-center justify-center mb-10">
         <SearchCompany callbackSetCompMeta={handleSetCompanySymbolCallback} />
       </div>
       {/* --------- select chart type --------- */}
-      <div className="company-pricing-chart-select-chart flex flex-col items-center justify-center my-6">
-        <h3 className="mb-4 font-semibold text-gray-900 dark:text-white">
+      <div className="flex flex-col justify-center my-6 company-pricing-chart-select-chart">
+        <h3 className="mb-4 ml-2 font-semibold text-gray-900 dark:text-white">
           Chart Type
         </h3>
-        <ul className="items-center w-full text-sm font-medium text-gray-90 rounded-lg flex flex-wrap md:flex-nowrap dark:bg-gray-700 dark:text-white">
+        <ul className="flex flex-wrap items-center w-full text-sm font-medium rounded-lg text-gray-90 md:flex-nowrap dark:bg-gray-700 dark:text-white">
           {chartTypeMeta.map((val, i) => {
             return (
               <li key={`${val.id}_${i}`}>
@@ -358,8 +360,12 @@ const PricingChart: React.FC = () => {
                   label={val.label}
                   value={`${val.id}_${i}`}
                   onChange={handleChartTypeSelectEvent}
-                  checked = {selectedChartType.id === val.id}
-                  twStyle={{container: 'justify-left ml-2', input: '', label: ''}}
+                  checked={selectedChartType.id === val.id}
+                  twStyle={{
+                    container: "justify-left ml-2",
+                    input: "",
+                    label: "",
+                  }}
                 />
               </li>
             );
@@ -368,11 +374,11 @@ const PricingChart: React.FC = () => {
       </div>
 
       {/* --------- select fair price type --------- */}
-      <div className="company-pricing-chart-control-panel-fairp-type flex flex-col items-center justify-center my-6">
-        <h3 className="mb-4 font-semibold text-gray-900 dark:text-white">
+      <div className="flex flex-col justify-center my-6 company-pricing-chart-control-panel-fairp-type">
+        <h3 className="mb-4 ml-2 font-semibold text-gray-900 dark:text-white">
           Fair price type
         </h3>
-        <ul className="items-center w-full text-sm font-medium text-gray-900 rounded-lg flex flex-wrap md:flex-nowrap dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+        <ul className="flex flex-wrap items-center w-full text-sm font-medium text-gray-900 rounded-lg md:flex-nowrap dark:bg-gray-700 dark:border-gray-600 dark:text-white">
           <li>
             <RadioButton
               groupName="radiog_select_fairp_type"
@@ -380,7 +386,7 @@ const PricingChart: React.FC = () => {
               value="fairp_type_historical"
               onChange={handleFairPriceTypeChange}
               checked={"fairp_type_historical" === selectedFairPriceType}
-              twStyle={{container: 'justify-left ml-2', input: '', label: ''}}
+              twStyle={{ container: "justify-left ml-2", input: "", label: "" }}
             />
           </li>
           <li>
@@ -390,33 +396,43 @@ const PricingChart: React.FC = () => {
               value="fairp_type_industrial"
               onChange={handleFairPriceTypeChange}
               checked={"fairp_type_industrial" === selectedFairPriceType}
-              twStyle={{container: 'justify-left ml-2', input: '', label: ''}}
+              twStyle={{ container: "justify-left ml-2", input: "", label: "" }}
             />
           </li>
         </ul>
       </div>
 
       {/* --------- control panel elements --------- */}
-      <div className="company-pricing-chart-control-panel flex flex-col items-center justify-center my-6">
+      <div className="flex flex-col justify-center my-6 company-pricing-chart-control-panel">
         {/* unique cp cbx-es per chart type */}
-        <ul className="items-center w-full text-sm font-medium text-gray-900 rounded-lg flex flex-wrap md:flex-nowrap dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+        <h3 className="mb-4 ml-2 font-semibold text-gray-900 dark:text-white">
+          Metrics
+        </h3>
+        <ul className="flex flex-wrap items-center w-full text-sm font-medium text-gray-900 rounded-lg md:flex-nowrap dark:bg-gray-700 dark:border-gray-600 dark:text-white">
           {chartTypeMeta.map((ctMeta, i) => {
             return ctMeta.cPanelElements.map((cpMeta, j) => {
               return (
                 <li key={`${cpMeta.id}_${(i + 1) * (j + 1)}`}>
-                <CheckBox
-                  label={cpMeta.label}
-                  checked={
-                    selectedCpCbxVals
-                      ? selectedCpCbxVals[cpMeta.id as ControlPanelCbxKeys] !==
-                        "0"
-                      : false
-                  }
-                  onChange={(e) => handleCpCbxChange(e, cpMeta.id)}
-                  twStyle={{
-                    container: selectedChartType.id === ctMeta.id ? "justify-left ml-2 block" : "justify-left ml-2 hidden", input: "", label: ""}
-                  }
-                /></li>
+                  <CheckBox
+                    label={cpMeta.label}
+                    checked={
+                      selectedCpCbxVals
+                        ? selectedCpCbxVals[
+                            cpMeta.id as ControlPanelCbxKeys
+                          ] !== "0"
+                        : false
+                    }
+                    onChange={(e) => handleCpCbxChange(e, cpMeta.id)}
+                    twStyle={{
+                      container:
+                        selectedChartType.id === ctMeta.id
+                          ? "justify-left ml-2 block"
+                          : "justify-left ml-2 hidden",
+                      input: "",
+                      label: "",
+                    }}
+                  />
+                </li>
               );
             });
           })}
@@ -424,48 +440,55 @@ const PricingChart: React.FC = () => {
           {/* common cp cbx-es */}
           {Object.keys(initialCommonCpCbxMeta).map((key, i) => (
             <li key={`${key}_${i}`}>
-            <CheckBox
-              label={
-                initialCommonCpCbxMeta[key as CommonControlPanelCbxKeys]?.label
-              }
-              checked={
-                commonCpCbxMeta
-                  ? commonCpCbxMeta[key as CommonControlPanelCbxKeys]?.value !==
-                    "0"
-                  : false
-              }
-              onChange={(e) => handleCommonCpCbxChange(e, key)}
-              twStyle={{container: 'justify-left ml-2', input: '', label: ''}}
-            /></li>
+              <CheckBox
+                label={
+                  initialCommonCpCbxMeta[key as CommonControlPanelCbxKeys]
+                    ?.label
+                }
+                checked={
+                  commonCpCbxMeta
+                    ? commonCpCbxMeta[key as CommonControlPanelCbxKeys]
+                        ?.value !== "0"
+                    : false
+                }
+                onChange={(e) => handleCommonCpCbxChange(e, key)}
+                twStyle={{
+                  container: "justify-left ml-2",
+                  input: "",
+                  label: "",
+                }}
+              />
+            </li>
           ))}
         </ul>
-        </div>
+      </div>
 
-        {/* date manip buttons */}
-        <div>
-          <Button
-            label="Reset date filter"
-            onClick={handleResetDateFilterButtonClick}
-          />
-          <Button
-            label="Select 3 years of data"
-            onClick={handle3YrsDateFilterButtonClick}
-          />
-          <Button
-            label="Select 5 years of data"
-            onClick={handle5YrsDateFilterButtonClick}
-          />
-          <Button
-            label="Select 10 years of data"
-            onClick={handle10YrsDateFilterButtonClick}
-          />
-        </div>
-        {/* pricing chart */}
-        <div className=" p-9">
-          <div className="company-pricing-chart-main"></div>
-          <div className="company-pricing-chart-compinfo"></div>
-          <div className="company-pricing-chart-debug"></div>
-        </div>
+      {/* date manip buttons */}
+      <div>
+        <ButtonGroup
+          variant="contained"
+          aria-label="outlined primary button group"
+        >
+          <Button onClick={handleResetDateFilterButtonClick}>
+            Reset date filter
+          </Button>
+          <Button onClick={handle3YrsDateFilterButtonClick}>
+            Select 3 years of data
+          </Button>
+          <Button onClick={handle5YrsDateFilterButtonClick}>
+            Select 5 years of data
+          </Button>
+          <Button onClick={handle10YrsDateFilterButtonClick}>
+            Select 10 years of data
+          </Button>
+        </ButtonGroup>
+      </div>
+      {/* pricing chart */}
+      <div className=" p-9">
+        <div className="company-pricing-chart-main"></div>
+        <div className="company-pricing-chart-compinfo"></div>
+        <div className="company-pricing-chart-debug"></div>
+      </div>
     </div>
   );
 };

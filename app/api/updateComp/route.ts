@@ -23,7 +23,7 @@ export async function GET(request: Request) {
 
     // construct uri
     let uriStr = `http://${process.env.DATA_SERVER}:${process.env.DATA_SERVER_PORT}/api/v1/resources/get_company?ticker=${symbol}`;
-    const respData = await fetch(uriStr).then((res) => res.json());
+    const respData = await fetch(uriStr) //.then((res) => res.json()); itt hiba volt, nan a letöltött adatokban
 
     // return data
     return NextResponse.json(

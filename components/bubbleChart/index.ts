@@ -1,3 +1,4 @@
-import BubbleChart from "./BubbleChart";
+import BubbleChartInterpType from "./BubbleChartInterpType";
+import BubbleChartSimType from "./BubbleChartSimType";
 
-export default BubbleChart;
+export { BubbleChartInterpType, BubbleChartSimType}

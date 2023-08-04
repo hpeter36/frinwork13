@@ -4,10 +4,12 @@ import React, {useState, useEffect} from 'react'
 
 import { SearchCompany, MultiRangeSlider, MultiRangeSliderDate } from '@/components'
 import { CheckBox, RadioButton, RadioButtonGroup } from '@/components/_elements'
-
-import { CompanyMetaData } from '@/types'
+import ButtonTWE from '@/components/_elements_twe/Button'
+import Button from '@mui/material/Button'
 
 import { stringToLowerCaseWithoutWhitespace } from '@/utils/helpers'
+
+import DarkThemeToggle from '@/components/_mui/DarkThemeToggle'
 
 const OtherPage = () => {
 
@@ -54,6 +56,8 @@ const OtherPage = () => {
     {setGItem}
     {/* <MultiRangeSlider min={0} max={101} onChange={(min: number, max: number) => { console.log(`${min} ${max}`) }} labelFormat={(value: number) => `number ${value}`} />
     <MultiRangeSliderDate min={new Date('2020-01-01')} max={new Date('2023-06-29')} onChange={(actMin: Date, actMax: Date) => { console.log(`${actMin} ${actMax}`) }} /> */}
+    <ButtonTWE label='xxxx'></ButtonTWE>
+    <Button size="small">Share</Button>
   </div>
   )
 }

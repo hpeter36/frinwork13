@@ -9,7 +9,9 @@ import { navLinks, LoginState } from "../../configs/constants";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { DarkThemeToggle } from "flowbite-react";
+import DarkThemeToggle from "../_mui/DarkThemeToggle";
+
+import Logo from "./Logo";
 
 const NavTW = () => {
   const [active, setActive] = useState("Home");
@@ -20,7 +22,13 @@ const NavTW = () => {
     initTE({ Collapse, Dropdown, Ripple });
   }, []);
 
-  type PageLinksMetaArrKeys = "home" | "dashboard" | "common" | "pricingchart" | "tileschart" | "otherpage";
+  type PageLinksMetaArrKeys =
+    | "home"
+    | "dashboard"
+    | "common"
+    | "pricingchart"
+    | "tileschart"
+    | "otherpage";
 
   function getPageLinksMetaArrKey(page_url: string): PageLinksMetaArrKeys {
     switch (page_url) {
@@ -50,14 +58,14 @@ const NavTW = () => {
   return (
     // Main navigation container
     <nav
-      className="sticky top-0 z-10 flex w-full flex-nowrap items-center justify-between bg-[#FBFBFB] py-2 text-neutral-500 shadow-lg hover:text-neutral-700 focus:text-neutral-700 dark:bg-neutral-600 lg:flex-wrap lg:justify-start lg:py-4"
+      className="sticky top-0 z-10 flex items-center justify-between w-full py-2 shadow-lg flex-nowrap bg-secondary_c-300 text-neutral-500 hover:text-neutral-700 focus:text-neutral-700 dark:bg-secondary_c-700 lg:flex-wrap lg:justify-start lg:py-4"
       data-te-navbar-ref
     >
-      <div className="flex w-full flex-wrap items-center justify-between px-3">
+      <div className="flex flex-wrap items-center justify-between w-full px-3">
         {/* logo */}
-        <div>
+        {/* <div>
           <Link
-            className="mx-2 my-1 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 lg:mb-0 lg:mt-0"
+            className="flex items-center mx-2 my-1 text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 lg:mb-0 lg:mt-0"
             href="/"
           >
             <img
@@ -67,11 +75,12 @@ const NavTW = () => {
               loading="lazy"
             />
           </Link>
-        </div>
+        </div> */}
+        <Logo />
 
         {/* Hamburger button for mobile view */}
         <button
-          className="block border-0 bg-transparent px-2 text-neutral-500 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 dark:text-neutral-200 lg:hidden"
+          className="block px-2 bg-transparent border-0 text-neutral-500 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 dark:text-neutral-200 lg:hidden"
           type="button"
           data-te-collapse-init
           data-te-target="#navbarSupportedContent7"
@@ -104,7 +113,7 @@ const NavTW = () => {
         >
           {/* page related links */}
           <ul
-            className="list-style-none ml-auto flex flex-col pl-0 lg:mt-1 lg:flex-row"
+            className="flex flex-col pl-0 ml-auto list-style-none lg:mt-1 lg:flex-row"
             data-te-navbar-nav-ref
           >
             {/* menu items */}
@@ -115,6 +124,66 @@ const NavTW = () => {
                 navObj.auth === LoginState.BOTH
               ) {
                 // doesn't matter login state
+                return (
+                  <li
+                  key={navObj.id}
+                    className="pl-2 lg:my-0 lg:pl-2 lg:pr-1"
+                    data-te-nav-item-ref
+                  >
+                    <Link
+                      className={`${
+                        active == navObj.title ? "active" : ""
+                      } text-neutral-500 transition duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400`}
+                      aria-current={active == navObj.title ? "page" : undefined}
+                      href={navObj.url}
+                      data-te-nav-link-ref
+                      onClick={(e) => setActive(navObj.title)}
+                    >
+                      {navObj.title}
+                    </Link>
+                  </li>
+                );
+              }
+            })}
+
+            {/* not logged in and "/" route, show log in link */}
+            {pathName === "/" && !session && (
+              <li className="pl-2 lg:my-0 lg:pl-2 lg:pr-1" data-te-nav-item-ref>
+                <Link
+                  className="text-neutral-500 transition duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+                  href="/api/auth/signin"
+                  data-te-nav-link-ref
+                  onClick={(e) => {
+                    e.preventDefault();
+                    signIn(undefined, {
+                      redirect: true,
+                      callbackUrl: `${window.location.origin}/dashboard`,
+                    });
+                  }}
+                >
+                  Create an account
+                </Link>
+              </li>
+            )}
+          </ul>
+        </div>
+
+        {/* common links */}
+        <div
+          className="!visible mt-2 hidden flex-grow items-center lg:mt-0 lg:!flex lg:basis-auto"
+          id="navbarSupportedContent7"
+          data-te-collapse-item
+        >
+          <ul
+            className="flex flex-col pl-0 ml-auto list-style-none lg:mt-1 lg:flex-row"
+            data-te-navbar-nav-ref
+          >
+            {navLinks["common"].map((navObj) => {
+              if (
+                (navObj.auth === LoginState.LOGOUT && !session) || // logout only pages
+                (navObj.auth === LoginState.LOGIN && session) || // login only pages
+                navObj.auth === LoginState.BOTH
+              ) {
                 return (
                   <li
                     className="pl-2 lg:my-0 lg:pl-2 lg:pr-1"
@@ -136,47 +205,10 @@ const NavTW = () => {
                 );
               }
             })}
-          </ul>
-        </div>
-
-        {/* common links */}
-        <div className="!visible mt-2 hidden flex-grow items-center lg:mt-0 lg:!flex lg:basis-auto"
-          id="navbarSupportedContent7"
-          data-te-collapse-item>
-          <ul
-            className="list-style-none ml-auto flex flex-col pl-0 lg:mt-1 lg:flex-row"
-            data-te-navbar-nav-ref
-          >
-            {navLinks["common"].map((navObj) => { 
-              if((navObj.auth === LoginState.LOGOUT && !session) || // logout only pages
-              (navObj.auth === LoginState.LOGIN && session) || // login only pages
-              navObj.auth === LoginState.BOTH)
-              {
-              return (
-              <li
-                className="pl-2 lg:my-0 lg:pl-2 lg:pr-1"
-                data-te-nav-item-ref
-                key={navObj.id}
-              >
-                <Link
-                  className={`${
-                    active == navObj.title ? "active" : ""
-                  } text-neutral-500 transition duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400`}
-                  aria-current={active == navObj.title ? "page" : undefined}
-                  href={navObj.url}
-                  data-te-nav-link-ref
-                  onClick={(e) => setActive(navObj.title)}
-                >
-                  {navObj.title}
-                </Link>
-              </li>
-            )}})}
             {/* Dark theme toggle */}
-            <li
-                className="pl-2 lg:my-0 lg:pl-2 lg:pr-1"
-                data-te-nav-item-ref>
-                  <DarkThemeToggle />
-                </li>
+            <li className="pl-2 lg:my-0 lg:pl-2 lg:pr-1" data-te-nav-item-ref>
+              <DarkThemeToggle />
+            </li>
           </ul>
         </div>
 
@@ -185,12 +217,18 @@ const NavTW = () => {
           {/* Logged out */}
           {!session && (
             <div>
-              <span className="text-neutral-500 dark:text-neutral-200">You are not signed in </span>
-              <Link className="text-neutral-500 transition duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+              <span className="text-neutral-500 dark:text-neutral-200">
+                You are not signed in{" "}
+              </span>
+              <Link
+                className="text-neutral-500 transition duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
                 href={`/api/auth/signin`}
                 onClick={(e) => {
                   e.preventDefault();
-                  signIn(undefined, { redirect:true, callbackUrl: `${window.location.origin}/dashboard`});
+                  signIn(undefined, {
+                    redirect: true,
+                    callbackUrl: `${window.location.origin}/dashboard`,
+                  });
 
                   // signIn("credentials", {
                   //   username: data?.username,
@@ -213,18 +251,19 @@ const NavTW = () => {
           {/* Logged in */}
           {session?.user && (
             <>
-
               {/* logged in user related functions */}
-              
-              
+
               {/* sign out */}
               <div>
                 <span>
-                  <span className="text-neutral-500 dark:text-neutral-200">Signed in as</span>
+                  <span className="text-neutral-500 dark:text-neutral-200">
+                    Signed in as
+                  </span>
                   <br />
                   <strong>{session?.user?.email ?? session?.user?.name}</strong>
                 </span>
-                <Link className="text-neutral-500 transition duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+                <Link
+                  className="text-neutral-500 transition duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
                   href={`/api/auth/signout`}
                   onClick={(e) => {
                     e.preventDefault();

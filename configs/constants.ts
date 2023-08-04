@@ -55,13 +55,7 @@ export const navLinks = {
       title: "Our Team",
       url: "#home_team",
       auth: LoginState.LOGOUT,
-    },
-    {
-      id: "home_register",
-      title: "Create an account",
-      url: "/api/auth/signin",
-      auth: LoginState.LOGOUT,
-    },
+    }
   ],
 
   // protected pages

@@ -1,8 +1,7 @@
-import Nav from "./layout/Nav";
 
 import SessProvider from "./SessProvider";
 import LoginForm from "./LoginForm";
-import BubbleChart from "./bubbleChart";
+import { BubbleChartSimType, BubbleChartInterpType } from "./bubbleChart";
 import SearchCompany from "./SearchCompany";
 import MultiRangeSlider from "./MultiRangeSlider/MultiRangeSlider";
 import MultiRangeSliderDate from "./MultiRangeSliderDate/MultiRangeSliderDate";
@@ -13,10 +12,10 @@ import PricingChart from "./PricingChart/PricingChart";
 import AnimatedCounter from "./AnimatedCounter/AnimatedCounter";
 
 export {
-  Nav,
   SessProvider,
   LoginForm,
-  BubbleChart,
+  BubbleChartSimType,
+  BubbleChartInterpType,
   SearchCompany,
   MultiRangeSlider,
   MultiRangeSliderDate,

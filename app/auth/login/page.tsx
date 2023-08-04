@@ -15,7 +15,7 @@ async function LoginPage() {
         router.push('/')
 
   return (
-	<div className='flex-center w-full'>
+	<div className="flex justify-center items-center w-full">
 		<LoginForm />
 	</div>
   )

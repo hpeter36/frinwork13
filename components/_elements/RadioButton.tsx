@@ -50,7 +50,7 @@ const RadioButton = (props: RadioButtonInputProps) => {
       <input
         checked={checked}
         onChange={onChange}
-        id={value}
+        id={`${groupName}_${value}`}
         type="radio"
         value={value}
         name={groupName}
@@ -58,7 +58,7 @@ const RadioButton = (props: RadioButtonInputProps) => {
         data-id={toBeSelectedId}
       />
       <label
-        htmlFor={value}
+        htmlFor={`${groupName}_${value}`}
         className={`ml-2 text-sm font-medium text-gray-900 dark:text-gray-300 ${_twStyle.label}`}
       >
         {_label}
