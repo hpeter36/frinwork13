@@ -126,7 +126,7 @@ const NavTW = () => {
                 // doesn't matter login state
                 return (
                   <li
-                  key={navObj.id}
+                    key={navObj.id}
                     className="pl-2 lg:my-0 lg:pl-2 lg:pr-1"
                     data-te-nav-item-ref
                   >
@@ -205,81 +205,79 @@ const NavTW = () => {
                 );
               }
             })}
-            {/* Dark theme toggle */}
+          </ul>
+
+          <ul
+            className="flex flex-col pl-0 ml-auto list-style-none lg:mt-1 lg:flex-row"
+            data-te-navbar-nav-ref
+          >
             <li className="pl-2 lg:my-0 lg:pl-2 lg:pr-1" data-te-nav-item-ref>
-              <DarkThemeToggle />
+              {/* User related elements */}
+              {/* Logged out */}
+              {!session && (
+                <div>
+                  <Link
+                    className="text-neutral-500 transition duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+                    href={`/api/auth/signin`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      signIn(undefined, {
+                        redirect: true,
+                        callbackUrl: `${window.location.origin}/dashboard`,
+                      });
+
+                      // signIn("credentials", {
+                      //   username: data?.username,
+                      //   password: data?.password,
+                      //   redirect: false,
+                      // }).then((response) => {
+                      //   if (response?.error) {
+                      //     // show notification for user
+                      //   } else {
+                      //     // redirect to destination page
+                      //   }
+                      // });
+                    }}
+                  >
+                    Sign in
+                  </Link>
+                </div>
+              )}
+
+              {/* Logged in */}
+              {session?.user && (
+                <>
+                  {/* logged in user related functions */}
+
+                  {/* sign out */}
+                  <div>
+                    <span>
+                      <strong>
+                        {session?.user?.email ?? session?.user?.name}
+                      </strong>
+                    </span>
+                    <Link
+                      className="text-neutral-500 transition duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
+                      href={`/api/auth/signout`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        signOut({
+                          redirect: true,
+                          callbackUrl: `${window.location.origin}`,
+                        });
+                      }}
+                    >
+                      Sign out
+                    </Link>
+                  </div>
+                </>
+              )}
             </li>
           </ul>
         </div>
 
-        {/* User related elements */}
-        <div className="relative flex items-center">
-          {/* Logged out */}
-          {!session && (
-            <div>
-              <span className="text-neutral-500 dark:text-neutral-200">
-                You are not signed in{" "}
-              </span>
-              <Link
-                className="text-neutral-500 transition duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-                href={`/api/auth/signin`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  signIn(undefined, {
-                    redirect: true,
-                    callbackUrl: `${window.location.origin}/dashboard`,
-                  });
-
-                  // signIn("credentials", {
-                  //   username: data?.username,
-                  //   password: data?.password,
-                  //   redirect: false,
-                  // }).then((response) => {
-                  //   if (response?.error) {
-                  //     // show notification for user
-                  //   } else {
-                  //     // redirect to destination page
-                  //   }
-                  // });
-                }}
-              >
-                Sign in
-              </Link>
-            </div>
-          )}
-
-          {/* Logged in */}
-          {session?.user && (
-            <>
-              {/* logged in user related functions */}
-
-              {/* sign out */}
-              <div>
-                <span>
-                  <span className="text-neutral-500 dark:text-neutral-200">
-                    Signed in as
-                  </span>
-                  <br />
-                  <strong>{session?.user?.email ?? session?.user?.name}</strong>
-                </span>
-                <Link
-                  className="text-neutral-500 transition duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400"
-                  href={`/api/auth/signout`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    signOut({
-                      redirect: true,
-                      callbackUrl: `${window.location.origin}`,
-                    });
-                  }}
-                >
-                  Sign out
-                </Link>
-              </div>
-            </>
-          )}
-          {/* Logged in end */}
-        </div>
+        {/* Dark theme toggle */}
+        <DarkThemeToggle />
       </div>
     </nav>
   );

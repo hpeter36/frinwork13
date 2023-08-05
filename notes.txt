@@ -3280,18 +3280,43 @@ megcsinálni
         rendezni a file struktúrát, nem a megfelelő helyen lévő elemek, inputok kiszervezése stb, könnyen megtalálható legyen minden
 
     szépítés
+        egy szebb, advancedebb header menu
+            ami él scrollozásra
         egy normális logó
-        section beúsztatás
+            még gradient átmenetekkel lehet bolondítani 
         képekre egy enyhe scale + megemelkedő effekt
             f.m. linkek whilehovering scale 1.1
         gradient szövegek, hátterek - hoobank proj 
+            texteken enyhe
+            több gradient pötty egy sectionon, rendezetlen átmenetek
+            sectionok egybefüggően gradiens megszakadás nélkül 2-3 egy sectionon
+            ugyanaz a háttér, de előző, következő blokkoktól eltérő contrast
+        blokkok, képek absolute pos, elcsúsztatva a normál flowból
         idézetek
             blur + opacity effektel(framer motion)
+        több kép, kevés szöveg
+        kártyák kép felül, hx, p- ezek animálva tiles vagy valami framer motion megemelkedő effect hooverra
+        elválasztó kicsi section hx + p mint a quote kontrasztos egyforma háttér
+        scrollozásra, scrollpozi alapján anim pld. egy változó háttér, pld megjelenik egy lekerekített négyzet majd eltúnik(háttérrel azonos szín a végén elején)
+        felsoroláshoz valami egyedi bulletpoint
+        váltogatni a különböző megoldásokat ahogy scrollozok
+        ferde sectionvégek, árfolyam pattern
+    navbar, ahogy scrollozok le aktiválja az adott menupontot ahol érvényes
+        https://relatablecode.com/how-to-make-a-navbar-with-react-scroll
+        https://github.com/lijunray/react-scrolling-nav
+        react-scroll
+    új navbar
+        https://mui.com/material-ui/react-app-bar/
+        https://github.com/Nazeh-Taha/react-responsive-animate-navbar
+        https://github.com/yusinto/react-site-nav
+        https://github.com/abodmicheal/react-js-stickynav?ref=reactjsexample.com
+        scrollozásra animálás, háttér vált.
+    a header töltődjön be időben, ne utólag
     bubi projekt kettévétele
         rendezett jól átgondolt komponensek
         megfelelő kliensoldali loading screen, Suspense?
     valami kezdő contentel kitölteni
-    tw elements + egyéb hibák
+    tw elements szép lassú eltávolítása, lehetőleg muis csere
 
     bg-primary, text-primary elim
         secondary
@@ -3450,7 +3475,7 @@ Framer-motion
         animate entire sub-trees of components with a single animate prop
         when, staggerChildren 
 
-release docker nélkül
+release docker nélkül, dev módok, otthoni háló
     db
         local Dbeaver db dump
         server dbeaver sql import
@@ -3469,3 +3494,27 @@ release docker nélkül
             set FLASK_ENV=development
             cd C:\Sites\Frinwork\frinwork_python
             python runserver_data_api.py
+    frinwork13
+        local git push, server git pull
+        npm install
+        env vars
+        npm run dev
+    szerver
+        fw. bejövő port allow
+    router
+        publikus ip(nem natolt) kell a internetszpég.
+        winbox/ip/cloud - ddns aktiválás, külső elérése a routernek
+        winbox/ip//firewall/Nat külső port access eg 3000 -> belső eg. 3000 route beáll 
+            general/chain - dstnat, protocol tcp, dst port 80 - bejövő port
+            extra/dst address type - local
+            action/action - dst nat, to address 192.168.88.244, to ports - amin fut localba a szolg.
+            jobb oldalt "Comment" - route név
+        RDP szerver elérés
+            winbox/ip//firewall/Nat
+                general/chain - dstnat, protocol tcp, dst port 3389 - bejövő port
+                action/action - dst nat, to address 192.168.88.244, to ports - 3389, amin fut localba a szolg.
+                jobb oldalt "Comment" - route név
+
+release docker nélkül, prod módok, 80 port, otthoni háló
+release dockerrel, prod módok, 80 port, otthoni háló
+release dockerrel, Heroku

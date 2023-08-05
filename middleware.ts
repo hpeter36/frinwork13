@@ -79,6 +79,14 @@ export async function middleware(request: NextRequest) {
   // user not logged in
   else {
 
+  // user signed out
+  // if login page -> dashboard
+  if (requestedPath.startsWith("/api/auth/signout")) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/";
+    return NextResponse.redirect(url);
+  }
+
 	// protected pages
 
 	// '/pricingChart' -> login page

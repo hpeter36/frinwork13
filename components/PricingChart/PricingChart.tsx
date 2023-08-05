@@ -8,6 +8,9 @@ import { RadioButtonGroup, RadioButton, CheckBox } from "../_elements";
 import Button from "@mui/material/Button";
 import { ButtonGroup } from "@mui/material";
 
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+
 import SearchCompany from "../SearchCompany";
 import { ApiResponse, CompanyMetaData } from "../../types";
 
@@ -58,6 +61,9 @@ const PricingChart: React.FC = () => {
   const compMeta = useRef<CompanyMetaData | null>(null);
   const pricingChartObj = useRef<CompanyPricingChart | null>(null);
   const lastCpCbxKey = useRef<string | null>(null);
+
+  const theme = useTheme();
+  const isResAboveSm = useMediaQuery(theme.breakpoints.up('sm'));
 
   // functions
   function setInitialOrReadCookieValue(key: string) {
@@ -468,6 +474,7 @@ const PricingChart: React.FC = () => {
         <ButtonGroup
           variant="contained"
           aria-label="outlined primary button group"
+          // orientation={isResAboveSm ? "horizontal" : "vertical"}
         >
           <Button onClick={handleResetDateFilterButtonClick}>
             Reset date filter
