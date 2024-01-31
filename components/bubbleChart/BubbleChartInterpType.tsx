@@ -268,6 +268,7 @@ const BubbleChartInterpType: React.FC<BubbleChartInputInterpTypeProps> = ({
 
       // animation loop
       let frameloop = regl.current!.frame(({ time }) => {
+        
         // init start time
         if (startTime === null) {
           startTime = time;
@@ -843,7 +844,7 @@ const BubbleChartInterpType: React.FC<BubbleChartInputInterpTypeProps> = ({
         positionStart: createAnimPropValue(
           animDefinition.propMapping!.positionStart,
           packData
-        )! as number[][],
+        )! as number[][], // !!! itt nem [number, number] ? 
         startColor: createAnimPropValue(
           animDefinition.propMapping!.startColor,
           packData

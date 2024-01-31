@@ -45,7 +45,7 @@ export async function fetchBubbleData(selected_plan: EnumSubscription) {
 
   // get response
   let respDataJson: ApiResponse = await resp.json();
-  respDataJson = await respDataJson;
+  respDataJson = await respDataJson; // ez ide teljesen felesleges !!!
 
   // check for response
   if (respDataJson.status !== "STATUS_OK") {
@@ -57,7 +57,7 @@ export async function fetchBubbleData(selected_plan: EnumSubscription) {
 
 export function shuffleBubbleData(array: BubbleData[]) {
   let currentIndex = array.length,
-    randomIndex;
+    randomIndex; // ????????????? !!!
 
   // While there remain elements to shuffle.
   while (currentIndex != 0) {

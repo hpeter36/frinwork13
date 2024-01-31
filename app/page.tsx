@@ -29,7 +29,7 @@ export default async function HomePage(request: Request) {
         <Hero />
         <Stats />
         <BubbleChartInterpType inputs={inputsBubbleChartInterptype} />
-        {/* <BubbleChartSimType inputs={inputsBubbleChartSimType} /> */}
+        <BubbleChartSimType inputs={inputsBubbleChartSimType} />
         <Features />
         <FeatureDescription />
         <Quote />

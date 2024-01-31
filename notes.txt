@@ -3317,6 +3317,7 @@ megcsinálni
         megfelelő kliensoldali loading screen, Suspense?
     valami kezdő contentel kitölteni
     tw elements szép lassú eltávolítása, lehetőleg muis csere
+    "MySQL server has gone away (ConnectionAbortedError(10053, 'A felépített kapcsolatot az állomás szoftvere megszakította', None, 10053, None))") hiba
 
     bg-primary, text-primary elim
         secondary
@@ -3360,6 +3361,17 @@ megcsinálni
         képekkel magyarázni a featureoket, rövid szöveg
     tw, mui breakpoints, mobil mód, dark mód minden legyen patent
     nyitólap + pricing chart legyen tökéletes látványra, működésre
+
+    pricing chart oszlopokba + logikusabban elrendezni az inputokat
+    már megint nem váltja a checkboxokat chart type váltás után
+    fair price type radio se változik
+    QUBT, RIVN nem találja
+    ha csak az egyik végét cibálom a date filternek nem jól választ ki
+    
+
+    pricing chartra kell valami summary componens ami összefoglalja a kül. árazásokat egy grafikus megjelenítéssel
+
+    data api + db refactor, végleges clean struktúra létrehozása
 
     csak a szükséges importok * helyett
     unused változónevek, importok kivétele
